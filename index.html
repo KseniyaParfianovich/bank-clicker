@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔥 ULTRA CLICKER - МУЛЬТИПЛЕЕР</title>
+<title>🔥 ULTRA CLICKER EMPIRE 3.0</title>
 
 <style>
 * {
@@ -14,7 +14,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f3460 100%);
   color: #00ff00;
   text-align: center;
   overflow-x: hidden;
@@ -24,41 +24,108 @@ body {
 
 h1 {
   font-size: 2.5em;
-  text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+  text-shadow: 0 0 20px #00ff00, 0 0 40px #ff00ff;
   margin: 20px 0;
-  animation: pulse 2s infinite;
+  animation: glow 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes glow {
   0%, 100% { text-shadow: 0 0 20px #00ff00; }
-  50% { text-shadow: 0 0 40px #00ff00, 0 0 60px #00ff00; }
+  50% { text-shadow: 0 0 40px #00ff00, 0 0 60px #ff00ff; }
 }
 
-.container {
-  max-width: 900px;
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 15px;
+  max-width: 1400px;
   margin: 0 auto;
+}
+
+.sidebar {
+  background: rgba(0, 255, 0, 0.05);
+  border: 2px solid rgba(0, 255, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  max-height: 800px;
+  overflow-y: auto;
+  position: sticky;
+  top: 10px;
+}
+
+.sidebar h3 {
+  color: #00ff00;
+  margin-bottom: 15px;
+  border-bottom: 2px solid rgba(0, 255, 0, 0.3);
+  padding-bottom: 10px;
+}
+
+.player-card {
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.player-card:hover {
+  background: rgba(0, 255, 0, 0.2);
+  transform: translateX(5px);
+}
+
+.player-card.current {
+  background: rgba(255, 255, 0, 0.2);
+  border-color: #ffff00;
+}
+
+.player-name {
+  font-weight: bold;
+  color: #00ff00;
+}
+
+.player-level {
+  font-size: 0.8em;
+  color: #00aa00;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  z-index: 2000;
+  animation: slideIn 0.5s;
+  max-width: 300px;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(400px); }
+  to { transform: translateX(0); }
 }
 
 .card {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
-  padding: 25px;
+  padding: 20px;
   margin: 15px auto;
   border-radius: 15px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 255, 0, 0.1);
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
   border: 2px solid rgba(0, 255, 0, 0.2);
   transition: all 0.3s;
 }
 
 .card:hover {
-  box-shadow: 0 0 50px rgba(0, 255, 0, 0.5), inset 0 0 30px rgba(0, 255, 0, 0.2);
-  transform: translateY(-5px);
+  box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
 }
 
-.stats {
+.stats-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   margin: 15px 0;
 }
@@ -68,7 +135,6 @@ h1 {
   padding: 15px;
   border-radius: 10px;
   border: 1px solid rgba(0, 255, 0, 0.3);
-  font-size: 0.95em;
 }
 
 .stat-value {
@@ -98,12 +164,12 @@ button {
   box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
 }
 
-button:hover {
+button:hover:not(:disabled) {
   transform: scale(1.08);
   box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
 }
 
-button:active {
+button:active:not(:disabled) {
   transform: scale(0.95);
 }
 
@@ -115,15 +181,10 @@ button:disabled {
 }
 
 .big-button {
-  font-size: 1.3em;
-  padding: 15px 30px;
+  font-size: 1.5em;
+  padding: 20px 40px;
   width: 100%;
-  margin: 10px 0;
-}
-
-.upgrade-btn {
-  font-size: 0.9em;
-  padding: 10px 15px;
+  margin: 15px 0;
 }
 
 .tab-buttons {
@@ -150,55 +211,137 @@ button:disabled {
 
 .tab-content {
   display: none;
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .tab-content.active {
   display: block;
 }
 
-.upgrade-item {
+.item {
   background: rgba(0, 255, 0, 0.05);
   border: 1px solid rgba(0, 255, 0, 0.2);
   border-radius: 10px;
-  padding: 12px;
-  margin: 8px 0;
+  padding: 15px;
+  margin: 10px 0;
   text-align: left;
+  transition: all 0.3s;
 }
 
-.upgrade-header {
+.item:hover {
+  background: rgba(0, 255, 0, 0.15);
+  border-color: rgba(0, 255, 0, 0.4);
+}
+
+.item-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.upgrade-name {
+.item-name {
   font-weight: bold;
+  color: #00ff00;
+  font-size: 1.1em;
+}
+
+.item-cost {
+  background: rgba(255, 100, 100, 0.2);
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: #ff6464;
+}
+
+.item-desc {
+  font-size: 0.85em;
+  color: #00aa00;
+  margin-top: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(0, 255, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 10px 0;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff00 0%, #00cc00 100%);
+  transition: width 0.3s;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 90%;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
   color: #00ff00;
 }
 
-.upgrade-cost {
-  background: rgba(255, 100, 100, 0.2);
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.9em;
+.modal-content input, .modal-content select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: rgba(0, 255, 0, 0.1);
+  border: 2px solid #00ff00;
+  border-radius: 8px;
+  color: #00ff00;
+  font-size: 1em;
 }
 
-.upgrade-desc {
-  font-size: 0.85em;
+.modal-content input::placeholder {
   color: #00aa00;
-  margin-top: 5px;
 }
 
-.multiplier {
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  flex: 1;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #00ff00;
   font-size: 1.5em;
-  color: #ffff00;
-  text-shadow: 0 0 10px #ffff00;
-  animation: bounce 0.5s;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  cursor: pointer;
 }
 
 .combo {
@@ -220,201 +363,78 @@ button:disabled {
   100% { transform: translate(-50%, -150%) scale(0.5); opacity: 0; }
 }
 
-.leaderboard {
-  text-align: left;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.player-item {
-  background: rgba(0, 255, 0, 0.1);
-  padding: 10px;
+.transaction {
+  background: rgba(0, 255, 100, 0.1);
+  padding: 12px;
   margin: 8px 0;
   border-radius: 8px;
   border-left: 3px solid #00ff00;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.player-rank {
-  background: #00ff00;
-  color: #000;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin-right: 10px;
-  flex-shrink: 0;
-}
-
-.player-info {
-  flex: 1;
   text-align: left;
 }
 
-.player-name {
-  font-weight: bold;
-  color: #00ff00;
+.transaction.sent {
+  border-left-color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
 }
 
-.player-money {
-  font-size: 0.9em;
-  color: #00aa00;
-}
-
-.player-current {
-  background: rgba(255, 255, 0, 0.2);
-  border-left-color: #ffff00;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 2000;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal.active {
-  display: flex;
-}
-
-.modal-content {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
-  padding: 30px;
-  border-radius: 15px;
-  max-width: 400px;
-  width: 90%;
-  border: 2px solid #00ff00;
-  box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
-  color: #00ff00;
-}
-
-.modal-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  background: rgba(0, 255, 0, 0.1);
-  border: 1px solid #00ff00;
-  border-radius: 8px;
-  color: #00ff00;
-  font-size: 1em;
-}
-
-.modal-content input::placeholder {
-  color: #00aa00;
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.modal-buttons button {
-  flex: 1;
-}
-
-.achievement {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #ffff00 0%, #ffaa00 100%);
-  color: #000;
-  padding: 15px 20px;
-  border-radius: 10px;
-  font-weight: bold;
-  animation: slideIn 0.5s;
-  z-index: 1000;
-  box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
-}
-
-@keyframes slideIn {
-  from { transform: translateX(400px); }
-  to { transform: translateX(0); }
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: none;
-  color: #00ff00;
-  font-size: 1.5em;
-  cursor: pointer;
-}
-
-.info-text {
-  font-size: 0.85em;
-  color: #00aa00;
-  margin: 10px 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background: rgba(0, 255, 0, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 8px 0;
-  border: 1px solid rgba(0, 255, 0, 0.2);
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #00ff00 0%, #00cc00 100%);
-  transition: width 0.3s;
-  box-shadow: 0 0 10px #00ff00;
-}
-
-.offline-income {
-  background: rgba(100, 100, 255, 0.1);
-  border: 1px solid rgba(100, 100, 255, 0.3);
+.quest-item {
+  background: rgba(100, 150, 255, 0.1);
+  border: 1px solid rgba(100, 150, 255, 0.3);
   padding: 15px;
+  margin: 10px 0;
   border-radius: 10px;
-  margin: 15px 0;
-  color: #6464ff;
+  text-align: left;
 }
 
-.timer {
+.quest-title {
+  font-weight: bold;
+  color: #6496ff;
+  font-size: 1.1em;
+}
+
+.quest-progress {
+  margin: 10px 0;
+}
+
+.achievement-badge {
+  display: inline-block;
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 20px;
   font-size: 0.9em;
-  color: #ffaa00;
 }
 
-@media (max-width: 600px) {
-  h1 {
-    font-size: 1.8em;
+.achievement-badge.locked {
+  opacity: 0.4;
+}
+
+@media (max-width: 1200px) {
+  .main-container {
+    grid-template-columns: 1fr 1fr;
   }
   
-  .card {
-    max-width: 95%;
+  .sidebar {
+    grid-column: 1 / -1;
+    max-height: 300px;
   }
-  
-  .stats {
+}
+
+@media (max-width: 768px) {
+  .main-container {
     grid-template-columns: 1fr;
   }
   
-  button {
-    padding: 10px 15px;
-    font-size: 0.9em;
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  h1 {
+    font-size: 1.8em;
   }
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -436,110 +456,144 @@ button:disabled {
 
 <body>
 
-<h1>🔥 ULTRA CLICKER 🔥</h1>
+<h1>🔥 ULTRA CLICKER EMPIRE 3.0 🔥</h1>
 
-<div class="container">
-  <!-- ГЛАВНАЯ КАРТА -->
-  <div class="card">
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-label">💰 ДЕНЬГИ</div>
-        <div class="stat-value" id="money">0</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">⚡ МОЩЬ</div>
-        <div class="stat-value" id="power">1</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">📊 УРОВЕНЬ</div>
-        <div class="stat-value" id="level">1</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">🎯 КОМБО</div>
-        <div class="stat-value" id="combo">0</div>
-      </div>
-    </div>
-
-    <button class="big-button" onclick="clickMoney()" id="clickBtn">
-      <span id="clickText">КЛИК! +</span><span id="clickPower">1</span>
-    </button>
-
-    <div class="info-text">
-      💵 Доход в сек: <span id="income">0</span>
-    </div>
-
-    <button onclick="spinWheel()">🎡 КОЛЕСО УДАЧИ</button>
-    <button onclick="dailyBonus()">🎁 ЕЖЕДНЕВНЫЙ БОНУС</button>
+<div class="main-container">
+  <!-- ЛЕВЫЙ САЙДБАР -->
+  <div class="sidebar">
+    <h3>👥 ОНЛАЙН</h3>
+    <div id="onlineList"></div>
+    <h3 style="margin-top: 20px;">🏆 ТОП 5</h3>
+    <div id="topPlayers"></div>
+    <h3 style="margin-top: 20px;">📊 ГИЛЬДИЯ</h3>
+    <div id="guildInfo"></div>
   </div>
 
-  <!-- ТАБЫ -->
-  <div class="card">
-    <div class="tab-buttons">
-      <button class="tab-btn active" onclick="switchTab('shop')">🛍️ МАГАЗИН</button>
-      <button class="tab-btn" onclick="switchTab('multiplier')">✖️ МНОЖИТЕЛИ</button>
-      <button class="tab-btn" onclick="switchTab('stats')">📊 СТАТИСТИКА</button>
-      <button class="tab-btn" onclick="switchTab('settings')">⚙️ ОПЦИИ</button>
-    </div>
-
-    <!-- ШОП -->
-    <div id="shop" class="tab-content active">
-      <h3>🛍️ МАГАЗИН АПГРЕЙДОВ</h3>
-      <div id="upgradesList"></div>
-    </div>
-
-    <!-- МНОЖИТЕЛИ -->
-    <div id="multiplier" class="tab-content">
-      <h3>✖️ БУСТЫ</h3>
-      <div id="multipliersList"></div>
-    </div>
-
-    <!-- СТАТИСТИКА -->
-    <div id="stats" class="tab-content">
-      <h3>📊 ТВОЯ СТАТИСТИКА</h3>
-      <div class="stat">
-        <div class="stat-label">📈 ВСЕГО ЗАРАБОТАНО</div>
-        <div class="stat-value" id="totalEarned">0</div>
+  <!-- ЦЕНТРАЛЬНАЯ ЧАСТЬ -->
+  <div>
+    <!-- ГЛАВНАЯ КАРТА -->
+    <div class="card">
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-label">💰 ДЕНЬГИ</div>
+          <div class="stat-value" id="money">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">⚡ МОЩЬ</div>
+          <div class="stat-value" id="power">1</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">📊 УРОВЕНЬ</div>
+          <div class="stat-value" id="level">1</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">⭐ РЕПУТАЦИЯ</div>
+          <div class="stat-value" id="reputation">0</div>
+        </div>
       </div>
-      <div class="stat" style="margin-top: 10px;">
-        <div class="stat-label">🖱️ ВСЕГО КЛИКОВ</div>
-        <div class="stat-value" id="totalClicks">0</div>
+
+      <button class="big-button" onclick="clickMoney()" id="clickBtn">
+        КЛИК! +<span id="clickPower">1</span>
+      </button>
+
+      <div style="color: #00aa00; font-size: 0.9em;">
+        💵 Доход в сек: <span id="income">0</span> | 🎯 Комбо: <span id="combo">0</span>
       </div>
-      <div class="stat" style="margin-top: 10px;">
-        <div class="stat-label">⏱️ ВРЕМЯ ИГРЫ</div>
-        <div class="stat-value" id="playTime">0ч</div>
+
+      <div style="margin-top: 10px;">
+        <button onclick="spinWheel()">🎡 КОЛЕСО УДАЧИ (50💰)</button>
+        <button onclick="dailyBonus()">🎁 ЕЖЕДНЕВНЫЙ БОНУС</button>
+        <button onclick="openMultiplayer()" style="background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);">👥 МУЛЬТИПЛЕЕР</button>
       </div>
-      <div class="leaderboard" id="leaderboard"></div>
     </div>
 
-    <!-- ОПЦИИ -->
-    <div id="settings" class="tab-content">
-      <h3>⚙️ НАСТРОЙКИ</h3>
-      <button onclick="exportData()" style="width: 100%; margin: 10px 0;">💾 ЭКСПОРТИРОВАТЬ</button>
-      <button onclick="importData()" style="width: 100%; margin: 10px 0;">📂 ИМПОРТИРОВАТЬ</button>
-      <button onclick="resetGame()" style="width: 100%; margin: 10px 0; background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);">🔄 СБРОС ИГРЫ</button>
-      <div class="info-text">
-        Версия: 2.0 | Мультиплеер: ВКЛ
+    <!-- ТАБЫ -->
+    <div class="card">
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="switchTab('shop')">🛍️ МАГАЗИН</button>
+        <button class="tab-btn" onclick="switchTab('quests')">🎯 КВЕСТЫ</button>
+        <button class="tab-btn" onclick="switchTab('trades')">🛒 ТОРГОВЛЯ</button>
+        <button class="tab-btn" onclick="switchTab('pvp')">⚔️ PVP</button>
+        <button class="tab-btn" onclick="switchTab('stats')">📊 СТАТИСТИКА</button>
+        <button class="tab-btn" onclick="switchTab('settings')">⚙️ ОПЦИИ</button>
+      </div>
+
+      <!-- ШОП -->
+      <div id="shop" class="tab-content active">
+        <h3>🛍️ МАГАЗИН АПГРЕЙДОВ</h3>
+        <div id="upgradesList"></div>
+      </div>
+
+      <!-- КВЕСТЫ -->
+      <div id="quests" class="tab-content">
+        <h3>🎯 АКТИВНЫЕ КВЕСТЫ</h3>
+        <div id="questsList"></div>
+      </div>
+
+      <!-- ТОРГОВЛЯ -->
+      <div id="trades" class="tab-content">
+        <h3>🛒 МАРКЕТПЛЕЙС</h3>
+        <button onclick="openTradeModal()" style="width: 100%;">➕ ВЫСТАВИТЬ НА ПРОДАЖУ</button>
+        <div id="tradesList"></div>
+        <h3 style="margin-top: 20px;">💸 МОИ ПРЕДЛОЖЕНИЯ</h3>
+        <div id="myTrades"></div>
+      </div>
+
+      <!-- PVP -->
+      <div id="pvp" class="tab-content">
+        <h3>⚔️ БОЕВАЯ АРЕНА</h3>
+        <button onclick="startPvP()" style="width: 100%; font-size: 1.2em;">⚔️ ВЫЗВАТЬ ПРОТИВНИКА</button>
+        <div id="pvpStats" style="margin-top: 20px;"></div>
+        <h3 style="margin-top: 20px;">🏅 БОЕВЫЕ УСПЕХИ</h3>
+        <div id="pvpHistory"></div>
+      </div>
+
+      <!-- СТАТИСТИКА -->
+      <div id="stats" class="tab-content">
+        <h3>📊 ТВОЯ СТАТИСТИКА</h3>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-label">📈 ВСЕГО ЗАРАБОТАНО</div>
+            <div class="stat-value" id="totalEarned">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">🖱️ ВСЕГО КЛИКОВ</div>
+            <div class="stat-value" id="totalClicks">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">⏱️ ВРЕМЯ ИГРЫ</div>
+            <div class="stat-value" id="playTime">0ч</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">🎖️ ДОСТИЖЕНИЯ</div>
+            <div class="stat-value" id="achievementCount">0</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 15px;">💸 ИСТОРИЯ ТРАНЗАКЦИЙ</h3>
+        <div id="transactionList"></div>
+
+        <h3 style="margin-top: 15px;">🏆 ДОСТИЖЕНИЯ</h3>
+        <div id="achievementsList"></div>
+      </div>
+
+      <!-- ОПЦИИ -->
+      <div id="settings" class="tab-content">
+        <h3>⚙️ НАСТРОЙКИ</h3>
+        <button onclick="createGuild()" style="width: 100%; margin: 10px 0;">🏰 СОЗДАТЬ ГИЛЬДИЮ</button>
+        <button onclick="openSendMoney()" style="width: 100%; margin: 10px 0;">💸 ОТПРАВИТЬ ДЕНЬГИ</button>
+        <button onclick="exportData()" style="width: 100%; margin: 10px 0;">💾 ЭКСПОРТИРОВАТЬ</button>
+        <button onclick="importData()" style="width: 100%; margin: 10px 0;">📂 ИМПОРТИРОВАТЬ</button>
+        <button onclick="resetGame()" style="width: 100%; margin: 10px 0; background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);">🔄 СБРОС ИГРЫ</button>
       </div>
     </div>
   </div>
 
-  <!-- МУЛЬТИПЛЕЕР -->
-  <div class="card">
-    <h3>👥 МУЛЬТИПЛЕЕР</h3>
-    <button onclick="openMultiplayer()" style="width: 100%;">🌐 ВКЛЮЧИТЬ МУЛЬТИПЛЕЕР</button>
-    <div id="multiplayerInfo" style="display: none; margin-top: 15px; text-align: left;">
-      <div class="info-text">Статус: <span id="multiplayerStatus">Отключен</span></div>
-      <div class="info-text">Код комнаты: <span id="roomCode" style="color: #00ff00; font-weight: bold;">-</span></div>
-      <button onclick="leaveMultiplayer()" style="width: 100%; margin-top: 10px;">❌ ВЫЙТИ</button>
-    </div>
+  <!-- ПРАВЫЙ САЙДБАР -->
+  <div class="sidebar">
+    <h3>🎖️ МЕГА ДОСТИЖЕНИЯ</h3>
+    <div id="megaAchievements"></div>
   </div>
-
-  <!-- ДОСТИЖЕНИЯ -->
-  <div class="card">
-    <h3>🏆 ДОСТИЖЕНИЯ</h3>
-    <div id="achievementsList"></div>
-  </div>
-
 </div>
 
 <!-- МОДАЛИ -->
@@ -547,77 +601,129 @@ button:disabled {
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('multiplayer-modal')">✕</button>
     <h2>👥 МУЛЬТИПЛЕЕР</h2>
+    <input type="text" id="playerName" placeholder="Введи своё имя" maxlength="15">
     <button onclick="createRoom()" style="width: 100%; margin: 10px 0;">➕ СОЗДАТЬ КОМНАТУ</button>
     <div style="text-align: center; margin: 10px 0; color: #00aa00;">ИЛИ</div>
-    <input type="text" id="roomCodeInput" placeholder="Введи код комнаты">
+    <input type="text" id="roomCodeInput" placeholder="Введи код комнаты" maxlength="8">
     <button onclick="joinRoom()" style="width: 100%; margin: 10px 0;">🔗 ПРИСОЕДИНИТЬСЯ</button>
   </div>
 </div>
 
-<!-- ОФФЛАЙН ДОХОД -->
-<div id="offlineIncome" class="card" style="display: none; margin-top: 20px;">
-  <h3>📡 ОФЛАЙН ДОХОД</h3>
-  <p>Пока ты был оффлайн:</p>
-  <div class="stat-value" id="offlineAmount">0</div>
-  <button onclick="acceptOfflineIncome()" style="width: 100%; margin-top: 10px;">✅ ПРИНЯТЬ</button>
+<div id="trade-modal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('trade-modal')">✕</button>
+    <h2>🛒 ВЫСТАВИТЬ НА ПРОДАЖУ</h2>
+    <select id="tradeItemType">
+      <option value="power">⚡ Сила +1</option>
+      <option value="money">💰 Деньги (100шт)</option>
+      <option value="boost">🚀 Буст x2</option>
+    </select>
+    <input type="number" id="tradePrice" placeholder="Цена в денежках" min="10">
+    <div class="modal-buttons">
+      <button onclick="createTrade()">✅ ПРОДАТЬ</button>
+      <button onclick="closeModal('trade-modal')">❌ ОТМЕНА</button>
+    </div>
+  </div>
 </div>
 
-<!-- СКРЫТАЯ ЯЧЕЙКА ДЛЯ ИМПОРТА -->
+<div id="send-money-modal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('send-money-modal')">✕</button>
+    <h2>💸 ОТПРАВИТЬ ДЕНЬГИ</h2>
+    <select id="recipientPlayer">
+      <option value="">Выбери игрока...</option>
+    </select>
+    <input type="number" id="sendAmount" placeholder="Сумма" min="1">
+    <div class="modal-buttons">
+      <button onclick="sendMoney()">✅ ОТПРАВИТЬ</button>
+      <button onclick="closeModal('send-money-modal')">❌ ОТМЕНА</button>
+    </div>
+  </div>
+</div>
+
 <input type="file" id="importFile" style="display: none;" onchange="handleImport()">
 
 <script>
-// ==================== ГЛАВНЫЕ ДАННЫЕ ====================
+// ==================== СИСТЕМА ИГРОВЫХ ДАННЫХ ====================
 let gameData = {
+  playerName: 'Player_' + Math.floor(Math.random() * 10000),
   money: 0,
   power: 1,
   level: 1,
+  reputation: 0,
   combo: 0,
+  
   bank: 0,
   autoClicker: 0,
   powerMultiplier: 1,
   criticalChance: 0,
   passiveIncome: 0,
+  energyRegen: 0,
+  
   totalEarned: 0,
   totalClicks: 0,
+  totalSpent: 0,
+  pvpWins: 0,
+  pvpLosses: 0,
+  
   lastDaily: 0,
   startTime: Date.now(),
   lastOfflineTime: 0,
   achievements: [],
-  upgrades: {}
+  upgrades: {},
+  roomCode: null,
+  
+  trades: [],
+  transactions: [],
+  myTrades: [],
+  
+  questProgress: { clicker: 0, richman: 0, trader: 0, pvpHero: 0 },
+  questsCompleted: [],
+  
+  guildName: null,
+  guildMembers: [],
+  guildCash: 0
 };
 
-// АПГРЕЙДЫ
 const upgrades = [
   { id: 'bank', name: '🏦 БАНК', cost: 100, effect: 1, maxLevel: 50, desc: '+0.5 дохода в сек' },
   { id: 'autoClicker', name: '🤖 АВТОКЛИК', cost: 200, effect: 1, maxLevel: 30, desc: '+1 автоклик в сек' },
   { id: 'powerUpgrade', name: '⚡ СУПЕРСИЛА', cost: 150, effect: 0.5, maxLevel: 40, desc: '+0.5 мощи' },
-  { id: 'criticalChance', name: '🎯 КРИТ.ХИТ', cost: 300, effect: 1, maxLevel: 20, desc: '+5% критического урона x2' },
-  { id: 'passiveIncome', name: '💤 ПАССИВ', cost: 250, effect: 0.2, maxLevel: 35, desc: '+0.2 дохода в фоне' },
+  { id: 'criticalChance', name: '🎯 КРИТ.ХИТ', cost: 300, effect: 1, maxLevel: 20, desc: '+5% крита' },
+  { id: 'passiveIncome', name: '💤 ПАССИВ', cost: 250, effect: 0.2, maxLevel: 35, desc: '+0.2 дохода фоне' },
+  { id: 'energyRegen', name: '⚙️ ЭНЕРГИЯ', cost: 400, effect: 0.1, maxLevel: 25, desc: '+0.1 ауры' },
 ];
 
-// ДОСТИЖЕНИЯ
+const quests = [
+  { id: 'clicker', name: '🖱️ КЛИКУН', desc: 'Сделай 100 кликов', goal: 100, reward: 200, check: () => gameData.totalClicks },
+  { id: 'richman', name: '💰 БОГАЧ', desc: 'Заработай 1000 денег', goal: 1000, reward: 500, check: () => gameData.totalEarned },
+  { id: 'trader', name: '🛒 ТОРГОВЕЦ', desc: 'Соверши 10 покупок', goal: 10, reward: 300, check: () => gameData.transactions.length },
+  { id: 'pvpHero', name: '⚔️ ГЕРОЙ', desc: 'Выигрей 5 боёв', goal: 5, reward: 400, check: () => gameData.pvpWins },
+];
+
 const achievements = [
-  { id: 'first_click', name: '🖱️ Первый клик', desc: 'Сделай первый клик', check: () => gameData.totalClicks >= 1 },
-  { id: 'hundred', name: '💯 СОТНЯ', desc: 'Заработай 100 денег', check: () => gameData.totalEarned >= 100 },
-  { id: 'thousand', name: '🤑 ТЫСЯЧНИК', desc: 'Заработай 1000 денег', check: () => gameData.totalEarned >= 1000 },
-  { id: 'combo_master', name: '🔥 МАСТЕР КОМБО', desc: 'Сделай комбо 10+', check: () => gameData.combo >= 10 },
-  { id: 'rich', name: '💎 МИЛЛИОНЕР', desc: 'Заработай 1000000 денег', check: () => gameData.totalEarned >= 1000000 },
-  { id: 'speedclicker', name: '⚡ МОЛНИЯ', desc: 'Кликни 100 раз за минуту', check: () => false }, // динамическое
+  { id: 'first_click', name: '🖱️ Первый клик', check: () => gameData.totalClicks >= 1 },
+  { id: 'hundred', name: '💯 Сотня', check: () => gameData.totalEarned >= 100 },
+  { id: 'thousand', name: '🤑 Тысячник', check: () => gameData.totalEarned >= 1000 },
+  { id: 'millionaire', name: '💎 Миллионер', check: () => gameData.totalEarned >= 1000000 },
+  { id: 'combo_master', name: '🔥 Мастер комбо', check: () => gameData.combo >= 15 },
+  { id: 'pvp_warrior', name: '⚔️ Боец', check: () => gameData.pvpWins >= 5 },
+  { id: 'trader_king', name: '👑 Торговец', check: () => gameData.transactions.length >= 10 },
+  { id: 'rich_guy', name: '💸 Спонсор', check: () => gameData.reputation >= 50 },
+  { id: 'level_50', name: '📊 Уровень 50', check: () => gameData.level >= 50 },
+  { id: 'guild_master', name: '🏰 Гильдмастер', check: () => gameData.guildName !== null },
 ];
 
-// ЗАГРУЗКА ДАННЫХ
 function loadGame() {
-  const saved = localStorage.getItem('ultraClickerData');
+  const saved = localStorage.getItem('ultraClickerEmpireData');
   if (saved) {
     gameData = { ...gameData, ...JSON.parse(saved) };
-    checkOfflineIncome();
   }
   gameData.lastOfflineTime = Date.now();
 }
 
-// СОХРАНЕНИЕ
 function saveGame() {
-  localStorage.setItem('ultraClickerData', JSON.stringify(gameData));
+  localStorage.setItem('ultraClickerEmpireData', JSON.stringify(gameData));
 }
 
 // ==================== КЛИК ====================
@@ -626,20 +732,18 @@ let comboTimer = null;
 function clickMoney() {
   let earn = gameData.power * gameData.powerMultiplier;
   
-  // Крит.хит
   if (Math.random() * 100 < gameData.criticalChance) {
     earn *= 2;
-    showComboText('⚡ КРИТ! x2');
+    showFloatingText('⚡ КРИТ! x2');
   }
   
   gameData.money += earn;
   gameData.totalEarned += earn;
   gameData.totalClicks++;
   
-  // КОМБО
   gameData.combo++;
   if (gameData.combo > 1) {
-    showComboText(`🔥 КОМБО x${gameData.combo}`);
+    showFloatingText(`🔥 КОМБО x${gameData.combo}`);
   }
   
   clearTimeout(comboTimer);
@@ -648,13 +752,12 @@ function clickMoney() {
   updateUI();
   saveGame();
   
-  // АНИМАЦИЯ
   const btn = document.getElementById('clickBtn');
   btn.style.transform = 'scale(0.9)';
   setTimeout(() => { btn.style.transform = 'scale(1)'; }, 100);
 }
 
-function showComboText(text) {
+function showFloatingText(text) {
   const div = document.createElement('div');
   div.className = 'combo';
   div.textContent = text;
@@ -665,7 +768,7 @@ function showComboText(text) {
 // ==================== КОЛЕСО УДАЧИ ====================
 function spinWheel() {
   if (gameData.money < 50) {
-    alert('❌ Нужно 50 денег!');
+    notify('❌ Нужно 50 денег!', 'error');
     return;
   }
   
@@ -674,10 +777,12 @@ function spinWheel() {
   const rewards = [
     { text: '💰 +100', money: 100 },
     { text: '💰 +500', money: 500 },
-    { text: '⚡ x2 мощь', power: 2 },
-    { text: '❌ Потеря 50', money: -50 },
+    { text: '⚡ СИЛА x2', power: 2 },
+    { text: '❌ -50', money: -50 },
     { text: '💰 +50', money: 50 },
-    { text: '🎉 +1000', money: 1000 }
+    { text: '🎉 +1000', money: 1000 },
+    { text: '⭐ +25 репутации', reputation: 25 },
+    { text: '🔥 КОМБО +10', combo: 10 }
   ];
   
   const reward = rewards[Math.floor(Math.random() * rewards.length)];
@@ -686,11 +791,11 @@ function spinWheel() {
     gameData.money += reward.money;
     gameData.totalEarned += Math.max(0, reward.money);
   }
-  if (reward.power) {
-    gameData.power *= reward.power;
-  }
+  if (reward.power) gameData.power *= reward.power;
+  if (reward.reputation) gameData.reputation += reward.reputation;
+  if (reward.combo) gameData.combo += reward.combo;
   
-  alert(reward.text);
+  notify('🎡 ' + reward.text, 'success');
   updateUI();
   saveGame();
 }
@@ -702,21 +807,21 @@ function buyUpgrade(upgradeId) {
   
   const level = gameData.upgrades[upgradeId] || 0;
   if (level >= upgrade.maxLevel) {
-    alert('❌ Максимальный уровень!');
+    notify('❌ Максимальный уровень!', 'error');
     return;
   }
   
   const cost = Math.floor(upgrade.cost * Math.pow(1.15, level));
   
   if (gameData.money < cost) {
-    alert('❌ Не хватает денег!');
+    notify('❌ Не хватает денег!', 'error');
     return;
   }
   
   gameData.money -= cost;
-  gameData.upgrades[upgradeId] = (gameData.upgrades[upgradeId] || 0) + 1;
+  gameData.totalSpent += cost;
+  gameData.upgrades[upgradeId] = level + 1;
   
-  // ПРИМЕНИТЬ ЭФФЕКТ
   switch (upgradeId) {
     case 'bank':
       gameData.passiveIncome += upgrade.effect;
@@ -733,8 +838,12 @@ function buyUpgrade(upgradeId) {
     case 'passiveIncome':
       gameData.passiveIncome += upgrade.effect;
       break;
+    case 'energyRegen':
+      gameData.energyRegen += upgrade.effect;
+      break;
   }
   
+  notify(`✅ Куплено ${upgrade.name}!`, 'success');
   updateUI();
   saveGame();
 }
@@ -746,7 +855,7 @@ function dailyBonus() {
   
   if (now - gameData.lastDaily < dayInMs) {
     const timeLeft = Math.ceil((dayInMs - (now - gameData.lastDaily)) / 3600000);
-    alert(`⛔ Бонус через ${timeLeft} часов!`);
+    notify(`⛔ Бонус через ${timeLeft}ч`, 'warning');
     return;
   }
   
@@ -754,78 +863,457 @@ function dailyBonus() {
   gameData.totalEarned += 500;
   gameData.lastDaily = now;
   
-  alert('🎁 +500 денег!');
+  notify('🎁 +500 денег!', 'success');
   updateUI();
   saveGame();
 }
 
-// ==================== ОФЛАЙН ДОХОД ====================
-function checkOfflineIncome() {
-  const now = Date.now();
-  const offlineTime = Math.floor((now - gameData.lastOfflineTime) / 1000);
-  
-  if (offlineTime < 5) return;
-  
-  const income = gameData.passiveIncome * offlineTime;
-  
-  if (income > 0) {
-    const modal = document.getElementById('offlineIncome');
-    document.getElementById('offlineAmount').textContent = Math.floor(income);
-    modal.style.display = 'block';
-  }
+// ==================== ТОРГОВЛЯ ====================
+function openTradeModal() {
+  document.getElementById('trade-modal').classList.add('active');
 }
 
-function acceptOfflineIncome() {
-  const now = Date.now();
-  const offlineTime = Math.floor((now - gameData.lastOfflineTime) / 1000);
-  const income = gameData.passiveIncome * offlineTime;
+function createTrade() {
+  const itemType = document.getElementById('tradeItemType').value;
+  const price = parseInt(document.getElementById('tradePrice').value);
   
-  gameData.money += income;
-  gameData.totalEarned += income;
+  if (isNaN(price) || price < 10) {
+    notify('❌ Минимальная цена 10!', 'error');
+    return;
+  }
   
-  document.getElementById('offlineIncome').style.display = 'none';
+  gameData.myTrades.push({
+    id: Date.now(),
+    type: itemType,
+    price: price,
+    seller: gameData.playerName
+  });
+  
+  notify('✅ Товар выставлен!', 'success');
+  closeModal('trade-modal');
   updateUI();
   saveGame();
 }
 
-// ==================== АВТОКЛИК & ПАССИВ ====================
-setInterval(() => {
-  let autoIncome = gameData.autoClicker + gameData.passiveIncome;
-  gameData.money += autoIncome;
-  gameData.totalEarned += autoIncome;
-  updateUI();
-}, 1000);
-
-// ==================== ТАБЫ ====================
-function switchTab(tabName) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+function buyTrade(tradeId) {
+  const trade = gameData.myTrades.find(t => t.id === tradeId);
+  if (!trade) return;
   
-  document.getElementById(tabName).classList.add('active');
-  event.target.classList.add('active');
-  
-  if (tabName === 'stats') {
-    updateLeaderboard();
+  if (gameData.money < trade.price) {
+    notify('❌ Не хватает денег!', 'error');
+    return;
   }
+  
+  gameData.money -= trade.price;
+  gameData.totalSpent += trade.price;
+  
+  if (trade.type === 'power') gameData.power += 1;
+  if (trade.type === 'money') gameData.money += 100;
+  if (trade.type === 'boost') gameData.powerMultiplier *= 2;
+  
+  gameData.transactions.push({
+    type: 'buy',
+    amount: trade.price,
+    seller: trade.seller,
+    time: new Date().toLocaleTimeString()
+  });
+  
+  gameData.myTrades = gameData.myTrades.filter(t => t.id !== tradeId);
+  
+  notify(`✅ Куплено у ${trade.seller}!`, 'success');
+  updateUI();
+  saveGame();
+}
+
+// ==================== PVP ====================
+function startPvP() {
+  const opponents = ['Bot_Alpha', 'Bot_Beta', 'Bot_Gamma', 'Bot_Delta', 'Bot_Epsilon'];
+  const opponent = opponents[Math.floor(Math.random() * opponents.length)];
+  
+  const playerPower = gameData.power + (gameData.pvpWins * 0.5);
+  const opponentPower = Math.random() * 50 + 20;
+  
+  let result;
+  if (playerPower > opponentPower) {
+    gameData.pvpWins++;
+    gameData.money += 1000;
+    gameData.totalEarned += 1000;
+    gameData.reputation += 10;
+    result = `✅ ПОБЕДА! +1000💰 +10⭐`;
+  } else {
+    gameData.pvpLosses++;
+    gameData.money = Math.max(0, gameData.money - 500);
+    result = `❌ ПОРАЖЕНИЕ! -500💰`;
+  }
+  
+  gameData.transactions.push({
+    type: 'pvp',
+    opponent: opponent,
+    result: result,
+    time: new Date().toLocaleTimeString()
+  });
+  
+  notify(result, playerPower > opponentPower ? 'success' : 'error');
+  updateUI();
+  saveGame();
+}
+
+// ==================== КВЕСТЫ ====================
+function completeQuest(questId) {
+  const quest = quests.find(q => q.id === questId);
+  if (!quest) return;
+  
+  if (gameData.questsCompleted.includes(questId)) {
+    notify('❌ Уже выполнен!', 'error');
+    return;
+  }
+  
+  if (quest.check() >= quest.goal) {
+    gameData.money += quest.reward;
+    gameData.totalEarned += quest.reward;
+    gameData.reputation += 5;
+    gameData.questsCompleted.push(questId);
+    
+    notify(`✅ Квест выполнен! +${quest.reward}💰 +5⭐`, 'success');
+    updateUI();
+    saveGame();
+  } else {
+    notify(`❌ Нужно ещё ${quest.goal - quest.check()}`, 'warning');
+  }
+}
+
+// ==================== ГИЛЬДИИ ====================
+function createGuild() {
+  const guildName = prompt('Введи имя гильдии:');
+  if (guildName && guildName.trim().length > 0) {
+    gameData.guildName = guildName.trim();
+    gameData.guildMembers = [gameData.playerName];
+    notify(`✅ Гильдия "${guildName}" создана!`, 'success');
+    updateUI();
+    saveGame();
+  }
+}
+
+// ==================== ОТПРАВКА ДЕНЕГ ====================
+function openSendMoney() {
+  const players = ['Player_1234', 'Player_5678', 'Player_9999'];
+  
+  const select = document.getElementById('recipientPlayer');
+  select.innerHTML = '<option value="">Выбери игрока...</option>';
+  
+  players.forEach(p => {
+    if (p !== gameData.playerName) {
+      const opt = document.createElement('option');
+      opt.value = p;
+      opt.textContent = p;
+      select.appendChild(opt);
+    }
+  });
+  
+  document.getElementById('send-money-modal').classList.add('active');
+}
+
+function sendMoney() {
+  const recipient = document.getElementById('recipientPlayer').value;
+  const amount = parseInt(document.getElementById('sendAmount').value);
+  
+  if (!recipient || isNaN(amount) || amount <= 0) {
+    notify('❌ Заполни все поля!', 'error');
+    return;
+  }
+  
+  if (gameData.money < amount) {
+    notify('❌ Не хватает денег!', 'error');
+    return;
+  }
+  
+  gameData.money -= amount;
+  gameData.reputation += 1;
+  
+  gameData.transactions.push({
+    type: 'send',
+    recipient: recipient,
+    amount: amount,
+    time: new Date().toLocaleTimeString()
+  });
+  
+  notify(`✅ Отправлено ${amount}💰 игроку ${recipient}`, 'success');
+  closeModal('send-money-modal');
+  updateUI();
+  saveGame();
 }
 
 // ==================== UI ====================
 function updateUI() {
   document.getElementById('money').textContent = formatNumber(Math.floor(gameData.money));
-  document.getElementById('power').textContent = formatNumber(Math.floor(gameData.power * 100) / 100);
+  document.getElementById('power').textContent = formatNumber(gameData.power.toFixed(2));
   document.getElementById('level').textContent = calculateLevel();
+  document.getElementById('reputation').textContent = gameData.reputation;
   document.getElementById('combo').textContent = gameData.combo;
   
   const income = (gameData.autoClicker + gameData.passiveIncome).toFixed(1);
   document.getElementById('income').textContent = income;
-  
   document.getElementById('clickPower').textContent = formatNumber(Math.floor(gameData.power * gameData.powerMultiplier));
+  
   document.getElementById('totalEarned').textContent = formatNumber(gameData.totalEarned);
   document.getElementById('totalClicks').textContent = formatNumber(gameData.totalClicks);
   document.getElementById('playTime').textContent = getPlayTime();
+  document.getElementById('achievementCount').textContent = gameData.achievements.length;
   
   updateUpgradesList();
+  updateQuestsList();
+  updateTradesList();
+  updatePvPStats();
+  updateTransactionsList();
   updateAchievements();
+  updateOnlineList();
+  updateTopPlayers();
+  updateGuildInfo();
+}
+
+function updateUpgradesList() {
+  const list = document.getElementById('upgradesList');
+  list.innerHTML = upgrades.map(u => {
+    const level = gameData.upgrades[u.id] || 0;
+    const cost = Math.floor(u.cost * Math.pow(1.15, level));
+    const canAfford = gameData.money >= cost && level < u.maxLevel;
+    
+    return `
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <div class="item-name">${u.name}</div>
+            <div class="item-desc">${u.desc}</div>
+            <div style="font-size: 0.8em; color: #00aa00;">Уровень: ${level}/${u.maxLevel}</div>
+          </div>
+          <button class="item-cost" onclick="buyUpgrade('${u.id}')" ${!canAfford ? 'disabled' : ''}>
+            ${cost}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateQuestsList() {
+  const list = document.getElementById('questsList');
+  list.innerHTML = quests.map(q => {
+    const progress = q.check();
+    const completed = gameData.questsCompleted.includes(q.id);
+    const percent = Math.min(100, Math.floor((progress / q.goal) * 100));
+    
+    return `
+      <div class="quest-item">
+        <div class="quest-title">${completed ? '✅' : '🔲'} ${q.name}</div>
+        <div class="item-desc">${q.desc}</div>
+        <div class="quest-progress">Прогресс: ${progress}/${q.goal}</div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${percent}%"></div>
+        </div>
+        ${!completed ? `<button onclick="completeQuest('${q.id}')" style="width: 100%; margin-top: 10px;">Завершить (${q.reward}💰)</button>` : '<span style="color: #00aa00;">✅ Выполнен</span>'}
+      </div>
+    `;
+  }).join('');
+}
+
+function updateTradesList() {
+  const list = document.getElementById('tradesList');
+  const trades = gameData.myTrades.filter(t => t.seller !== gameData.playerName);
+  
+  if (trades.length === 0) {
+    list.innerHTML = '<div style="color: #00aa00; text-align: center; padding: 20px;">📭 Нет товаров</div>';
+    return;
+  }
+  
+  list.innerHTML = trades.map(t => {
+    const itemName = { power: '⚡ Сила +1', money: '💰 Деньги (100шт)', boost: '🚀 Буст x2' }[t.type];
+    return `
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <div class="item-name">${itemName}</div>
+            <div class="item-desc">от ${t.seller}</div>
+          </div>
+          <button class="item-cost" onclick="buyTrade(${t.id})">Купить ${t.price}</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  const myTrades = document.getElementById('myTrades');
+  const my = gameData.myTrades.filter(t => t.seller === gameData.playerName);
+  
+  if (my.length === 0) {
+    myTrades.innerHTML = '<div style="color: #00aa00;">📭 Ты ничего не выставил</div>';
+    return;
+  }
+  
+  myTrades.innerHTML = my.map(t => {
+    const itemName = { power: '⚡ Сила +1', money: '💰 Деньги', boost: '🚀 Буст' }[t.type];
+    return `
+      <div class="item">
+        <div class="item-header">
+          <div>
+            <div class="item-name">${itemName}</div>
+            <div class="item-desc">Цена: ${t.price}💰</div>
+          </div>
+          <button onclick="removeTrade(${t.id})" style="background: #ff6464;">Убрать</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function removeTrade(tradeId) {
+  gameData.myTrades = gameData.myTrades.filter(t => t.id !== tradeId);
+  updateUI();
+  saveGame();
+}
+
+function updatePvPStats() {
+  const stats = document.getElementById('pvpStats');
+  const winRate = gameData.pvpWins + gameData.pvpLosses > 0 
+    ? Math.floor((gameData.pvpWins / (gameData.pvpWins + gameData.pvpLosses)) * 100)
+    : 0;
+  
+  stats.innerHTML = `
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-label">🏆 ПОБЕД</div>
+        <div class="stat-value">${gameData.pvpWins}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">💔 ПОРАЖЕНИЙ</div>
+        <div class="stat-value">${gameData.pvpLosses}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">📊 % ПОБЕД</div>
+        <div class="stat-value">${winRate}%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">⚡ МОЩЬ</div>
+        <div class="stat-value">${gameData.power.toFixed(1)}</div>
+      </div>
+    </div>
+  `;
+  
+  const history = document.getElementById('pvpHistory');
+  const pvpTransactions = gameData.transactions.filter(t => t.type === 'pvp');
+  
+  if (pvpTransactions.length === 0) {
+    history.innerHTML = '<div style="color: #00aa00;">⚔️ Боёв ещё не было</div>';
+    return;
+  }
+  
+  history.innerHTML = pvpTransactions.slice(-5).reverse().map(t => `
+    <div class="transaction ${t.result.includes('ПОБЕДА') ? '' : 'sent'}">
+      <strong>vs ${t.opponent}</strong><br>
+      ${t.result}<br>
+      <span style="font-size: 0.8em; color: #00aa00;">${t.time}</span>
+    </div>
+  `).join('');
+}
+
+function updateTransactionsList() {
+  const list = document.getElementById('transactionList');
+  
+  if (gameData.transactions.length === 0) {
+    list.innerHTML = '<div style="color: #00aa00;">📭 Нет транзакций</div>';
+    return;
+  }
+  
+  list.innerHTML = gameData.transactions.slice(-10).reverse().map(t => {
+    if (t.type === 'send') {
+      return `
+        <div class="transaction sent">
+          <strong>💸 → ${t.recipient}</strong><br>
+          -${t.amount}💰<br>
+          <span style="font-size: 0.8em;">${t.time}</span>
+        </div>
+      `;
+    } else if (t.type === 'buy') {
+      return `
+        <div class="transaction">
+          <strong>🛒 от ${t.seller}</strong><br>
+          -${t.amount}💰<br>
+          <span style="font-size: 0.8em;">${t.time}</span>
+        </div>
+      `;
+    }
+    return '';
+  }).join('');
+}
+
+function updateAchievements() {
+  const list = document.getElementById('achievementsList');
+  list.innerHTML = achievements.map(a => {
+    const unlocked = gameData.achievements.includes(a.id);
+    return `
+      <div class="achievement-badge ${unlocked ? '' : 'locked'}">
+        ${unlocked ? '✅' : '🔒'} ${a.name}
+      </div>
+    `;
+  }).join('');
+  
+  achievements.forEach(a => {
+    if (!gameData.achievements.includes(a.id) && a.check()) {
+      gameData.achievements.push(a.id);
+      showNotification(`🏆 ${a.name}`, 'achievement');
+      saveGame();
+    }
+  });
+  
+  document.getElementById('megaAchievements').innerHTML = gameData.achievements.map(id => {
+    const a = achievements.find(x => x.id === id);
+    return `<div class="achievement-badge">✅ ${a.name}</div>`;
+  }).join('');
+}
+
+function updateOnlineList() {
+  const list = document.getElementById('onlineList');
+  const onlinePlayers = ['Player_1234', 'Player_5678', gameData.playerName, 'Player_9999'];
+  
+  list.innerHTML = onlinePlayers.map(p => `
+    <div class="player-card ${p === gameData.playerName ? 'current' : ''}">
+      <div class="player-name">${p === gameData.playerName ? '👤 ' + p + ' (ТЫ)' : '👤 ' + p}</div>
+      <div class="player-level">🟢 Онлайн</div>
+    </div>
+  `).join('');
+}
+
+function updateTopPlayers() {
+  const list = document.getElementById('topPlayers');
+  const topPlayers = [
+    { name: 'Champion_101', earned: 50000 },
+    { name: 'Pro_Player', earned: 45000 },
+    { name: gameData.playerName, earned: gameData.totalEarned },
+    { name: 'Legend_999', earned: 35000 },
+    { name: 'Master_42', earned: 30000 }
+  ].sort((a, b) => b.earned - a.earned);
+  
+  list.innerHTML = topPlayers.map((p, i) => `
+    <div class="player-card ${p.name === gameData.playerName ? 'current' : ''}">
+      <strong>${i + 1}. ${p.name}</strong><br>
+      <span class="player-level">${formatNumber(p.earned)} заработано</span>
+    </div>
+  `).join('');
+}
+
+function updateGuildInfo() {
+  const info = document.getElementById('guildInfo');
+  
+  if (!gameData.guildName) {
+    info.innerHTML = '<button onclick="createGuild()" style="width: 100%;">➕ СОЗДАТЬ</button>';
+    return;
+  }
+  
+  info.innerHTML = `
+    <div class="player-card">
+      <div class="player-name">🏰 ${gameData.guildName}</div>
+      <div class="player-level">👥 Участников: ${gameData.guildMembers.length}</div>
+      <div class="player-level">💰 Касса: ${formatNumber(gameData.guildCash)}</div>
+    </div>
+  `;
 }
 
 function formatNumber(num) {
@@ -843,85 +1331,103 @@ function getPlayTime() {
   const hours = Math.floor(ms / 3600000);
   if (hours > 0) return hours + 'ч';
   const mins = Math.floor(ms / 60000);
-  return mins + 'м';
+  return mins > 0 ? mins + 'м' : '0м';
 }
 
-function updateUpgradesList() {
-  const list = document.getElementById('upgradesList');
-  list.innerHTML = upgrades.map(u => {
-    const level = gameData.upgrades[u.id] || 0;
-    const cost = Math.floor(u.cost * Math.pow(1.15, level));
-    const canAfford = gameData.money >= cost && level < u.maxLevel;
-    
-    return `
-      <div class="upgrade-item">
-        <div class="upgrade-header">
-          <div>
-            <div class="upgrade-name">${u.name}</div>
-            <div class="upgrade-desc">${u.desc}</div>
-            <div class="info-text">Уровень: ${level}/${u.maxLevel}</div>
-          </div>
-          <button class="upgrade-btn" onclick="buyUpgrade('${u.id}')" ${!canAfford ? 'disabled' : ''}>
-            ${cost}
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function updateAchievements() {
-  const list = document.getElementById('achievementsList');
-  list.innerHTML = achievements.map(a => {
-    const unlocked = gameData.achievements.includes(a.id);
-    return `
-      <div class="upgrade-item" style="opacity: ${unlocked ? 1 : 0.5};">
-        <span>${unlocked ? '✅' : '🔒'}</span> ${a.name} - ${a.desc}
-      </div>
-    `;
-  }).join('');
-  
-  achievements.forEach(a => {
-    if (!gameData.achievements.includes(a.id) && a.check()) {
-      gameData.achievements.push(a.id);
-      showAchievement(a.name);
-      saveGame();
-    }
-  });
-}
-
-function showAchievement(name) {
+function notify(msg, type = 'info') {
   const div = document.createElement('div');
-  div.className = 'achievement';
-  div.textContent = '🏆 ' + name;
+  div.className = 'notification';
+  div.textContent = msg;
+  
+  if (type === 'error') {
+    div.style.background = 'linear-gradient(135deg, #ff4444 0%, #cc0000 100%)';
+  } else if (type === 'success') {
+    div.style.background = 'linear-gradient(135deg, #00ff00 0%, #00cc00 100%)';
+    div.style.color = '#000';
+  } else if (type === 'warning') {
+    div.style.background = 'linear-gradient(135deg, #ffaa00 0%, #ff6600 100%)';
+  }
+  
   document.body.appendChild(div);
   setTimeout(() => div.remove(), 3000);
 }
 
-function updateLeaderboard() {
-  const board = document.getElementById('leaderboard');
-  board.innerHTML = '<div class="info-text">🏆 РЕЙТИНГ</div>';
-  board.innerHTML += `
-    <div class="player-item player-current">
-      <div class="player-rank">1</div>
-      <div class="player-info">
-        <div class="player-name">👤 Ты</div>
-        <div class="player-money">${formatNumber(gameData.totalEarned)} заработано</div>
-      </div>
-    </div>
-  `;
+function showNotification(msg, type) {
+  const div = document.createElement('div');
+  div.className = 'notification';
+  div.textContent = msg;
+  div.style.background = 'linear-gradient(135deg, #ffff00 0%, #ffaa00 100%)';
+  div.style.color = '#000';
+  div.style.top = '80px';
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 4000);
 }
 
-// ==================== ЭКСПОРТ/ИМПОРТ ====================
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function openMultiplayer() {
+  document.getElementById('multiplayer-modal').classList.add('active');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+}
+
+function createRoom() {
+  const name = document.getElementById('playerName').value;
+  if (!name) {
+    notify('❌ Введи имя!', 'error');
+    return;
+  }
+  
+  gameData.playerName = name;
+  const roomCode = Math.random().toString(36).substr(2, 8).toUpperCase();
+  gameData.roomCode = roomCode;
+  
+  notify(`✅ Комната создана! Код: ${roomCode}`, 'success');
+  closeModal('multiplayer-modal');
+  updateUI();
+  saveGame();
+}
+
+function joinRoom() {
+  const code = document.getElementById('roomCodeInput').value.toUpperCase();
+  const name = document.getElementById('playerName').value;
+  
+  if (!name || !code) {
+    notify('❌ Заполни все поля!', 'error');
+    return;
+  }
+  
+  if (code.length !== 8) {
+    notify('❌ Неверный код!', 'error');
+    return;
+  }
+  
+  gameData.playerName = name;
+  gameData.roomCode = code;
+  
+  notify(`✅ Присоединился к комнате ${code}!`, 'success');
+  closeModal('multiplayer-modal');
+  updateUI();
+  saveGame();
+}
+
 function exportData() {
   const data = JSON.stringify(gameData);
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'ultraclicker-save.json';
+  a.download = 'ultraclicker-empire-save.json';
   a.click();
-  alert('✅ Сохранение экспортировано!');
+  notify('✅ Сохранение экспортировано!', 'success');
 }
 
 function importData() {
@@ -939,96 +1445,34 @@ function handleImport() {
       gameData = { ...gameData, ...imported };
       saveGame();
       updateUI();
-      alert('✅ Сохранение импортировано!');
+      notify('✅ Сохранение импортировано!', 'success');
     } catch {
-      alert('❌ Ошибка при импорте!');
+      notify('❌ Ошибка при импорте!', 'error');
     }
   };
   reader.readAsText(file);
 }
 
 function resetGame() {
-  if (confirm('⚠️ ВНИМАНИЕ! Это сотрёт ВСЕ данные! Уверен?')) {
-    localStorage.removeItem('ultraClickerData');
-    gameData = {
-      money: 0,
-      power: 1,
-      level: 1,
-      combo: 0,
-      bank: 0,
-      autoClicker: 0,
-      powerMultiplier: 1,
-      criticalChance: 0,
-      passiveIncome: 0,
-      totalEarned: 0,
-      totalClicks: 0,
-      lastDaily: 0,
-      startTime: Date.now(),
-      lastOfflineTime: 0,
-      achievements: [],
-      upgrades: {}
-    };
-    updateUI();
-    alert('🔄 Игра сброшена!');
+  if (confirm('⚠️ ВНИМАНИЕ! Сотрёт ВСЕ данные! Уверен?')) {
+    localStorage.removeItem('ultraClickerEmpireData');
+    location.reload();
   }
 }
 
-// ==================== МУЛЬТИПЛЕЕР (ЛОКАЛЬНЫЙ) ====================
-function openMultiplayer() {
-  document.getElementById('multiplayer-modal').classList.add('active');
-}
-
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.remove('active');
-}
-
-function createRoom() {
-  const roomCode = Math.random().toString(36).substr(2, 8).toUpperCase();
-  gameData.roomCode = roomCode;
-  saveGame();
-  
-  document.getElementById('multiplayerInfo').style.display = 'block';
-  document.getElementById('multiplayerStatus').textContent = '🟢 АКТИВНА';
-  document.getElementById('roomCode').textContent = roomCode;
-  document.getElementById('multiplayer-modal').classList.remove('active');
-  
-  alert(`✅ Комната создана!\nКод: ${roomCode}\nПередай друзьям этот код!`);
-}
-
-function joinRoom() {
-  const code = document.getElementById('roomCodeInput').value.toUpperCase();
-  if (code.length !== 8) {
-    alert('❌ Некорректный код!');
-    return;
-  }
-  
-  gameData.roomCode = code;
-  saveGame();
-  
-  document.getElementById('multiplayerInfo').style.display = 'block';
-  document.getElementById('multiplayerStatus').textContent = '🟢 В КОМНАТЕ';
-  document.getElementById('roomCode').textContent = code;
-  document.getElementById('multiplayer-modal').classList.remove('active');
-  
-  alert(`✅ Присоединился к комнате ${code}`);
-}
-
-function leaveMultiplayer() {
-  gameData.roomCode = null;
-  saveGame();
-  
-  document.getElementById('multiplayerInfo').style.display = 'none';
-  alert('❌ Вышел из мультиплеера');
-}
+// ==================== АВТОКЛИК & ПАССИВ ====================
+setInterval(() => {
+  let autoIncome = gameData.autoClicker + gameData.passiveIncome;
+  gameData.money += autoIncome;
+  gameData.totalEarned += autoIncome;
+}, 1000);
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
 loadGame();
 updateUI();
 
-// Сохранение каждые 10 сек
 setInterval(saveGame, 10000);
 
-// Обновление UI каждые 100ms
 setInterval(() => {
   document.getElementById('money').textContent = formatNumber(Math.floor(gameData.money));
   document.getElementById('income').textContent = (gameData.autoClicker + gameData.passiveIncome).toFixed(1);
