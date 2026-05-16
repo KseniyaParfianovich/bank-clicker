@@ -601,11 +601,13 @@ button:disabled {
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('multiplayer-modal')">✕</button>
     <h2>👥 МУЛЬТИПЛЕЕР</h2>
+    <p style="color: #00aa00; margin: 10px 0; font-size: 0.9em;">Поделись кодом комнаты с другом!</p>
     <input type="text" id="playerName" placeholder="Введи своё имя" maxlength="15">
     <button onclick="createRoom()" style="width: 100%; margin: 10px 0;">➕ СОЗДАТЬ КОМНАТУ</button>
-    <div style="text-align: center; margin: 10px 0; color: #00aa00;">ИЛИ</div>
+    <div style="text-align: center; margin: 10px 0; color: #00aa00;">— ИЛИ —</div>
     <input type="text" id="roomCodeInput" placeholder="Введи код комнаты" maxlength="8">
     <button onclick="joinRoom()" style="width: 100%; margin: 10px 0;">🔗 ПРИСОЕДИНИТЬСЯ</button>
+    <div id="roomInfo" style="margin-top: 15px; color: #ffff00; font-weight: bold;"></div>
   </div>
 </div>
 
@@ -646,7 +648,7 @@ button:disabled {
 <script>
 // ==================== СИСТЕМА ИГРОВЫХ ДАННЫХ ====================
 let gameData = {
-  playerName: 'Player_' + Math.floor(Math.random() * 10000),
+  playerName: 'Игрок_' + Math.floor(Math.random() * 10000),
   money: 0,
   power: 1,
   level: 1,
@@ -714,16 +716,25 @@ const achievements = [
   { id: 'guild_master', name: '🏰 Гильдмастер', check: () => gameData.guildName !== null },
 ];
 
+// ==================== ЗАГРУЗКА И СОХРАНЕНИЕ ====================
 function loadGame() {
   const saved = localStorage.getItem('ultraClickerEmpireData');
   if (saved) {
-    gameData = { ...gameData, ...JSON.parse(saved) };
+    try {
+      gameData = { ...gameData, ...JSON.parse(saved) };
+    } catch (e) {
+      console.error('Ошибка загрузки данных:', e);
+    }
   }
   gameData.lastOfflineTime = Date.now();
 }
 
 function saveGame() {
-  localStorage.setItem('ultraClickerEmpireData', JSON.stringify(gameData));
+  try {
+    localStorage.setItem('ultraClickerEmpireData', JSON.stringify(gameData));
+  } catch (e) {
+    console.error('Ошибка сохранения данных:', e);
+  }
 }
 
 // ==================== КЛИК ====================
@@ -868,6 +879,57 @@ function dailyBonus() {
   saveGame();
 }
 
+// ==================== МУЛЬТИПЛЕЕР ====================
+function openMultiplayer() {
+  document.getElementById('multiplayer-modal').classList.add('active');
+  updateRoomInfo();
+}
+
+function createRoom() {
+  const playerName = document.getElementById('playerName').value.trim();
+  if (!playerName) {
+    notify('❌ Введи имя!', 'error');
+    return;
+  }
+  
+  gameData.playerName = playerName;
+  gameData.roomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+  
+  notify(`✅ Комната создана! Код: ${gameData.roomCode}`, 'success');
+  updateRoomInfo();
+  saveGame();
+}
+
+function joinRoom() {
+  const playerName = document.getElementById('playerName').value.trim();
+  const roomCode = document.getElementById('roomCodeInput').value.trim().toUpperCase();
+  
+  if (!playerName) {
+    notify('❌ Введи имя!', 'error');
+    return;
+  }
+  if (!roomCode) {
+    notify('❌ Введи код комнаты!', 'error');
+    return;
+  }
+  
+  gameData.playerName = playerName;
+  gameData.roomCode = roomCode;
+  
+  notify(`✅ Присоединился к комнате ${roomCode}!`, 'success');
+  updateRoomInfo();
+  saveGame();
+}
+
+function updateRoomInfo() {
+  const roomInfo = document.getElementById('roomInfo');
+  if (gameData.roomCode) {
+    roomInfo.innerHTML = `🎮 Комната: <strong>${gameData.roomCode}</strong><br>Игрок: ${gameData.playerName}`;
+  } else {
+    roomInfo.innerHTML = '';
+  }
+}
+
 // ==================== ТОРГОВЛЯ ====================
 function openTradeModal() {
   document.getElementById('trade-modal').classList.add('active');
@@ -996,20 +1058,15 @@ function createGuild() {
 
 // ==================== ОТПРАВКА ДЕНЕГ ====================
 function openSendMoney() {
-  const players = ['Player_1234', 'Player_5678', 'Player_9999'];
-  
+  const players = ['Игрок_1234', 'Игрок_5678', 'Игрок_9999'];
   const select = document.getElementById('recipientPlayer');
   select.innerHTML = '<option value="">Выбери игрока...</option>';
-  
   players.forEach(p => {
-    if (p !== gameData.playerName) {
-      const opt = document.createElement('option');
-      opt.value = p;
-      opt.textContent = p;
-      select.appendChild(opt);
-    }
+    const opt = document.createElement('option');
+    opt.value = p;
+    opt.textContent = p;
+    select.appendChild(opt);
   });
-  
   document.getElementById('send-money-modal').classList.add('active');
 }
 
@@ -1017,8 +1074,13 @@ function sendMoney() {
   const recipient = document.getElementById('recipientPlayer').value;
   const amount = parseInt(document.getElementById('sendAmount').value);
   
-  if (!recipient || isNaN(amount) || amount <= 0) {
-    notify('❌ Заполни все поля!', 'error');
+  if (!recipient) {
+    notify('❌ Выбери игрока!', 'error');
+    return;
+  }
+  
+  if (isNaN(amount) || amount <= 0) {
+    notify('❌ Введи корректную сумму!', 'error');
     return;
   }
   
@@ -1028,406 +1090,31 @@ function sendMoney() {
   }
   
   gameData.money -= amount;
-  gameData.reputation += 1;
+  gameData.reputation += 2;
   
   gameData.transactions.push({
     type: 'send',
-    recipient: recipient,
     amount: amount,
+    recipient: recipient,
     time: new Date().toLocaleTimeString()
   });
   
-  notify(`✅ Отправлено ${amount}💰 игроку ${recipient}`, 'success');
+  notify(`✅ Отправлено ${amount}💰 игроку ${recipient}!`, 'success');
   closeModal('send-money-modal');
   updateUI();
   saveGame();
 }
 
-// ==================== UI ====================
-function updateUI() {
-  document.getElementById('money').textContent = formatNumber(Math.floor(gameData.money));
-  document.getElementById('power').textContent = formatNumber(gameData.power.toFixed(2));
-  document.getElementById('level').textContent = calculateLevel();
-  document.getElementById('reputation').textContent = gameData.reputation;
-  document.getElementById('combo').textContent = gameData.combo;
-  
-  const income = (gameData.autoClicker + gameData.passiveIncome).toFixed(1);
-  document.getElementById('income').textContent = income;
-  document.getElementById('clickPower').textContent = formatNumber(Math.floor(gameData.power * gameData.powerMultiplier));
-  
-  document.getElementById('totalEarned').textContent = formatNumber(gameData.totalEarned);
-  document.getElementById('totalClicks').textContent = formatNumber(gameData.totalClicks);
-  document.getElementById('playTime').textContent = getPlayTime();
-  document.getElementById('achievementCount').textContent = gameData.achievements.length;
-  
-  updateUpgradesList();
-  updateQuestsList();
-  updateTradesList();
-  updatePvPStats();
-  updateTransactionsList();
-  updateAchievements();
-  updateOnlineList();
-  updateTopPlayers();
-  updateGuildInfo();
-}
-
-function updateUpgradesList() {
-  const list = document.getElementById('upgradesList');
-  list.innerHTML = upgrades.map(u => {
-    const level = gameData.upgrades[u.id] || 0;
-    const cost = Math.floor(u.cost * Math.pow(1.15, level));
-    const canAfford = gameData.money >= cost && level < u.maxLevel;
-    
-    return `
-      <div class="item">
-        <div class="item-header">
-          <div>
-            <div class="item-name">${u.name}</div>
-            <div class="item-desc">${u.desc}</div>
-            <div style="font-size: 0.8em; color: #00aa00;">Уровень: ${level}/${u.maxLevel}</div>
-          </div>
-          <button class="item-cost" onclick="buyUpgrade('${u.id}')" ${!canAfford ? 'disabled' : ''}>
-            ${cost}
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function updateQuestsList() {
-  const list = document.getElementById('questsList');
-  list.innerHTML = quests.map(q => {
-    const progress = q.check();
-    const completed = gameData.questsCompleted.includes(q.id);
-    const percent = Math.min(100, Math.floor((progress / q.goal) * 100));
-    
-    return `
-      <div class="quest-item">
-        <div class="quest-title">${completed ? '✅' : '🔲'} ${q.name}</div>
-        <div class="item-desc">${q.desc}</div>
-        <div class="quest-progress">Прогресс: ${progress}/${q.goal}</div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: ${percent}%"></div>
-        </div>
-        ${!completed ? `<button onclick="completeQuest('${q.id}')" style="width: 100%; margin-top: 10px;">Завершить (${q.reward}💰)</button>` : '<span style="color: #00aa00;">✅ Выполнен</span>'}
-      </div>
-    `;
-  }).join('');
-}
-
-function updateTradesList() {
-  const list = document.getElementById('tradesList');
-  const trades = gameData.myTrades.filter(t => t.seller !== gameData.playerName);
-  
-  if (trades.length === 0) {
-    list.innerHTML = '<div style="color: #00aa00; text-align: center; padding: 20px;">📭 Нет товаров</div>';
-    return;
-  }
-  
-  list.innerHTML = trades.map(t => {
-    const itemName = { power: '⚡ Сила +1', money: '💰 Деньги (100шт)', boost: '🚀 Буст x2' }[t.type];
-    return `
-      <div class="item">
-        <div class="item-header">
-          <div>
-            <div class="item-name">${itemName}</div>
-            <div class="item-desc">от ${t.seller}</div>
-          </div>
-          <button class="item-cost" onclick="buyTrade(${t.id})">Купить ${t.price}</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-  
-  const myTrades = document.getElementById('myTrades');
-  const my = gameData.myTrades.filter(t => t.seller === gameData.playerName);
-  
-  if (my.length === 0) {
-    myTrades.innerHTML = '<div style="color: #00aa00;">📭 Ты ничего не выставил</div>';
-    return;
-  }
-  
-  myTrades.innerHTML = my.map(t => {
-    const itemName = { power: '⚡ Сила +1', money: '💰 Деньги', boost: '🚀 Буст' }[t.type];
-    return `
-      <div class="item">
-        <div class="item-header">
-          <div>
-            <div class="item-name">${itemName}</div>
-            <div class="item-desc">Цена: ${t.price}💰</div>
-          </div>
-          <button onclick="removeTrade(${t.id})" style="background: #ff6464;">Убрать</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function removeTrade(tradeId) {
-  gameData.myTrades = gameData.myTrades.filter(t => t.id !== tradeId);
-  updateUI();
-  saveGame();
-}
-
-function updatePvPStats() {
-  const stats = document.getElementById('pvpStats');
-  const winRate = gameData.pvpWins + gameData.pvpLosses > 0 
-    ? Math.floor((gameData.pvpWins / (gameData.pvpWins + gameData.pvpLosses)) * 100)
-    : 0;
-  
-  stats.innerHTML = `
-    <div class="stats-grid">
-      <div class="stat">
-        <div class="stat-label">🏆 ПОБЕД</div>
-        <div class="stat-value">${gameData.pvpWins}</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">💔 ПОРАЖЕНИЙ</div>
-        <div class="stat-value">${gameData.pvpLosses}</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">📊 % ПОБЕД</div>
-        <div class="stat-value">${winRate}%</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">⚡ МОЩЬ</div>
-        <div class="stat-value">${gameData.power.toFixed(1)}</div>
-      </div>
-    </div>
-  `;
-  
-  const history = document.getElementById('pvpHistory');
-  const pvpTransactions = gameData.transactions.filter(t => t.type === 'pvp');
-  
-  if (pvpTransactions.length === 0) {
-    history.innerHTML = '<div style="color: #00aa00;">⚔️ Боёв ещё не было</div>';
-    return;
-  }
-  
-  history.innerHTML = pvpTransactions.slice(-5).reverse().map(t => `
-    <div class="transaction ${t.result.includes('ПОБЕДА') ? '' : 'sent'}">
-      <strong>vs ${t.opponent}</strong><br>
-      ${t.result}<br>
-      <span style="font-size: 0.8em; color: #00aa00;">${t.time}</span>
-    </div>
-  `).join('');
-}
-
-function updateTransactionsList() {
-  const list = document.getElementById('transactionList');
-  
-  if (gameData.transactions.length === 0) {
-    list.innerHTML = '<div style="color: #00aa00;">📭 Нет транзакций</div>';
-    return;
-  }
-  
-  list.innerHTML = gameData.transactions.slice(-10).reverse().map(t => {
-    if (t.type === 'send') {
-      return `
-        <div class="transaction sent">
-          <strong>💸 → ${t.recipient}</strong><br>
-          -${t.amount}💰<br>
-          <span style="font-size: 0.8em;">${t.time}</span>
-        </div>
-      `;
-    } else if (t.type === 'buy') {
-      return `
-        <div class="transaction">
-          <strong>🛒 от ${t.seller}</strong><br>
-          -${t.amount}💰<br>
-          <span style="font-size: 0.8em;">${t.time}</span>
-        </div>
-      `;
-    }
-    return '';
-  }).join('');
-}
-
-function updateAchievements() {
-  const list = document.getElementById('achievementsList');
-  list.innerHTML = achievements.map(a => {
-    const unlocked = gameData.achievements.includes(a.id);
-    return `
-      <div class="achievement-badge ${unlocked ? '' : 'locked'}">
-        ${unlocked ? '✅' : '🔒'} ${a.name}
-      </div>
-    `;
-  }).join('');
-  
-  achievements.forEach(a => {
-    if (!gameData.achievements.includes(a.id) && a.check()) {
-      gameData.achievements.push(a.id);
-      showNotification(`🏆 ${a.name}`, 'achievement');
-      saveGame();
-    }
-  });
-  
-  document.getElementById('megaAchievements').innerHTML = gameData.achievements.map(id => {
-    const a = achievements.find(x => x.id === id);
-    return `<div class="achievement-badge">✅ ${a.name}</div>`;
-  }).join('');
-}
-
-function updateOnlineList() {
-  const list = document.getElementById('onlineList');
-  const onlinePlayers = ['Player_1234', 'Player_5678', gameData.playerName, 'Player_9999'];
-  
-  list.innerHTML = onlinePlayers.map(p => `
-    <div class="player-card ${p === gameData.playerName ? 'current' : ''}">
-      <div class="player-name">${p === gameData.playerName ? '👤 ' + p + ' (ТЫ)' : '👤 ' + p}</div>
-      <div class="player-level">🟢 Онлайн</div>
-    </div>
-  `).join('');
-}
-
-function updateTopPlayers() {
-  const list = document.getElementById('topPlayers');
-  const topPlayers = [
-    { name: 'Champion_101', earned: 50000 },
-    { name: 'Pro_Player', earned: 45000 },
-    { name: gameData.playerName, earned: gameData.totalEarned },
-    { name: 'Legend_999', earned: 35000 },
-    { name: 'Master_42', earned: 30000 }
-  ].sort((a, b) => b.earned - a.earned);
-  
-  list.innerHTML = topPlayers.map((p, i) => `
-    <div class="player-card ${p.name === gameData.playerName ? 'current' : ''}">
-      <strong>${i + 1}. ${p.name}</strong><br>
-      <span class="player-level">${formatNumber(p.earned)} заработано</span>
-    </div>
-  `).join('');
-}
-
-function updateGuildInfo() {
-  const info = document.getElementById('guildInfo');
-  
-  if (!gameData.guildName) {
-    info.innerHTML = '<button onclick="createGuild()" style="width: 100%;">➕ СОЗДАТЬ</button>';
-    return;
-  }
-  
-  info.innerHTML = `
-    <div class="player-card">
-      <div class="player-name">🏰 ${gameData.guildName}</div>
-      <div class="player-level">👥 Участников: ${gameData.guildMembers.length}</div>
-      <div class="player-level">💰 Касса: ${formatNumber(gameData.guildCash)}</div>
-    </div>
-  `;
-}
-
-function formatNumber(num) {
-  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-  return Math.floor(num).toString();
-}
-
-function calculateLevel() {
-  return Math.floor(gameData.totalEarned / 1000) + 1;
-}
-
-function getPlayTime() {
-  const ms = Date.now() - gameData.startTime;
-  const hours = Math.floor(ms / 3600000);
-  if (hours > 0) return hours + 'ч';
-  const mins = Math.floor(ms / 60000);
-  return mins > 0 ? mins + 'м' : '0м';
-}
-
-function notify(msg, type = 'info') {
-  const div = document.createElement('div');
-  div.className = 'notification';
-  div.textContent = msg;
-  
-  if (type === 'error') {
-    div.style.background = 'linear-gradient(135deg, #ff4444 0%, #cc0000 100%)';
-  } else if (type === 'success') {
-    div.style.background = 'linear-gradient(135deg, #00ff00 0%, #00cc00 100%)';
-    div.style.color = '#000';
-  } else if (type === 'warning') {
-    div.style.background = 'linear-gradient(135deg, #ffaa00 0%, #ff6600 100%)';
-  }
-  
-  document.body.appendChild(div);
-  setTimeout(() => div.remove(), 3000);
-}
-
-function showNotification(msg, type) {
-  const div = document.createElement('div');
-  div.className = 'notification';
-  div.textContent = msg;
-  div.style.background = 'linear-gradient(135deg, #ffff00 0%, #ffaa00 100%)';
-  div.style.color = '#000';
-  div.style.top = '80px';
-  document.body.appendChild(div);
-  setTimeout(() => div.remove(), 4000);
-}
-
-function switchTab(tabName) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  
-  document.getElementById(tabName).classList.add('active');
-  event.target.classList.add('active');
-}
-
-function openMultiplayer() {
-  document.getElementById('multiplayer-modal').classList.add('active');
-}
-
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.remove('active');
-}
-
-function createRoom() {
-  const name = document.getElementById('playerName').value;
-  if (!name) {
-    notify('❌ Введи имя!', 'error');
-    return;
-  }
-  
-  gameData.playerName = name;
-  const roomCode = Math.random().toString(36).substr(2, 8).toUpperCase();
-  gameData.roomCode = roomCode;
-  
-  notify(`✅ Комната создана! Код: ${roomCode}`, 'success');
-  closeModal('multiplayer-modal');
-  updateUI();
-  saveGame();
-}
-
-function joinRoom() {
-  const code = document.getElementById('roomCodeInput').value.toUpperCase();
-  const name = document.getElementById('playerName').value;
-  
-  if (!name || !code) {
-    notify('❌ Заполни все поля!', 'error');
-    return;
-  }
-  
-  if (code.length !== 8) {
-    notify('❌ Неверный код!', 'error');
-    return;
-  }
-  
-  gameData.playerName = name;
-  gameData.roomCode = code;
-  
-  notify(`✅ Присоединился к комнате ${code}!`, 'success');
-  closeModal('multiplayer-modal');
-  updateUI();
-  saveGame();
-}
-
+// ==================== ЭКСПОРТ И ИМПОРТ ====================
 function exportData() {
-  const data = JSON.stringify(gameData);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'ultraclicker-empire-save.json';
-  a.click();
-  notify('✅ Сохранение экспортировано!', 'success');
+  const dataStr = JSON.stringify(gameData, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(dataBlob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `clicker_backup_${Date.now()}.json`;
+  link.click();
+  notify('✅ Данные экспортированы!', 'success');
 }
 
 function importData() {
@@ -1439,45 +1126,264 @@ function handleImport() {
   if (!file) return;
   
   const reader = new FileReader();
-  reader.onload = (e) => {
+  reader.onload = function(e) {
     try {
-      const imported = JSON.parse(e.target.result);
-      gameData = { ...gameData, ...imported };
+      const importedData = JSON.parse(e.target.result);
+      gameData = { ...gameData, ...importedData };
       saveGame();
+      notify('✅ Данные импортированы! Перезагрузи страницу.', 'success');
       updateUI();
-      notify('✅ Сохранение импортировано!', 'success');
-    } catch {
+    } catch (err) {
       notify('❌ Ошибка при импорте!', 'error');
     }
   };
   reader.readAsText(file);
 }
 
+// ==================== СБРОС ИГРЫ ====================
 function resetGame() {
-  if (confirm('⚠️ ВНИМАНИЕ! Сотрёт ВСЕ данные! Уверен?')) {
+  if (confirm('⚠️ Вы уверены? Это удалит все данные игры!')) {
     localStorage.removeItem('ultraClickerEmpireData');
     location.reload();
   }
 }
 
-// ==================== АВТОКЛИК & ПАССИВ ====================
+// ==================== УВЕДОМЛЕНИЯ ====================
+function notify(message, type) {
+  const div = document.createElement('div');
+  div.className = 'notification';
+  div.textContent = message;
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 3000);
+}
+
+// ==================== УПРАВЛЕНИЕ МОДАЛАМИ ====================
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+}
+
+// ==================== ПЕРЕКЛЮЧЕНИЕ ТАБОВ ====================
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ==================== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ====================
+function updateUI() {
+  // Основная статистика
+  document.getElementById('money').textContent = Math.floor(gameData.money);
+  document.getElementById('power').textContent = gameData.power.toFixed(1);
+  document.getElementById('level').textContent = gameData.level;
+  document.getElementById('reputation').textContent = gameData.reputation;
+  document.getElementById('combo').textContent = gameData.combo;
+  document.getElementById('clickPower').textContent = gameData.power.toFixed(1);
+  
+  // Пассивный доход
+  const passiveIncome = gameData.passiveIncome + (gameData.autoClicker * 0.5);
+  document.getElementById('income').textContent = passiveIncome.toFixed(1);
+  
+  // Статистика
+  document.getElementById('totalEarned').textContent = Math.floor(gameData.totalEarned);
+  document.getElementById('totalClicks').textContent = gameData.totalClicks;
+  
+  const hours = Math.floor((Date.now() - gameData.startTime) / 3600000);
+  document.getElementById('playTime').textContent = hours + 'ч';
+  
+  // Уровень
+  gameData.level = Math.floor(gameData.totalEarned / 500) + 1;
+  document.getElementById('level').textContent = gameData.level;
+  
+  // Магазин
+  updateShop();
+  
+  // Квесты
+  updateQuests();
+  
+  // Достижения
+  updateAchievements();
+  
+  // Торговля
+  updateTrades();
+  
+  // PVP
+  updatePvP();
+  
+  // Гильдия
+  updateGuild();
+}
+
+function updateShop() {
+  const shop = document.getElementById('upgradesList');
+  shop.innerHTML = '';
+  
+  upgrades.forEach(upgrade => {
+    const level = gameData.upgrades[upgrade.id] || 0;
+    const cost = Math.floor(upgrade.cost * Math.pow(1.15, level));
+    const maxed = level >= upgrade.maxLevel;
+    
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="item-header">
+        <div>
+          <div class="item-name">${upgrade.name}</div>
+          <div class="item-desc">${upgrade.desc}</div>
+          <div style="margin-top: 5px; color: #00aa00; font-size: 0.8em;">Уровень: ${level}/${upgrade.maxLevel}</div>
+        </div>
+        <button onclick="buyUpgrade('${upgrade.id}')" ${maxed ? 'disabled' : ''}>
+          ${maxed ? '✅ МАКС' : `${cost}💰`}
+        </button>
+      </div>
+    `;
+    shop.appendChild(item);
+  });
+}
+
+function updateQuests() {
+  const questList = document.getElementById('questsList');
+  questList.innerHTML = '';
+  
+  quests.forEach(quest => {
+    const completed = gameData.questsCompleted.includes(quest.id);
+    const progress = quest.check();
+    const percent = Math.min(100, Math.floor((progress / quest.goal) * 100));
+    
+    const item = document.createElement('div');
+    item.className = 'quest-item';
+    item.innerHTML = `
+      <div class="quest-title">${quest.name} ${completed ? '✅' : ''}</div>
+      <div class="item-desc">${quest.desc}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: ${percent}%"></div>
+      </div>
+      <div style="margin: 10px 0; color: #00aa00;">Прогресс: ${progress}/${quest.goal}</div>
+      <button onclick="completeQuest('${quest.id}')" ${completed ? 'disabled' : ''} style="width: 100%;">
+        ${completed ? '✅ ВЫПОЛНЕН' : `ПОЛУЧИТЬ +${quest.reward}💰`}
+      </button>
+    `;
+    questList.appendChild(item);
+  });
+}
+
+function updateAchievements() {
+  const achList = document.getElementById('achievementsList');
+  achList.innerHTML = '';
+  
+  let count = 0;
+  achievements.forEach(ach => {
+    const unlocked = ach.check();
+    if (unlocked) count++;
+    
+    const badge = document.createElement('div');
+    badge.className = 'achievement-badge' + (unlocked ? '' : ' locked');
+    badge.textContent = ach.name;
+    achList.appendChild(badge);
+  });
+  
+  document.getElementById('achievementCount').textContent = count;
+}
+
+function updateTrades() {
+  const tradeList = document.getElementById('tradesList');
+  tradeList.innerHTML = '';
+  
+  gameData.myTrades.forEach(trade => {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="item-header">
+        <div>
+          <div class="item-name">${trade.type === 'power' ? '⚡ Сила +1' : trade.type === 'money' ? '💰 Деньги (100шт)' : '🚀 Буст x2'}</div>
+          <div class="item-desc">Продавец: ${trade.seller}</div>
+        </div>
+        <div>
+          <div class="item-cost" style="margin-bottom: 5px;">${trade.price}💰</div>
+          <button onclick="buyTrade(${trade.id})">Купить</button>
+        </div>
+      </div>
+    `;
+    tradeList.appendChild(item);
+  });
+}
+
+function updatePvP() {
+  const pvpStats = document.getElementById('pvpStats');
+  pvpStats.innerHTML = `
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-label">🏆 ПОБЕД</div>
+        <div class="stat-value">${gameData.pvpWins}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">💀 ПОРАЖЕНИЙ</div>
+        <div class="stat-value">${gameData.pvpLosses}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">📊 ВИНРЕЙТ</div>
+        <div class="stat-value">${gameData.pvpWins + gameData.pvpLosses > 0 ? Math.floor((gameData.pvpWins / (gameData.pvpWins + gameData.pvpLosses)) * 100) : 0}%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">⚡ МОЩЬ</div>
+        <div class="stat-value">${gameData.power.toFixed(1)}</div>
+      </div>
+    </div>
+  `;
+  
+  const pvpHistory = document.getElementById('pvpHistory');
+  pvpHistory.innerHTML = '';
+  gameData.transactions
+    .filter(t => t.type === 'pvp')
+    .slice(-5)
+    .forEach(t => {
+      const trans = document.createElement('div');
+      trans.className = 'transaction' + (t.result.includes('ПОБЕДА') ? '' : ' sent');
+      trans.innerHTML = `${t.result}<br><small>${t.opponent} • ${t.time}</small>`;
+      pvpHistory.appendChild(trans);
+    });
+}
+
+function updateGuild() {
+  const guildInfo = document.getElementById('guildInfo');
+  if (gameData.guildName) {
+    guildInfo.innerHTML = `
+      <div style="color: #ffff00;">
+        <strong>${gameData.guildName}</strong><br>
+        Участников: ${gameData.guildMembers.length}<br>
+        <small style="color: #00aa00;">Вы в гильдии!</small>
+      </div>
+    `;
+  } else {
+    guildInfo.innerHTML = '<div style="color: #00aa00;">Нет гильдии</div>';
+  }
+}
+
+// ==================== ПАССИВНЫЙ ДОХОД ====================
 setInterval(() => {
-  let autoIncome = gameData.autoClicker + gameData.passiveIncome;
-  gameData.money += autoIncome;
-  gameData.totalEarned += autoIncome;
+  const income = gameData.passiveIncome + (gameData.autoClicker * 0.5);
+  if (income > 0) {
+    gameData.money += income;
+    gameData.totalEarned += income;
+    updateUI();
+    saveGame();
+  }
 }, 1000);
 
 // ==================== ИНИЦИАЛИЗАЦИЯ ====================
-loadGame();
-updateUI();
+window.addEventListener('load', () => {
+  loadGame();
+  updateUI();
+  notify(`👋 Добро пожаловать, ${gameData.playerName}!`, 'success');
+});
 
-setInterval(saveGame, 10000);
-
-setInterval(() => {
-  document.getElementById('money').textContent = formatNumber(Math.floor(gameData.money));
-  document.getElementById('income').textContent = (gameData.autoClicker + gameData.passiveIncome).toFixed(1);
-}, 100);
-
+window.addEventListener('beforeunload', () => {
+  saveGame();
+});
 </script>
 
 </body>
