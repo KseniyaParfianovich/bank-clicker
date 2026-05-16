@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔥 ULTRA CLICKER - МУЛЬТИПЛЕЕР</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+  color: #00ff00;
+  text-align: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 2.5em;
+  text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+  margin: 20px 0;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { text-shadow: 0 0 20px #00ff00; }
+  50% { text-shadow: 0 0 40px #00ff00, 0 0 60px #00ff00; }
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
+  padding: 25px;
+  margin: 15px auto;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3), inset 0 0 20px rgba(0, 255, 0, 0.1);
+  border: 2px solid rgba(0, 255, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 0 50px rgba(0, 255, 0, 0.5), inset 0 0 30px rgba(0, 255, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.stat {
+  background: rgba(0, 255, 0, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  font-size: 0.95em;
+}
+
+.stat-value {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+}
+
+.stat-label {
+  font-size: 0.8em;
+  color: #00aa00;
+  margin-top: 5px;
+}
+
+button {
+  padding: 12px 20px;
+  margin: 8px 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+  color: #000;
+  font-weight: bold;
+  font-size: 1em;
+  transition: all 0.3s;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:disabled {
+  background: #555;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.big-button {
+  font-size: 1.3em;
+  padding: 15px 30px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.upgrade-btn {
+  font-size: 0.9em;
+  padding: 10px 15px;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-btn {
+  padding: 10px 15px;
+  flex: 1;
+  min-width: 100px;
+  background: rgba(0, 255, 0, 0.2);
+  border: 2px solid rgba(0, 255, 0, 0.3);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+  color: #000;
+  border-color: #00ff00;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.upgrade-item {
+  background: rgba(0, 255, 0, 0.05);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.upgrade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upgrade-name {
+  font-weight: bold;
+  color: #00ff00;
+}
+
+.upgrade-cost {
+  background: rgba(255, 100, 100, 0.2);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.upgrade-desc {
+  font-size: 0.85em;
+  color: #00aa00;
+  margin-top: 5px;
+}
+
+.multiplier {
+  font-size: 1.5em;
+  color: #ffff00;
+  text-shadow: 0 0 10px #ffff00;
+  animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.combo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+  font-weight: bold;
+  color: #ffff00;
+  text-shadow: 0 0 20px #ffff00;
+  pointer-events: none;
+  animation: floatUp 1s forwards;
+  z-index: 1000;
+}
+
+@keyframes floatUp {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -150%) scale(0.5); opacity: 0; }
+}
+
+.leaderboard {
+  text-align: left;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.player-item {
+  background: rgba(0, 255, 0, 0.1);
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border-left: 3px solid #00ff00;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-rank {
+  background: #00ff00;
+  color: #000;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.player-info {
+  flex: 1;
+  text-align: left;
+}
+
+.player-name {
+  font-weight: bold;
+  color: #00ff00;
+}
+
+.player-money {
+  font-size: 0.9em;
+  color: #00aa00;
+}
+
+.player-current {
+  background: rgba(255, 255, 0, 0.2);
+  border-left-color: #ffff00;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 90%;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #00ff00;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
+  border-radius: 8px;
+  color: #00ff00;
+  font-size: 1em;
+}
+
+.modal-content input::placeholder {
+  color: #00aa00;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  flex: 1;
+}
+
+.achievement {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #ffff00 0%, #ffaa00 100%);
+  color: #000;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  animation: slideIn 0.5s;
+  z-index: 1000;
+  box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
+}
+
+@keyframes slideIn {
+  from { transform: translateX(400px); }
+  to { transform: translateX(0); }
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #00ff00;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.info-text {
+  font-size: 0.85em;
+  color: #00aa00;
+  margin: 10px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 255, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff00 0%, #00cc00 100%);
+  transition: width 0.3s;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.offline-income {
+  background: rgba(100, 100, 255, 0.1);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  color: #6464ff;
+}
+
+.timer {
+  font-size: 0.9em;
+  color: #ffaa00;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  .card {
+    max-width: 95%;
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  
+  button {
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 255, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.5);
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 ULTRA CLICKER 🔥</h1>
+
+<div class="container">
+  <!-- ГЛАВНАЯ КАРТА -->
+  <div class="card">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">💰 ДЕНЬГИ</div>
+        <div class="stat-value" id="money">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">⚡ МОЩЬ</div>
+        <div class="stat-value" id="power">1</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">📊 УРОВЕНЬ</div>
+        <div class="stat-value" id="level">1</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">🎯 КОМБО</div>
+        <div class="stat-value" id="combo">0</div>
+      </div>
+    </div>
+
+    <button class="big-button" onclick="clickMoney()" id="clickBtn">
+      <span id="clickText">КЛИК! +</span><span id="clickPower">1</span>
+    </button>
+
+    <div class="info-text">
+      💵 Доход в сек: <span id="income">0</span>
+    </div>
+
+    <button onclick="spinWheel()">🎡 КОЛЕСО УДАЧИ</button>
+    <button onclick="dailyBonus()">🎁 ЕЖЕДНЕВНЫЙ БОНУС</button>
+  </div>
+
+  <!-- ТАБЫ -->
+  <div class="card">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab('shop')">🛍️ МАГАЗИН</button>
+      <button class="tab-btn" onclick="switchTab('multiplier')">✖️ МНОЖИТЕЛИ</button>
+      <button class="tab-btn" onclick="switchTab('stats')">📊 СТАТИСТИКА</button>
+      <button class="tab-btn" onclick="switchTab('settings')">⚙️ ОПЦИИ</button>
+    </div>
+
+    <!-- ШОП -->
+    <div id="shop" class="tab-content active">
+      <h3>🛍️ МАГАЗИН АПГРЕЙДОВ</h3>
+      <div id="upgradesList"></div>
+    </div>
+
+    <!-- МНОЖИТЕЛИ -->
+    <div id="multiplier" class="tab-content">
+      <h3>✖️ БУСТЫ</h3>
+      <div id="multipliersList"></div>
+    </div>
+
+    <!-- СТАТИСТИКА -->
+    <div id="stats" class="tab-content">
+      <h3>📊 ТВОЯ СТАТИСТИКА</h3>
+      <div class="stat">
+        <div class="stat-label">📈 ВСЕГО ЗАРАБОТАНО</div>
+        <div class="stat-value" id="totalEarned">0</div>
+      </div>
+      <div class="stat" style="margin-top: 10px;">
+        <div class="stat-label">🖱️ ВСЕГО КЛИКОВ</div>
+        <div class="stat-value" id="totalClicks">0</div>
+      </div>
+      <div class="stat" style="margin-top: 10px;">
+        <div class="stat-label">⏱️ ВРЕМЯ ИГРЫ</div>
+        <div class="stat-value" id="playTime">0ч</div>
+      </div>
+      <div class="leaderboard" id="leaderboard"></div>
+    </div>
+
+    <!-- ОПЦИИ -->
+    <div id="settings" class="tab-content">
+      <h3>⚙️ НАСТРОЙКИ</h3>
+      <button onclick="exportData()" style="width: 100%; margin: 10px 0;">💾 ЭКСПОРТИРОВАТЬ</button>
+      <button onclick="importData()" style="width: 100%; margin: 10px 0;">📂 ИМПОРТИРОВАТЬ</button>
+      <button onclick="resetGame()" style="width: 100%; margin: 10px 0; background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);">🔄 СБРОС ИГРЫ</button>
+      <div class="info-text">
+        Версия: 2.0 | Мультиплеер: ВКЛ
+      </div>
+    </div>
+  </div>
+
+  <!-- МУЛЬТИПЛЕЕР -->
+  <div class="card">
+    <h3>👥 МУЛЬТИПЛЕЕР</h3>
+    <button onclick="openMultiplayer()" style="width: 100%;">🌐 ВКЛЮЧИТЬ МУЛЬТИПЛЕЕР</button>
+    <div id="multiplayerInfo" style="display: none; margin-top: 15px; text-align: left;">
+      <div class="info-text">Статус: <span id="multiplayerStatus">Отключен</span></div>
+      <div class="info-text">Код комнаты: <span id="roomCode" style="color: #00ff00; font-weight: bold;">-</span></div>
+      <button onclick="leaveMultiplayer()" style="width: 100%; margin-top: 10px;">❌ ВЫЙТИ</button>
+    </div>
+  </div>
+
+  <!-- ДОСТИЖЕНИЯ -->
+  <div class="card">
+    <h3>🏆 ДОСТИЖЕНИЯ</h3>
+    <div id="achievementsList"></div>
+  </div>
+
+</div>
+
+<!-- МОДАЛИ -->
+<div id="multiplayer-modal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('multiplayer-modal')">✕</button>
+    <h2>👥 МУЛЬТИПЛЕЕР</h2>
+    <button onclick="createRoom()" style="width: 100%; margin: 10px 0;">➕ СОЗДАТЬ КОМНАТУ</button>
+    <div style="text-align: center; margin: 10px 0; color: #00aa00;">ИЛИ</div>
+    <input type="text" id="roomCodeInput" placeholder="Введи код комнаты">
+    <button onclick="joinRoom()" style="width: 100%; margin: 10px 0;">🔗 ПРИСОЕДИНИТЬСЯ</button>
+  </div>
+</div>
+
+<!-- ОФФЛАЙН ДОХОД -->
+<div id="offlineIncome" class="card" style="display: none; margin-top: 20px;">
+  <h3>📡 ОФЛАЙН ДОХОД</h3>
+  <p>Пока ты был оффлайн:</p>
+  <div class="stat-value" id="offlineAmount">0</div>
+  <button onclick="acceptOfflineIncome()" style="width: 100%; margin-top: 10px;">✅ ПРИНЯТЬ</button>
+</div>
+
+<!-- СКРЫТАЯ ЯЧЕЙКА ДЛЯ ИМПОРТА -->
+<input type="file" id="importFile" style="display: none;" onchange="handleImport()">
+
+<script>
+// ==================== ГЛАВНЫЕ ДАННЫЕ ====================
+let gameData = {
+  money: 0,
+  power: 1,
+  level: 1,
+  combo: 0,
+  bank: 0,
+  autoClicker: 0,
+  powerMultiplier: 1,
+  criticalChance: 0,
+  passiveIncome: 0,
+  totalEarned: 0,
+  totalClicks: 0,
+  lastDaily: 0,
+  startTime: Date.now(),
+  lastOfflineTime: 0,
+  achievements: [],
+  upgrades: {}
+};
+
+// АПГРЕЙДЫ
+const upgrades = [
+  { id: 'bank', name: '🏦 БАНК', cost: 100, effect: 1, maxLevel: 50, desc: '+0.5 дохода в сек' },
+  { id: 'autoClicker', name: '🤖 АВТОКЛИК', cost: 200, effect: 1, maxLevel: 30, desc: '+1 автоклик в сек' },
+  { id: 'powerUpgrade', name: '⚡ СУПЕРСИЛА', cost: 150, effect: 0.5, maxLevel: 40, desc: '+0.5 мощи' },
+  { id: 'criticalChance', name: '🎯 КРИТ.ХИТ', cost: 300, effect: 1, maxLevel: 20, desc: '+5% критического урона x2' },
+  { id: 'passiveIncome', name: '💤 ПАССИВ', cost: 250, effect: 0.2, maxLevel: 35, desc: '+0.2 дохода в фоне' },
+];
+
+// ДОСТИЖЕНИЯ
+const achievements = [
+  { id: 'first_click', name: '🖱️ Первый клик', desc: 'Сделай первый клик', check: () => gameData.totalClicks >= 1 },
+  { id: 'hundred', name: '💯 СОТНЯ', desc: 'Заработай 100 денег', check: () => gameData.totalEarned >= 100 },
+  { id: 'thousand', name: '🤑 ТЫСЯЧНИК', desc: 'Заработай 1000 денег', check: () => gameData.totalEarned >= 1000 },
+  { id: 'combo_master', name: '🔥 МАСТЕР КОМБО', desc: 'Сделай комбо 10+', check: () => gameData.combo >= 10 },
+  { id: 'rich', name: '💎 МИЛЛИОНЕР', desc: 'Заработай 1000000 денег', check: () => gameData.totalEarned >= 1000000 },
+  { id: 'speedclicker', name: '⚡ МОЛНИЯ', desc: 'Кликни 100 раз за минуту', check: () => false }, // динамическое
+];
+
+// ЗАГРУЗКА ДАННЫХ
+function loadGame() {
+  const saved = localStorage.getItem('ultraClickerData');
+  if (saved) {
+    gameData = { ...gameData, ...JSON.parse(saved) };
+    checkOfflineIncome();
+  }
+  gameData.lastOfflineTime = Date.now();
+}
+
+// СОХРАНЕНИЕ
+function saveGame() {
+  localStorage.setItem('ultraClickerData', JSON.stringify(gameData));
+}
+
+// ==================== КЛИК ====================
+let comboTimer = null;
+
+function clickMoney() {
+  let earn = gameData.power * gameData.powerMultiplier;
+  
+  // Крит.хит
+  if (Math.random() * 100 < gameData.criticalChance) {
+    earn *= 2;
+    showComboText('⚡ КРИТ! x2');
+  }
+  
+  gameData.money += earn;
+  gameData.totalEarned += earn;
+  gameData.totalClicks++;
+  
+  // КОМБО
+  gameData.combo++;
+  if (gameData.combo > 1) {
+    showComboText(`🔥 КОМБО x${gameData.combo}`);
+  }
+  
+  clearTimeout(comboTimer);
+  comboTimer = setTimeout(() => { gameData.combo = 0; }, 2000);
+  
+  updateUI();
+  saveGame();
+  
+  // АНИМАЦИЯ
+  const btn = document.getElementById('clickBtn');
+  btn.style.transform = 'scale(0.9)';
+  setTimeout(() => { btn.style.transform = 'scale(1)'; }, 100);
+}
+
+function showComboText(text) {
+  const div = document.createElement('div');
+  div.className = 'combo';
+  div.textContent = text;
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 1000);
+}
+
+// ==================== КОЛЕСО УДАЧИ ====================
+function spinWheel() {
+  if (gameData.money < 50) {
+    alert('❌ Нужно 50 денег!');
+    return;
+  }
+  
+  gameData.money -= 50;
+  
+  const rewards = [
+    { text: '💰 +100', money: 100 },
+    { text: '💰 +500', money: 500 },
+    { text: '⚡ x2 мощь', power: 2 },
+    { text: '❌ Потеря 50', money: -50 },
+    { text: '💰 +50', money: 50 },
+    { text: '🎉 +1000', money: 1000 }
+  ];
+  
+  const reward = rewards[Math.floor(Math.random() * rewards.length)];
+  
+  if (reward.money) {
+    gameData.money += reward.money;
+    gameData.totalEarned += Math.max(0, reward.money);
+  }
+  if (reward.power) {
+    gameData.power *= reward.power;
+  }
+  
+  alert(reward.text);
+  updateUI();
+  saveGame();
+}
+
+// ==================== АПГРЕЙДЫ ====================
+function buyUpgrade(upgradeId) {
+  const upgrade = upgrades.find(u => u.id === upgradeId);
+  if (!upgrade) return;
+  
+  const level = gameData.upgrades[upgradeId] || 0;
+  if (level >= upgrade.maxLevel) {
+    alert('❌ Максимальный уровень!');
+    return;
+  }
+  
+  const cost = Math.floor(upgrade.cost * Math.pow(1.15, level));
+  
+  if (gameData.money < cost) {
+    alert('❌ Не хватает денег!');
+    return;
+  }
+  
+  gameData.money -= cost;
+  gameData.upgrades[upgradeId] = (gameData.upgrades[upgradeId] || 0) + 1;
+  
+  // ПРИМЕНИТЬ ЭФФЕКТ
+  switch (upgradeId) {
+    case 'bank':
+      gameData.passiveIncome += upgrade.effect;
+      break;
+    case 'autoClicker':
+      gameData.autoClicker += upgrade.effect;
+      break;
+    case 'powerUpgrade':
+      gameData.power += upgrade.effect;
+      break;
+    case 'criticalChance':
+      gameData.criticalChance += 5;
+      break;
+    case 'passiveIncome':
+      gameData.passiveIncome += upgrade.effect;
+      break;
+  }
+  
+  updateUI();
+  saveGame();
+}
+
+// ==================== ЕЖЕДНЕВНЫЙ БОНУС ====================
+function dailyBonus() {
+  const now = Date.now();
+  const dayInMs = 86400000;
+  
+  if (now - gameData.lastDaily < dayInMs) {
+    const timeLeft = Math.ceil((dayInMs - (now - gameData.lastDaily)) / 3600000);
+    alert(`⛔ Бонус через ${timeLeft} часов!`);
+    return;
+  }
+  
+  gameData.money += 500;
+  gameData.totalEarned += 500;
+  gameData.lastDaily = now;
+  
+  alert('🎁 +500 денег!');
+  updateUI();
+  saveGame();
+}
+
+// ==================== ОФЛАЙН ДОХОД ====================
+function checkOfflineIncome() {
+  const now = Date.now();
+  const offlineTime = Math.floor((now - gameData.lastOfflineTime) / 1000);
+  
+  if (offlineTime < 5) return;
+  
+  const income = gameData.passiveIncome * offlineTime;
+  
+  if (income > 0) {
+    const modal = document.getElementById('offlineIncome');
+    document.getElementById('offlineAmount').textContent = Math.floor(income);
+    modal.style.display = 'block';
+  }
+}
+
+function acceptOfflineIncome() {
+  const now = Date.now();
+  const offlineTime = Math.floor((now - gameData.lastOfflineTime) / 1000);
+  const income = gameData.passiveIncome * offlineTime;
+  
+  gameData.money += income;
+  gameData.totalEarned += income;
+  
+  document.getElementById('offlineIncome').style.display = 'none';
+  updateUI();
+  saveGame();
+}
+
+// ==================== АВТОКЛИК & ПАССИВ ====================
+setInterval(() => {
+  let autoIncome = gameData.autoClicker + gameData.passiveIncome;
+  gameData.money += autoIncome;
+  gameData.totalEarned += autoIncome;
+  updateUI();
+}, 1000);
+
+// ==================== ТАБЫ ====================
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+  
+  if (tabName === 'stats') {
+    updateLeaderboard();
+  }
+}
+
+// ==================== UI ====================
+function updateUI() {
+  document.getElementById('money').textContent = formatNumber(Math.floor(gameData.money));
+  document.getElementById('power').textContent = formatNumber(Math.floor(gameData.power * 100) / 100);
+  document.getElementById('level').textContent = calculateLevel();
+  document.getElementById('combo').textContent = gameData.combo;
+  
+  const income = (gameData.autoClicker + gameData.passiveIncome).toFixed(1);
+  document.getElementById('income').textContent = income;
+  
+  document.getElementById('clickPower').textContent = formatNumber(Math.floor(gameData.power * gameData.powerMultiplier));
+  document.getElementById('totalEarned').textContent = formatNumber(gameData.totalEarned);
+  document.getElementById('totalClicks').textContent = formatNumber(gameData.totalClicks);
+  document.getElementById('playTime').textContent = getPlayTime();
+  
+  updateUpgradesList();
+  updateAchievements();
+}
+
+function formatNumber(num) {
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+  return Math.floor(num).toString();
+}
+
+function calculateLevel() {
+  return Math.floor(gameData.totalEarned / 1000) + 1;
+}
+
+function getPlayTime() {
+  const ms = Date.now() - gameData.startTime;
+  const hours = Math.floor(ms / 3600000);
+  if (hours > 0) return hours + 'ч';
+  const mins = Math.floor(ms / 60000);
+  return mins + 'м';
+}
+
+function updateUpgradesList() {
+  const list = document.getElementById('upgradesList');
+  list.innerHTML = upgrades.map(u => {
+    const level = gameData.upgrades[u.id] || 0;
+    const cost = Math.floor(u.cost * Math.pow(1.15, level));
+    const canAfford = gameData.money >= cost && level < u.maxLevel;
+    
+    return `
+      <div class="upgrade-item">
+        <div class="upgrade-header">
+          <div>
+            <div class="upgrade-name">${u.name}</div>
+            <div class="upgrade-desc">${u.desc}</div>
+            <div class="info-text">Уровень: ${level}/${u.maxLevel}</div>
+          </div>
+          <button class="upgrade-btn" onclick="buyUpgrade('${u.id}')" ${!canAfford ? 'disabled' : ''}>
+            ${cost}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateAchievements() {
+  const list = document.getElementById('achievementsList');
+  list.innerHTML = achievements.map(a => {
+    const unlocked = gameData.achievements.includes(a.id);
+    return `
+      <div class="upgrade-item" style="opacity: ${unlocked ? 1 : 0.5};">
+        <span>${unlocked ? '✅' : '🔒'}</span> ${a.name} - ${a.desc}
+      </div>
+    `;
+  }).join('');
+  
+  achievements.forEach(a => {
+    if (!gameData.achievements.includes(a.id) && a.check()) {
+      gameData.achievements.push(a.id);
+      showAchievement(a.name);
+      saveGame();
+    }
+  });
+}
+
+function showAchievement(name) {
+  const div = document.createElement('div');
+  div.className = 'achievement';
+  div.textContent = '🏆 ' + name;
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 3000);
+}
+
+function updateLeaderboard() {
+  const board = document.getElementById('leaderboard');
+  board.innerHTML = '<div class="info-text">🏆 РЕЙТИНГ</div>';
+  board.innerHTML += `
+    <div class="player-item player-current">
+      <div class="player-rank">1</div>
+      <div class="player-info">
+        <div class="player-name">👤 Ты</div>
+        <div class="player-money">${formatNumber(gameData.totalEarned)} заработано</div>
+      </div>
+    </div>
+  `;
+}
+
+// ==================== ЭКСПОРТ/ИМПОРТ ====================
+function exportData() {
+  const data = JSON.stringify(gameData);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ultraclicker-save.json';
+  a.click();
+  alert('✅ Сохранение экспортировано!');
+}
+
+function importData() {
+  document.getElementById('importFile').click();
+}
+
+function handleImport() {
+  const file = document.getElementById('importFile').files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      gameData = { ...gameData, ...imported };
+      saveGame();
+      updateUI();
+      alert('✅ Сохранение импортировано!');
+    } catch {
+      alert('❌ Ошибка при импорте!');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetGame() {
+  if (confirm('⚠️ ВНИМАНИЕ! Это сотрёт ВСЕ данные! Уверен?')) {
+    localStorage.removeItem('ultraClickerData');
+    gameData = {
+      money: 0,
+      power: 1,
+      level: 1,
+      combo: 0,
+      bank: 0,
+      autoClicker: 0,
+      powerMultiplier: 1,
+      criticalChance: 0,
+      passiveIncome: 0,
+      totalEarned: 0,
+      totalClicks: 0,
+      lastDaily: 0,
+      startTime: Date.now(),
+      lastOfflineTime: 0,
+      achievements: [],
+      upgrades: {}
+    };
+    updateUI();
+    alert('🔄 Игра сброшена!');
+  }
+}
+
+// ==================== МУЛЬТИПЛЕЕР (ЛОКАЛЬНЫЙ) ====================
+function openMultiplayer() {
+  document.getElementById('multiplayer-modal').classList.add('active');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+}
+
+function createRoom() {
+  const roomCode = Math.random().toString(36).substr(2, 8).toUpperCase();
+  gameData.roomCode = roomCode;
+  saveGame();
+  
+  document.getElementById('multiplayerInfo').style.display = 'block';
+  document.getElementById('multiplayerStatus').textContent = '🟢 АКТИВНА';
+  document.getElementById('roomCode').textContent = roomCode;
+  document.getElementById('multiplayer-modal').classList.remove('active');
+  
+  alert(`✅ Комната создана!\nКод: ${roomCode}\nПередай друзьям этот код!`);
+}
+
+function joinRoom() {
+  const code = document.getElementById('roomCodeInput').value.toUpperCase();
+  if (code.length !== 8) {
+    alert('❌ Некорректный код!');
+    return;
+  }
+  
+  gameData.roomCode = code;
+  saveGame();
+  
+  document.getElementById('multiplayerInfo').style.display = 'block';
+  document.getElementById('multiplayerStatus').textContent = '🟢 В КОМНАТЕ';
+  document.getElementById('roomCode').textContent = code;
+  document.getElementById('multiplayer-modal').classList.remove('active');
+  
+  alert(`✅ Присоединился к комнате ${code}`);
+}
+
+function leaveMultiplayer() {
+  gameData.roomCode = null;
+  saveGame();
+  
+  document.getElementById('multiplayerInfo').style.display = 'none';
+  alert('❌ Вышел из мультиплеера');
+}
+
+// ==================== ИНИЦИАЛИЗАЦИЯ ====================
+loadGame();
+updateUI();
+
+// Сохранение каждые 10 сек
+setInterval(saveGame, 10000);
+
+// Обновление UI каждые 100ms
+setInterval(() => {
+  document.getElementById('money').textContent = formatNumber(Math.floor(gameData.money));
+  document.getElementById('income').textContent = (gameData.autoClicker + gameData.passiveIncome).toFixed(1);
+}, 100);
+
+</script>
+
+</body>
+</html>
