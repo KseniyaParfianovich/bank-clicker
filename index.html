@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏦 ULTRA BANK EMPIRE - ULTIMATE EDITION</title>
+<title>🏦 ULTRA BANK EMPIRE - INFINITE EXPANSION EDITION</title>
 <style>
 * {
   margin: 0;
@@ -11,15 +11,20 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Courier New', monospace;
   background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f3460 100%);
   color: #00ff00;
   text-align: center;
   overflow-x: hidden;
   min-height: 100vh;
   padding: 10px;
-  animation: bgShift 15s infinite;
+  animation: bgShift 25s infinite;
 }
 
 @keyframes bgShift {
@@ -27,331 +32,69 @@ body {
   50% { background: linear-gradient(135deg, #1a0f2e 0%, #2a1a4e 50%, #1f4570 100%); }
 }
 
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
-}
+@keyframes glow { 0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; } 50% { text-shadow: 0 0 20px #00ff00, 0 0 40px #ff00ff, 0 0 60px #00ffff; } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes shimmer { 0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); } 50% { box-shadow: 0 0 40px rgba(255, 0, 255, 0.7); } }
+@keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.auth-box {
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid #00ff00;
-  border-radius: 15px;
-  padding: 40px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-  animation: slideDown 0.5s ease-out;
-}
-
-.auth-box h2 {
-  color: #00ff00;
-  text-shadow: 0 0 20px #00ff00;
-  margin-bottom: 30px;
-  font-size: 2em;
-}
-
-.auth-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #00ff00;
-  background: rgba(0, 255, 0, 0.1);
-  color: #00ff00;
-  border-radius: 8px;
-  font-size: 1em;
-}
-
-.auth-input:focus {
-  outline: none;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-  border-color: #ffff00;
-}
-
-.auth-button {
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1.1em;
-}
-
-.auth-button:hover {
-  transform: scale(1.05);
-}
-
-.toggle-auth {
-  color: #00aa00;
-  margin-top: 15px;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.error-msg { color: #ff4444; }
-.success-msg { color: #44ff44; }
-
-.game-container { display: none; }
+.auth-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%); }
+.auth-box { background: rgba(0, 0, 0, 0.9); border: 3px solid #00ff00; border-radius: 20px; padding: 50px; width: 100%; max-width: 500px; box-shadow: 0 0 50px rgba(0, 255, 0, 0.5), inset 0 0 50px rgba(0, 255, 0, 0.1); animation: slideDown 0.8s ease-out; }
+.auth-box h2 { color: #00ff00; text-shadow: 0 0 30px #00ff00; margin-bottom: 30px; font-size: 2.5em; animation: glow 3s infinite; }
+.auth-input { width: 100%; padding: 15px; margin: 12px 0; border: 2px solid #00ff00; background: rgba(0, 255, 0, 0.05); color: #00ff00; border-radius: 10px; font-size: 1.1em; transition: all 0.3s; }
+.auth-input:focus { outline: none; box-shadow: 0 0 30px rgba(0, 255, 0, 0.8); border-color: #ffff00; background: rgba(0, 255, 0, 0.15); }
+.auth-button { width: 100%; padding: 15px; margin: 20px 0; background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%); color: #000; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2em; transition: all 0.3s; }
+.auth-button:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(0, 255, 0, 0.6); }
+.toggle-auth { color: #00aa00; margin-top: 20px; cursor: pointer; text-decoration: underline; font-size: 1.1em; transition: all 0.3s; }
+.toggle-auth:hover { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+.error-msg { color: #ff4444; font-weight: bold; font-size: 1.1em; margin: 15px 0; text-shadow: 0 0 10px #ff4444; }
+.success-msg { color: #44ff44; font-weight: bold; font-size: 1.1em; margin: 15px 0; text-shadow: 0 0 10px #44ff44; }
+.game-container { display: none; } 
 .game-container.active { display: block; }
-
-h1 {
-  font-size: 2em;
-  text-shadow: 0 0 20px #00ff00, 0 0 40px #ff00ff;
-  margin: 15px 0;
-}
-
-@keyframes slideDown {
-  from { transform: translateY(-30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.top-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
-  max-width: 1600px;
-  margin: 10px auto;
-  padding: 10px;
-  background: rgba(0, 255, 0, 0.05);
-  border: 1px solid rgba(0, 255, 0, 0.2);
-  border-radius: 10px;
-}
-
-.stat-box {
-  background: rgba(0, 255, 0, 0.1);
-  border: 1px solid rgba(0, 255, 0, 0.3);
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 0.9em;
-}
-
-.stat-value {
-  font-weight: bold;
-  color: #ffff00;
-  font-size: 1.2em;
-}
-
-.nav-menu {
-  display: flex;
-  gap: 5px;
-  margin: 10px auto;
-  max-width: 1600px;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 10px;
-  background: rgba(0, 255, 0, 0.05);
-  border: 1px solid rgba(0, 255, 0, 0.2);
-  border-radius: 10px;
-  overflow-y: auto;
-  max-height: 150px;
-}
-
-.nav-btn {
-  padding: 8px 12px;
-  border: 1px solid #00ff00;
-  background: rgba(0, 255, 0, 0.1);
-  color: #00ff00;
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 0.8em;
-  white-space: nowrap;
-}
-
-.nav-btn:hover {
-  background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
-  color: #000;
-}
-
-.nav-btn.active {
-  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
-  border-color: #ffff00;
-}
-
-.section {
-  display: none;
-  max-width: 1600px;
-  margin: 10px auto;
-  padding: 15px;
-  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%);
-  border: 1px solid rgba(0, 255, 0, 0.2);
-  border-radius: 10px;
-  animation: fadeIn 0.5s ease-in;
-}
-
+h1 { font-size: 3em; text-shadow: 0 0 30px #00ff00, 0 0 60px #ff00ff; margin: 20px 0; animation: glow 3s infinite; }
+h2 { color: #00ff00; text-shadow: 0 0 15px #00ff00; margin: 15px 0; }
+.top-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; max-width: 100%; margin: 15px auto; padding: 15px; background: rgba(0, 255, 0, 0.08); border: 2px solid rgba(0, 255, 0, 0.4); border-radius: 15px; box-shadow: 0 0 30px rgba(0, 255, 0, 0.2); }
+.stat-box { background: linear-gradient(135deg, rgba(0, 255, 0, 0.15) 0%, rgba(0, 255, 0, 0.05) 100%); border: 2px solid rgba(0, 255, 0, 0.4); padding: 12px; border-radius: 10px; font-size: 1em; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
+.stat-value { font-weight: bold; color: #ffff00; font-size: 1.4em; text-shadow: 0 0 10px #ffff00; }
+.nav-menu { display: flex; gap: 8px; margin: 15px auto; max-width: 100%; flex-wrap: wrap; justify-content: center; padding: 15px; background: rgba(0, 255, 0, 0.08); border: 2px solid rgba(0, 255, 0, 0.4); border-radius: 15px; overflow-y: auto; max-height: 300px; box-shadow: 0 0 30px rgba(0, 255, 0, 0.2); }
+.nav-btn { padding: 12px 15px; border: 2px solid #00ff00; background: rgba(0, 255, 0, 0.1); color: #00ff00; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 0.85em; white-space: nowrap; transition: all 0.3s; box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); }
+.nav-btn:hover { background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%); color: #000; transform: scale(1.1); box-shadow: 0 0 20px rgba(0, 255, 0, 0.6); }
+.nav-btn.active { background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%); border-color: #ffff00; box-shadow: 0 0 30px rgba(255, 0, 255, 0.8); }
+.section { display: none; max-width: 100%; margin: 15px auto; padding: 20px; background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%); border: 2px solid rgba(0, 255, 0, 0.4); border-radius: 15px; animation: fadeIn 0.5s ease-in; box-shadow: 0 0 30px rgba(0, 255, 0, 0.2); }
 .section.active { display: block; }
-
-.card {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-  border: 1px solid rgba(0, 255, 0, 0.2);
-}
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.grid-4 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  margin: 10px 0;
-}
-
-button {
-  padding: 8px 12px;
-  margin: 5px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
-  color: #000;
-  font-weight: bold;
-  font-size: 0.85em;
-}
-
-button:hover:not(:disabled) {
-  transform: scale(1.08);
-}
-
-.big-button {
-  font-size: 1.5em;
-  padding: 15px 30px;
-  width: 100%;
-  margin: 10px 0;
-  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
-  color: #fff;
-}
-
-.notification {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
-  color: #fff;
-  padding: 12px 15px;
-  border-radius: 8px;
-  z-index: 2000;
-  max-width: 250px;
-  font-size: 0.9em;
-}
-
-.logout-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
-  padding: 8px 15px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
-  font-size: 0.85em;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 15px;
-  background: rgba(0, 255, 0, 0.1);
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 8px 0;
-  border: 1px solid rgba(0, 255, 0, 0.2);
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #00ff00 0%, #00cc00 100%);
-  transition: width 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-  font-weight: bold;
-  font-size: 0.75em;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 10px 0;
-  background: rgba(0, 0, 0, 0.3);
-}
-
-table th {
-  background: rgba(0, 255, 0, 0.2);
-  padding: 8px;
-  text-align: left;
-  border: 1px solid rgba(0, 255, 0, 0.3);
-}
-
-table td {
-  padding: 8px;
-  border: 1px solid rgba(0, 255, 0, 0.1);
-}
-
-table tr:hover {
-  background: rgba(0, 255, 0, 0.1);
-}
-
-.achievement {
-  background: rgba(255, 215, 0, 0.1);
-  border: 1px solid #ffd700;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 8px 0;
-}
+.card { background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(10, 10, 30, 0.6) 100%); padding: 20px; margin: 12px 0; border-radius: 12px; box-shadow: 0 0 25px rgba(0, 255, 0, 0.3); border: 2px solid rgba(0, 255, 0, 0.3); }
+button { padding: 12px 18px; margin: 6px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%); color: #000; font-weight: bold; font-size: 0.95em; transition: all 0.3s; box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); }
+button:hover:not(:disabled) { transform: scale(1.12); box-shadow: 0 0 25px rgba(0, 255, 0, 0.8); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.big-button { font-size: 2em; padding: 25px 40px; width: 100%; margin: 15px 0; background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%); color: #fff; box-shadow: 0 0 40px rgba(255, 0, 255, 0.6); animation: pulse 1.5s infinite; }
+.big-button:hover { box-shadow: 0 0 60px rgba(255, 0, 255, 0.9); }
+.notification { position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%); color: #fff; padding: 16px 20px; border-radius: 10px; z-index: 2000; max-width: 300px; font-size: 1em; font-weight: bold; box-shadow: 0 0 30px rgba(255, 0, 255, 0.6); animation: slideDown 0.3s ease-out; }
+.logout-btn { position: absolute; top: 15px; right: 15px; background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%); padding: 12px 20px; cursor: pointer; border: none; border-radius: 8px; color: white; font-weight: bold; font-size: 1em; transition: all 0.3s; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
+.logout-btn:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
+.progress-bar { width: 100%; height: 25px; background: rgba(0, 255, 0, 0.1); border-radius: 8px; overflow: hidden; margin: 12px 0; border: 2px solid rgba(0, 255, 0, 0.3); box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1); }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #00ff00 0%, #00cc00 100%); transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 0.9em; box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; background: rgba(0, 0, 0, 0.4); border: 2px solid rgba(0, 255, 0, 0.3); border-radius: 8px; overflow: hidden; }
+table th { background: linear-gradient(135deg, rgba(0, 255, 0, 0.3) 0%, rgba(0, 255, 0, 0.1) 100%); padding: 12px; text-align: left; border-bottom: 2px solid rgba(0, 255, 0, 0.3); font-weight: bold; }
+table td { padding: 12px; border-bottom: 1px solid rgba(0, 255, 0, 0.1); }
+table tr:hover { background: rgba(0, 255, 0, 0.15); }
+.item-row { display: flex; justify-content: space-between; align-items: center; background: rgba(0, 255, 0, 0.08); padding: 12px; margin: 8px 0; border-radius: 8px; border: 2px solid rgba(0, 255, 0, 0.3); transition: all 0.3s; }
+.item-row:hover { background: rgba(0, 255, 0, 0.15); box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 15px 0; }
+.stat-item { background: rgba(0, 255, 0, 0.1); padding: 15px; border-radius: 10px; border: 2px solid rgba(0, 255, 0, 0.3); box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
+.stat-item-label { color: #00aa00; font-size: 0.9em; margin-bottom: 8px; }
+.stat-item-value { color: #ffff00; font-size: 1.6em; font-weight: bold; text-shadow: 0 0 10px #ffff00; }
+.prestige-box { background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 100, 0, 0.2) 100%); border: 3px solid #ffd700; border-radius: 12px; padding: 20px; margin: 15px 0; box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); }
+.shop-item { background: rgba(0, 255, 0, 0.08); padding: 15px; margin: 10px 0; border-radius: 10px; border: 2px solid rgba(0, 255, 0, 0.3); display: flex; justify-content: space-between; align-items: center; }
+.achievement { background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.05) 100%); border: 2px solid #ffd700; border-radius: 10px; padding: 12px; margin: 10px 0; box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+.badge { display: inline-block; background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%); color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 0.85em; font-weight: bold; margin: 3px; box-shadow: 0 0 15px rgba(255, 0, 255, 0.4); }
+.tab-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+.scroll-list { max-height: 400px; overflow-y: auto; border: 2px solid rgba(0, 255, 0, 0.3); border-radius: 10px; padding: 10px; background: rgba(0, 0, 0, 0.3); }
 
 @media (max-width: 768px) {
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .nav-menu { flex-direction: column; }
-}
-
-.item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 255, 0, 0.05);
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 255, 0, 0.2);
-}
-
-.badge {
-  display: inline-block;
-  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.8em;
-  font-weight: bold;
-  margin: 2px;
+  .top-bar { grid-template-columns: repeat(2, 1fr); }
+  h1 { font-size: 2em; }
+  .big-button { font-size: 1.3em; padding: 15px 25px; }
 }
 </style>
 </head>
@@ -359,11 +102,11 @@ table tr:hover {
 
 <div id="authContainer" class="auth-container">
   <div class="auth-box">
-    <h2 id="authTitle">🏦 ВХОД</h2>
+    <h2 id="authTitle">🏦 ВХОД В СИСТЕМУ</h2>
     <div id="authMessage"></div>
-    <input type="text" id="authUsername" class="auth-input" placeholder="Имя пользователя" maxlength="20">
-    <input type="password" id="authPassword" class="auth-input" placeholder="Пароль" maxlength="30">
-    <button class="auth-button" onclick="authSubmit()">ВОЙТИ</button>
+    <input type="text" id="authUsername" class="auth-input" placeholder="👤 Имя пользователя" maxlength="20">
+    <input type="password" id="authPassword" class="auth-input" placeholder="🔐 Пароль" maxlength="30">
+    <button class="auth-button" onclick="authSubmit()">⚡ ВОЙТИ</button>
     <div class="toggle-auth" onclick="toggleAuthMode()">📝 Нет аккаунта? Регистрация</div>
   </div>
 </div>
@@ -371,156 +114,315 @@ table tr:hover {
 <div id="gameContainer" class="game-container">
   <button class="logout-btn" onclick="logout()">🚪 ВЫХОД</button>
   
-  <h1>🏦 ULTRA BANK EMPIRE</h1>
+  <h1>🏦 ULTRA BANK EMPIRE - INFINITE EXPANSION</h1>
   
   <div class="top-bar">
     <div class="stat-box">👤 <span id="playerName">-</span></div>
-    <div class="stat-box">Уровень <span class="stat-value" id="level">1</span></div>
+    <div class="stat-box">⭐ Ур: <span class="stat-value" id="level">1</span></div>
     <div class="stat-box">💰 <span class="stat-value" id="money">0</span></div>
     <div class="stat-box">🏦 <span class="stat-value" id="deposit">0</span></div>
-    <div class="stat-box">🌟 <span class="stat-value" id="prestige">0</span></div>
     <div class="stat-box">👑 <span id="rank">Новичок</span></div>
+    <div class="stat-box">🎖️ Ачив: <span class="stat-value" id="achCount">0</span></div>
+    <div class="stat-box">⏱️ <span id="playTime">0ч</span></div>
   </div>
 
   <div class="nav-menu">
     <button class="nav-btn active" onclick="switchSection('main')">💰 ГЛАВНАЯ</button>
+    <button class="nav-btn" onclick="switchSection('click')">⚡ КЛИК СИСТЕМА</button>
     <button class="nav-btn" onclick="switchSection('bank')">🏦 БАНК</button>
     <button class="nav-btn" onclick="switchSection('business')">🏢 БИЗНЕС</button>
-    <button class="nav-btn" onclick="switchSection('workers')">👷 РАБОТНИКИ</button>
+    <button class="nav-btn" onclick="switchSection('industry')">🏭 ПРОМЫШЛЕННОСТЬ</button>
+    <button class="nav-btn" onclick="switchSection('workforce')">👨‍💼 ПЕРСОНАЛ</button>
     <button class="nav-btn" onclick="switchSection('pets')">🐾 ПИТОМЦЫ</button>
-    <button class="nav-btn" onclick="switchSection('quests')">📜 КВЕСТЫ</button>
+    <button class="nav-btn" onclick="switchSection('research')">🔬 ИССЛЕДОВАНИЯ</button>
+    <button class="nav-btn" onclick="switchSection('prestige')">👑 ПРЕСТИЖ</button>
+    <button class="nav-btn" onclick="switchSection('upgrades')">⬆️ УЛУЧШЕНИЯ</button>
+    <button class="nav-btn" onclick="switchSection('investments')">📈 ИНВЕСТИЦИИ</button>
     <button class="nav-btn" onclick="switchSection('events')">🎉 СОБЫТИЯ</button>
+    <button class="nav-btn" onclick="switchSection('quests')">📜 КВЕСТЫ</button>
     <button class="nav-btn" onclick="switchSection('clan')">🏛️ КЛАН</button>
+    <button class="nav-btn" onclick="switchSection('achievements')">🎖️ ДОСТИЖЕНИЯ</button>
     <button class="nav-btn" onclick="switchSection('leaderboard')">🏆 ЛИДЕРЫ</button>
-    <button class="nav-btn" onclick="switchSection('shop')">🛒 МАГАЗИН</button>
     <button class="nav-btn" onclick="switchSection('settings')">⚙️ НАСТРОЙКИ</button>
   </div>
 
   <!-- ГЛАВНАЯ -->
   <div id="main" class="section active">
     <div class="card">
-      <h2>💰 ОСНОВНОЙ КЛИК</h2>
-      <div class="grid-2">
-        <div>
-          <p>Денег: <span class="stat-value" id="m1">0</span></p>
-          <p>Мощь: <span class="stat-value" id="pow1">1</span></p>
-          <p>Множитель: <span class="stat-value" id="mult1">x1</span></p>
+      <h2>📊 БЫСТРЫЙ ОБЗОР</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">💵 БАЛАНС</div>
+          <div class="stat-item-value" id="mainMoney">0</div>
         </div>
-        <div>
-          <p>XP: <span class="stat-value" id="xp1">0</span></p>
-          <p>Уровень: <span class="stat-value" id="lvl1">1</span></p>
-          <p>CPS: <span class="stat-value" id="cps1">0</span>/сек</p>
+        <div class="stat-item">
+          <div class="stat-item-label">⚡ МОЩЬ</div>
+          <div class="stat-item-value" id="mainPower">1</div>
         </div>
-      </div>
-      <button class="big-button" onclick="click()">⚡ СУПЕРКЛИК</button>
-      <div class="progress-bar"><div class="progress-fill" id="xpBar" style="width: 0%"></div></div>
-    </div>
-
-    <div class="card">
-      <h2>💎 БЫСТРЫЕ НАГРАДЫ</h2>
-      <div class="grid-3">
-        <button onclick="rewardDaily()">🎁 ДНЕВНАЯ<br><span style="font-size:0.8em" id="dailyCD">-</span></button>
-        <button onclick="rewardWeekly()">📦 ЕЖЕНЕДЕЛЬНАЯ<br><span style="font-size:0.8em" id="weeklyCD">-</span></button>
-        <button onclick="rewardMonthly()">🎉 ЕЖЕМЕСЯЧНАЯ<br><span style="font-size:0.8em" id="monthlyCD">-</span></button>
+        <div class="stat-item">
+          <div class="stat-item-label">📈 МНОЖИТЕЛЬ</div>
+          <div class="stat-item-value" id="mainMult">x1</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">🔄 ПАССИВНЫЙ ДОХОД/СЕК</div>
+          <div class="stat-item-value" id="mainPassive">0</div>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>🎡 КОЛЕСО УДАЧИ (ДОРОГО)</h2>
-      <button onclick="spinWheel()" style="width:100%">Прокрутить (1M) - Раз в час</button>
-      <p style="font-size:0.8em;color:#aaa">Осталось времени: <span id="wheelCD">-</span></p>
+      <h2>🎁 ЕЖЕДНЕВНЫЕ СОБЫТИЯ</h2>
+      <div class="stats-grid">
+        <button onclick="rewardDaily()" style="padding: 20px;">🎁 ЕЖЕДНЕВНЫЙ БОНУС<br><span id="dailyCD" style="font-size: 0.8em;">ГОТОВО</span></button>
+        <button onclick="rewardWeekly()" style="padding: 20px;">📦 ЕЖЕНЕДЕЛЬНЫЙ<br><span id="weeklyCD" style="font-size: 0.8em;">ГОТОВО</span></button>
+        <button onclick="rewardMonthly()" style="padding: 20px;">🎉 ЕЖЕМЕСЯЧНЫЙ<br><span id="monthlyCD" style="font-size: 0.8em;">ГОТОВО</span></button>
+        <button onclick="spinWheel()" style="padding: 20px;">🎡 КОЛЕСО УДАЧИ<br><span id="wheelCD" style="font-size: 0.8em;">ГОТОВО</span></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📈 СТАТИСТИКА</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">📊 ВСЕГО ЗАРАБОТАНО</div>
+          <div class="stat-item-value" id="totalEarned" style="font-size: 1.3em;">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">🖱️ ВСЕГО КЛИКОВ</div>
+          <div class="stat-item-value" id="totalClicks" style="font-size: 1.3em;">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">👑 ПРЕСТИЖ УРОВЕНЬ</div>
+          <div class="stat-item-value" id="prestigeLvl" style="font-size: 1.3em;">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- КЛИК СИСТЕМА -->
+  <div id="click" class="section">
+    <div class="card">
+      <h2>⚡ ПРОДВИНУТАЯ СИСТЕМА КЛИКОВ</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">💵 ТЕКУЩИЙ БАЛАНС</div>
+          <div class="stat-item-value" id="clickMoney">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">⚡ БАЗОВАЯ МОЩЬ</div>
+          <div class="stat-item-value" id="clickPower">1</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">🔥 ГЛОБАЛЬНЫЙ МНОЖИТЕЛЬ</div>
+          <div class="stat-item-value" id="clickMult">x1</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">💎 ДОХОД ЗА КЛИК</div>
+          <div class="stat-item-value" id="clickValue">1K</div>
+        </div>
+      </div>
+      <button class="big-button" onclick="click()">⚡ СУПЕРКЛИК +<span id="clickVal2">1K</span>💵</button>
+      <div class="progress-bar"><div class="progress-fill" id="xpBar" style="width: 0%;"><span id="xpPercent">0%</span></div></div>
+      <p style="color: #00aa00; margin: 10px 0; font-size: 1.1em;">
+        <strong>Уровень <span id="lvl">1</span> | XP: <span id="xp">0</span>/<span id="xpMax">1000</span></strong>
+      </p>
     </div>
   </div>
 
   <!-- БАНК -->
   <div id="bank" class="section">
     <div class="card">
-      <h2>🏦 БАНКОВСКАЯ СИСТЕМА</h2>
-      <div class="grid-2">
-        <div>
-          <p>Депозит: <span class="stat-value" id="dep1">0</span></p>
-          <p>Процент: <span class="stat-value" id="intRate">0.5</span>%</p>
+      <h2>🏦 БАНКОВСКАЯ ИМПЕРИЯ</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">💰 ДЕПОЗИТ</div>
+          <div class="stat-item-value" id="bankDeposit">0</div>
         </div>
-        <div>
-          <p>Уровень: <span class="stat-value" id="bankLvl">1</span></p>
-          <p>Доход/сек: <span class="stat-value" id="bankIncome">0</span></p>
+        <div class="stat-item">
+          <div class="stat-item-label">📊 СТАВКА</div>
+          <div class="stat-item-value" id="bankRate">0.5%</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">🔝 УРОВЕНЬ</div>
+          <div class="stat-item-value" id="bankLvl">1</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">💸 ДОХОД/СЕК</div>
+          <div class="stat-item-value" id="bankIncome">0</div>
         </div>
       </div>
-      <button onclick="bankDeposit()">📥 Положить 10%</button>
-      <button onclick="bankWithdraw()">📤 Снять 50%</button>
-      <button onclick="bankUpgrade()">⬆️ Улучшить (10K) - Повышает %</button>
+      <button onclick="bankDeposit()" style="width: 32%; display: inline-block;">📥 ПОЛОЖИТЬ 10%</button>
+      <button onclick="bankWithdraw()" style="width: 32%; display: inline-block;">📤 СНЯТЬ 50%</button>
+      <button onclick="bankUpgrade()" style="width: 32%; display: inline-block;">⬆️ УЛУЧШИТЬ</button>
     </div>
   </div>
 
   <!-- БИЗНЕС -->
   <div id="business" class="section">
     <div class="card">
-      <h2>🏢 ДЕЛОВЫЕ ПРЕДПРИЯТИЯ</h2>
-      <div id="businessList"></div>
+      <h2>🏢 МАЛЫЙ И СРЕДНИЙ БИЗНЕС</h2>
+      <div class="scroll-list" id="businessList"></div>
     </div>
   </div>
 
-  <!-- РАБОТНИКИ -->
-  <div id="workers" class="section">
+  <!-- ПРОМЫШЛЕННОСТЬ -->
+  <div id="industry" class="section">
     <div class="card">
-      <h2>👷 НАЙМИТЕ РАБОТНИКОВ</h2>
-      <div id="workersList"></div>
+      <h2>🏭 ПРОМЫШЛЕННЫЕ КОМПЛЕКСЫ</h2>
+      <div class="scroll-list" id="industryList"></div>
+    </div>
+  </div>
+
+  <!-- ПЕРСОНАЛ -->
+  <div id="workforce" class="section">
+    <div class="card">
+      <h2>👨‍💼 СИСТЕМА ПЕРСОНАЛА</h2>
+      <div class="scroll-list" id="workforceList"></div>
     </div>
   </div>
 
   <!-- ПИТОМЦЫ -->
   <div id="pets" class="section">
     <div class="card">
-      <h2>🐾 ПИТОМЦЫ</h2>
-      <p>Питомцев: <span class="stat-value" id="petCount">0</span></p>
-      <p>Бонус мощи: <span class="stat-value" id="petBonus">x1</span></p>
-      <div id="petsList"></div>
+      <h2>🐾 МАГИЧЕСКИЕ ПИТОМЦЫ</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">🐾 ВСЕГО ПИТОМЦЕВ</div>
+          <div class="stat-item-value" id="petCount">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">⚡ БОЕВОЙ БОНУС</div>
+          <div class="stat-item-value" id="petBonus">x1</div>
+        </div>
+      </div>
+      <div class="scroll-list" id="petsList"></div>
     </div>
   </div>
 
-  <!-- КВЕСТЫ -->
-  <div id="quests" class="section">
+  <!-- ИССЛЕДОВАНИЯ -->
+  <div id="research" class="section">
     <div class="card">
-      <h2>📜 ЕЖЕДНЕВНЫЕ КВЕСТЫ</h2>
-      <p style="color:#aaa;font-size:0.9em">Завершите квесты за дополнительные награды</p>
-      <div id="questsList"></div>
+      <h2>🔬 ТЕХНОЛОГИЧЕСКИЕ ИССЛЕДОВАНИЯ</h2>
+      <p style="color: #ffd700; margin: 10px 0;">Улучшайте технологии для получения мощных бонусов</p>
+      <div class="scroll-list" id="researchList"></div>
+    </div>
+  </div>
+
+  <!-- ПРЕСТИЖ -->
+  <div id="prestige" class="section">
+    <div class="prestige-box">
+      <h2>👑 СИСТЕМА ПРЕСТИЖА</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">⭐ УРОВЕНЬ ПРЕСТИЖА</div>
+          <div class="stat-item-value" id="pres1">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">💎 МНОЖИТЕЛЬ ПРЕСТИЖА</div>
+          <div class="stat-item-value" id="pres2">x1</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">✨ ПАССИВНЫЙ БОНУС</div>
+          <div class="stat-item-value" id="pres3">x1</div>
+        </div>
+      </div>
+      <p style="color: #ffd700; margin: 15px 0; font-size: 1.1em;">
+        Каждый престиж даёт +1.5x ко всем множителям. Сбросьте прогресс для получения престижа!
+      </p>
+      <button onclick="prestigeReset()" style="width: 100%; background: linear-gradient(135deg, #ffd700 0%, #ff8800 100%); color: #000; padding: 20px; font-size: 1.2em;">
+        ⭐ ПРОМОУТИТЬСЯ (нужно 10T денег)
+      </button>
+    </div>
+  </div>
+
+  <!-- УЛУЧШЕНИЯ -->
+  <div id="upgrades" class="section">
+    <div class="card">
+      <h2>⬆️ ГЛОБАЛЬНЫЕ УЛУЧШЕНИЯ</h2>
+      <div class="scroll-list" id="upgradesList"></div>
+    </div>
+  </div>
+
+  <!-- ИНВЕСТИЦИИ -->
+  <div id="investments" class="section">
+    <div class="card">
+      <h2>📈 ФОНДОВАЯ БИРЖА И ИНВЕСТИЦИИ</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">💼 ПОРТФЕЛЬ</div>
+          <div class="stat-item-value" id="portfolio">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">📊 ДОХОД</div>
+          <div class="stat-item-value" id="portfolioIncome">0</div>
+        </div>
+      </div>
+      <button onclick="investRisky()" style="width: 48%; display: inline-block;">🎲 РИСКОВАТЬ (1M)</button>
+      <button onclick="investSafe()" style="width: 48%; display: inline-block;">🛡️ БЕЗОПАСНО (100K)</button>
+      <button onclick="sellInvestments()" style="width: 100%; margin-top: 10px;">💸 ПРОДАТЬ ПОРТФЕЛЬ</button>
     </div>
   </div>
 
   <!-- СОБЫТИЯ -->
   <div id="events" class="section">
     <div class="card">
-      <h2>🎉 ВРЕМЕННЫЕ СОБЫТИЯ</h2>
-      <p style="color:#aaa;font-size:0.9em">Ограниченные события с бонусами</p>
-      <div id="eventsList"></div>
+      <h2>🎉 ВРЕМЕННЫЕ СОБЫТИЯ И БОНУСЫ</h2>
+      <div class="scroll-list" id="eventsList"></div>
+    </div>
+  </div>
+
+  <!-- КВЕСТЫ -->
+  <div id="quests" class="section">
+    <div class="card">
+      <h2>📜 СИСТЕМА КВЕСТОВ</h2>
+      <div class="scroll-list" id="questsList"></div>
     </div>
   </div>
 
   <!-- КЛАН -->
   <div id="clan" class="section">
     <div class="card">
-      <h2>🏛️ СИСТЕМА КЛАНА</h2>
-      <p>Мой клан: <span class="stat-value" id="clanName">Нет</span></p>
-      <p>Уровень клана: <span class="stat-value" id="clanLevel">0</span></p>
-      <p>Членов: <span class="stat-value" id="clanMembers">0</span>/10</p>
-      <button onclick="createClan()">📋 Создать клан (50K)</button>
-      <button onclick="leaveClan()">🚪 Покинуть клан</button>
-      <div id="clanInfo" style="margin-top:15px"></div>
+      <h2>🏛️ КЛАНОВ ДИНАМИКА</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-label">👥 КЛАН</div>
+          <div class="stat-item-value" id="clanName" style="font-size: 1.2em;">-</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">📊 УРОВЕНЬ</div>
+          <div class="stat-item-value" id="clanLevel">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-label">👤 ЧЛЕНОВ</div>
+          <div class="stat-item-value" id="clanMembers">0/20</div>
+        </div>
+      </div>
+      <button onclick="createClan()" style="width: 48%;">📋 СОЗДАТЬ</button>
+      <button onclick="leaveClan()" style="width: 48%;">🚪 ВЫЙТИ</button>
+    </div>
+  </div>
+
+  <!-- ДОСТИЖЕНИЯ -->
+  <div id="achievements" class="section">
+    <div class="card">
+      <h2>🎖️ СИСТЕМА ДОСТИЖЕНИЙ</h2>
+      <p style="color: #ffd700; margin: 10px 0;">Выполняйте достижения и получайте ценные бонусы!</p>
+      <div class="scroll-list" id="achievementsList"></div>
     </div>
   </div>
 
   <!-- ЛИДЕРЫ -->
   <div id="leaderboard" class="section">
     <div class="card">
-      <h2>🏆 ТАБЛИЦА ЛИДЕРОВ</h2>
+      <h2>🏆 ГЛОБАЛЬНАЯ ТАБЛИЦА ЛИДЕРОВ</h2>
       <table id="leaderboardTable">
         <thead>
           <tr>
-            <th>Место</th>
-            <th>Игрок</th>
-            <th>Уровень</th>
-            <th>Денег</th>
-            <th>Депозит</th>
+            <th>🥇</th>
+            <th>👤 Игрок</th>
+            <th>⭐ Уровень</th>
+            <th>💰 Денег</th>
+            <th>👑 Престиж</th>
           </tr>
         </thead>
         <tbody id="leaderboardBody"></tbody>
@@ -528,21 +430,13 @@ table tr:hover {
     </div>
   </div>
 
-  <!-- МАГАЗИН -->
-  <div id="shop" class="section">
-    <div class="card">
-      <h2>🛒 МАГАЗИН УЛУЧШЕНИЙ</h2>
-      <div id="shopList"></div>
-    </div>
-  </div>
-
   <!-- НАСТРОЙКИ -->
   <div id="settings" class="section">
     <div class="card">
-      <h2>⚙️ НАСТРОЙКИ</h2>
-      <button onclick="exportData()" style="width:100%">💾 Экспорт сохранения</button>
-      <button onclick="importData()" style="width:100%;margin-top:10px">📂 Импорт сохранения</button>
-      <button onclick="resetGame()" style="width:100%;margin-top:10px;background:linear-gradient(135deg, #ff4444 0%, #cc0000 100%)">🔄 ПОЛНЫЙ СБРОС</button>
+      <h2>⚙️ НАСТРОЙКИ И ЭКСПОРТ</h2>
+      <button onclick="exportData()" style="width: 100%; margin-bottom: 10px;">💾 ЭКСПОРТ СОХРАНЕНИЯ</button>
+      <button onclick="importData()" style="width: 100%; margin-bottom: 10px;">📂 ИМПОРТ СОХРАНЕНИЯ</button>
+      <button onclick="resetGame()" style="width: 100%; background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);">🔄 ПОЛНЫЙ СБРОС</button>
       <input type="file" id="fileInput" style="display:none" onchange="handleFileImport()">
     </div>
   </div>
@@ -552,6 +446,56 @@ table tr:hover {
 let authMode = 'login';
 let currentUser = null;
 let gameLoop;
+
+const BUSINESSES = Array.from({length: 20}, (_, i) => ({
+  id: i+1, name: `Бизнес Уровня ${i+1} ${['🍋','☕','🍔','🏨','🎰','🏦','🏢','👑','🌌','🔮','⚡','💎','🚀','🎪','🎭','🎬','🎨','🎸','📚','🏥'][i]}`,
+  baseCost: Math.pow(10, 2 + i*0.5), baseIncome: Math.pow(10, i*0.6)
+}));
+
+const INDUSTRIES = Array.from({length: 20}, (_, i) => ({
+  id: i+1, name: `Промплант ${i+1} ${['⚙️','🔧','🛠️','⚡','💫','🌊','❄️','🔥','💨','🌪️','🌈','🎆','✨','🌟','💫','⭐','🌠','🪐','🌙','☄️'][i]}`,
+  baseCost: Math.pow(10, 3 + i*0.6), baseIncome: Math.pow(10, 1 + i*0.7)
+}));
+
+const WORKERS = Array.from({length: 15}, (_, i) => ({
+  id: i+1, name: ['Стажер','Рабочий','Техник','Мастер','Инженер','Директор','CEO','Магнат','Титан','Архи-Капиталист','Божественный Босс','Космический Щеф','Галактический Лидер','Вселенский Правитель','Омниправитель'][i],
+  icon: ['👨','💼','🔧','🎓','👔','🎩','💎','👑','🌟','✨','💫','🌌','🪐','🌠','∞'][i],
+  baseCost: Math.pow(100, 1 + i*0.3)
+}));
+
+const PETS = Array.from({length: 18}, (_, i) => ({
+  id: i+1, name: ['Кот','Собака','Дракон','Феникс','Единорог','Голем','Ангел','Демон','Божество','Архидемон','Титан','Архититан','Космический Китай','Галактический Левиафан','Универсальная Сущность','Супер ИИ Питомец','Омни Сущность','Инфинити Питомец'][i],
+  icon: ['🐱','🐶','🐉','🔥','🦄','🌑','👼','😈','👹','💀','🦁','🦅','🐋','🐲','🪲','🤖','👾','∞'][i],
+  cost: Math.pow(100, 2 + i*0.4), power: 1 + i*0.15
+}));
+
+const TECHNOLOGIES = Array.from({length: 25}, (_, i) => ({
+  id: i+1, name: ['Механизация','Электрификация','Автоматизация','Кибернетизация','AI Интеграция','Квантовые Вычисления','Нейронные Сети','Галактические Двигатели','Телепортация','Временные Петли','Пространственные Швы','Размерные Врата','Божественная Энергия','Космическое Излучение','Темная Материя','Антиматерия','Плазма Ядра','Нейтронный Коллапс','Сингулярность','Бесконечность','Омниверсальная Энергия','Мультивселенная Синергия','Суперкластер Сила','Гиперреальность','Абсолютное Всё'][i],
+  baseCost: Math.pow(10, 4 + i*0.8), bonus: 1 + i*0.1
+}));
+
+const ACHIEVEMENTS = [
+  {id: 1, name: '🥚 Рождение', desc: 'Сделай первый клик', check: () => gameData.totalClicks >= 1, bonus: 0.01},
+  {id: 2, name: '🎯 Сотня', desc: '100 кликов', check: () => gameData.totalClicks >= 100, bonus: 0.02},
+  {id: 3, name: '💰 Миллион', desc: '1M заработано', check: () => gameData.totalEarned >= 1e6, bonus: 0.05},
+  {id: 4, name: '⭐ Титан', desc: 'Уровень 100', check: () => gameData.level >= 100, bonus: 0.1},
+  {id: 5, name: '🏦 Магнат', desc: '1B денег', check: () => gameData.totalEarned >= 1e9, bonus: 0.15},
+  {id: 6, name: '👑 Император', desc: 'Уровень 500', check: () => gameData.level >= 500, bonus: 0.2},
+  {id: 7, name: '🌌 Вселенский', desc: 'Уровень 1000', check: () => gameData.level >= 1000, bonus: 0.3},
+  {id: 8, name: '∞ Бесконечность', desc: 'Все исследования', check: () => Object.keys(gameData.technologies || {}).length >= TECHNOLOGIES.length, bonus: 0.5},
+];
+
+let gameData = {
+  money: 0, power: 1, level: 1, xp: 0, xpMax: 1000, xpGrowth: 1.2,
+  deposit: 0, bankLevel: 1, bankRate: 0.5,
+  businesses: {}, industries: {}, workers: {}, pets: [],
+  technologies: {}, upgrades: {}, investments: 0,
+  lastDaily: 0, lastWeekly: 0, lastMonthly: 0, lastWheel: 0,
+  prestigeLvl: 0, prestigeBonus: 1, passiveMulti: 1,
+  clanName: null, clanLevel: 0, clanMembers: [],
+  totalEarned: 0, totalClicks: 0, multiplier: 1,
+  startTime: Date.now(), achievementsCompleted: []
+};
 
 function toggleAuthMode() {
   authMode = authMode === 'login' ? 'register' : 'login';
@@ -574,7 +518,7 @@ function authSubmit() {
   const msg = document.getElementById('authMessage');
 
   if (!username || !password) {
-    msg.innerHTML = '<div class="error-msg">❌ Заполните все поля!</div>';
+    msg.innerHTML = '<div class="error-msg">❌ Заполните оба поля!</div>';
     return;
   }
 
@@ -582,12 +526,12 @@ function authSubmit() {
 
   if (authMode === 'register') {
     if (users[username]) {
-      msg.innerHTML = '<div class="error-msg">❌ Существует!</div>';
+      msg.innerHTML = '<div class="error-msg">❌ Пользователь существует!</div>';
       return;
     }
     users[username] = hashPassword(password);
     localStorage.setItem('bankUsers', JSON.stringify(users));
-    msg.innerHTML = '<div class="success-msg">✅ Создано!</div>';
+    msg.innerHTML = '<div class="success-msg">✅ Аккаунт создан!</div>';
     authMode = 'login';
     document.getElementById('authTitle').textContent = '🏦 ВХОД';
     document.getElementById('authPassword').value = '';
@@ -618,71 +562,9 @@ function showGame() {
   startGameLoop();
 }
 
-const businesses = [
-  {id: 1, name: 'Лимонад', icon: '🍋', baseCost: 100, baseIncome: 1, level: 0},
-  {id: 2, name: 'Кофейня', icon: '☕', baseCost: 500, baseIncome: 5, level: 0},
-  {id: 3, name: 'Ресторан', icon: '🍔', baseCost: 5000, baseIncome: 50, level: 0},
-  {id: 4, name: 'Отель', icon: '🏨', baseCost: 50000, baseIncome: 500, level: 0},
-  {id: 5, name: 'Казино', icon: '🎰', baseCost: 500000, baseIncome: 5000, level: 0},
-  {id: 6, name: 'Банк', icon: '🏦', baseCost: 5000000, baseIncome: 50000, level: 0},
-  {id: 7, name: 'Корпорация', icon: '🏢', baseCost: 50000000, baseIncome: 500000, level: 0},
-  {id: 8, name: 'Империя', icon: '👑', baseCost: 500000000, baseIncome: 5000000, level: 0},
-];
-
-const workers = [
-  {id: 1, name: 'Юноша', icon: '🧑', baseCost: 50, productivity: 1.1},
-  {id: 2, name: 'Рабочий', icon: '💪', baseCost: 500, productivity: 1.3},
-  {id: 3, name: 'Менеджер', icon: '👔', baseCost: 5000, productivity: 1.5},
-  {id: 4, name: 'Директор', icon: '🎩', baseCost: 50000, productivity: 2.0},
-  {id: 5, name: 'CEO', icon: '🤵', baseCost: 500000, productivity: 3.0},
-];
-
-const pets = [
-  {id: 1, name: 'Кот', icon: '🐱', cost: 1000, power: 1.1, income: 10},
-  {id: 2, name: 'Собака', icon: '🐶', cost: 5000, power: 1.2, income: 50},
-  {id: 3, name: 'Дракон', icon: '🐉', cost: 100000, power: 1.5, income: 1000},
-  {id: 4, name: 'Феникс', icon: '🔥', cost: 1000000, power: 2.0, income: 10000},
-  {id: 5, name: 'Единорог', icon: '🦄', cost: 10000000, power: 2.5, income: 100000},
-];
-
-const shopItems = [
-  {id: 1, name: 'Удвоитель мощи', icon: '⚡', cost: 100000, bonus: 2.0},
-  {id: 2, name: 'Утроитель дохода', icon: '💰', cost: 500000, bonus: 3.0},
-  {id: 3, name: 'Ускоритель', icon: '⏱️', cost: 1000000, bonus: 1.5},
-];
-
-let gameData = {
-  money: 0,
-  power: 1,
-  level: 1,
-  xp: 0,
-  xpMax: 1000,
-  deposit: 0,
-  prestige: 0,
-  clanName: null,
-  clanLevel: 0,
-  clanMembers: [],
-  businesses: {},
-  workers: {},
-  pets: [],
-  lastDaily: 0,
-  lastWeekly: 0,
-  lastMonthly: 0,
-  lastWheel: 0,
-  bankLevel: 1,
-  bankIncome: 0,
-  totalEarned: 0,
-  totalClicks: 0,
-  multiplier: 1,
-  startTime: Date.now(),
-  shopItems: {}
-};
-
 function loadGame() {
   const saved = localStorage.getItem(`bankgame_${currentUser}`);
-  if (saved) {
-    gameData = {...gameData, ...JSON.parse(saved)};
-  }
+  if (saved) gameData = {...gameData, ...JSON.parse(saved)};
   updateUI();
 }
 
@@ -691,11 +573,17 @@ function saveGame() {
 }
 
 function getRank() {
-  const ranks = ['Новичок', 'Стажер', 'Профи', 'Мастер', 'Легенда', 'Бог', 'ИМПЕРЕР'];
-  return ranks[Math.min(Math.floor(gameData.level / 10), 6)];
+  const ranks = ['Новичок','Охотник','Боец','Герой','Легенда','Полубог','Бог','АРХИИМПЕРАТОР','∞ СУЩНОСТЬ'];
+  return ranks[Math.min(Math.floor(gameData.level / 150), 8)];
 }
 
 function formatNum(n) {
+  if (n >= 1e33) return (n / 1e33).toFixed(2) + 'Dec';
+  if (n >= 1e30) return (n / 1e30).toFixed(2) + 'Nov';
+  if (n >= 1e27) return (n / 1e27).toFixed(2) + 'Oct';
+  if (n >= 1e24) return (n / 1e24).toFixed(2) + 'Sp';
+  if (n >= 1e21) return (n / 1e21).toFixed(2) + 'Sx';
+  if (n >= 1e18) return (n / 1e18).toFixed(2) + 'Qi';
   if (n >= 1e15) return (n / 1e15).toFixed(1) + 'Q';
   if (n >= 1e12) return (n / 1e12).toFixed(1) + 'T';
   if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
@@ -709,20 +597,21 @@ function notify(msg) {
   div.className = 'notification';
   div.textContent = msg;
   document.body.appendChild(div);
-  setTimeout(() => div.remove(), 3000);
+  setTimeout(() => div.remove(), 4000);
 }
 
 function click() {
-  const income = gameData.power * 100 * gameData.multiplier;
+  const income = gameData.power * 10000 * gameData.multiplier * gameData.prestigeBonus * gameData.passiveMulti;
   gameData.money += income;
   gameData.totalEarned += income;
   gameData.totalClicks++;
-  gameData.xp += 1;
+  gameData.xp += 10;
   
   if (gameData.xp >= gameData.xpMax) {
     gameData.xp = 0;
     gameData.level++;
-    gameData.xpMax = Math.floor(gameData.xpMax * 1.1);
+    gameData.power *= 1.25;
+    gameData.xpMax = Math.floor(gameData.xpMax * gameData.xpGrowth);
     notify(`⭐ УРОВЕНЬ ${gameData.level}!`);
   }
   
@@ -734,10 +623,10 @@ function rewardDaily() {
   const now = Date.now();
   if (now - gameData.lastDaily < 86400000) {
     const h = Math.floor((86400000 - (now - gameData.lastDaily)) / 3600000);
-    notify(`⛔ Через ${h}ч`);
+    notify(`⛔ ${h}ч`);
     return;
   }
-  const reward = Math.max(gameData.totalEarned * 0.1, 10000);
+  const reward = Math.max(gameData.totalEarned * 0.2, 100000);
   gameData.money += reward;
   gameData.totalEarned += reward;
   gameData.lastDaily = now;
@@ -750,14 +639,14 @@ function rewardWeekly() {
   const now = Date.now();
   if (now - gameData.lastWeekly < 604800000) {
     const d = Math.floor((604800000 - (now - gameData.lastWeekly)) / 86400000);
-    notify(`⛔ Через ${d}д`);
+    notify(`⛔ ${d}д`);
     return;
   }
-  const reward = Math.max(gameData.totalEarned * 0.5, 100000);
+  const reward = gameData.totalEarned * 1;
   gameData.money += reward;
-  gameData.power *= 1.05;
+  gameData.power *= 1.15;
   gameData.lastWeekly = now;
-  notify(`📦 +${formatNum(reward)} + мощь`);
+  notify(`📦 +${formatNum(reward)} + 15% мощи`);
   updateUI();
   saveGame();
 }
@@ -766,45 +655,49 @@ function rewardMonthly() {
   const now = Date.now();
   if (now - gameData.lastMonthly < 2592000000) {
     const d = Math.floor((2592000000 - (now - gameData.lastMonthly)) / 86400000);
-    notify(`⛔ Через ${d}д`);
+    notify(`⛔ ${d}д`);
     return;
   }
-  const reward = Math.max(gameData.totalEarned, 1000000);
+  const reward = gameData.totalEarned * 5;
   gameData.money += reward;
-  gameData.multiplier *= 1.1;
+  gameData.multiplier *= 2;
   gameData.lastMonthly = now;
-  notify(`🎉 +${formatNum(reward)} + множитель`);
+  notify(`🎉 +${formatNum(reward)} + x2 множитель!`);
   updateUI();
   saveGame();
 }
 
 function spinWheel() {
   const now = Date.now();
-  if (gameData.money < 1000000) {
-    notify('❌ Нужно 1M');
+  if (gameData.money < 100000000) {
+    notify('❌ Нужно 100M');
     return;
   }
   if (now - gameData.lastWheel < 3600000) {
     const m = Math.floor((3600000 - (now - gameData.lastWheel)) / 60000);
-    notify(`⛔ Через ${m}м`);
+    notify(`⛔ ${m}м`);
     return;
   }
   
-  gameData.money -= 1000000;
+  gameData.money -= 100000000;
   const rewards = [
-    {text: '+5M', money: 5000000},
-    {text: '+50M', money: 50000000},
-    {text: '+500M', money: 500000000},
-    {text: '+2.0x Мощь', power: 2},
-    {text: '+10 Уровней', level: 10},
+    {text: '+1B', money: 1000000000},
+    {text: '+100B', money: 100000000000},
+    {text: 'x2 мощь', power: 2},
+    {text: '+50 уровней', level: 50},
+    {text: '+100 уровней', level: 100},
     {text: 'Питомец', pet: true},
+    {text: 'x5 множитель', mult: 5},
+    {text: '+10 уровней за Престиж', prestige: true},
   ];
   const r = rewards[Math.floor(Math.random() * rewards.length)];
   
   if (r.money) { gameData.money += r.money; gameData.totalEarned += r.money; }
   if (r.power) gameData.power *= r.power;
-  if (r.level) { gameData.level += r.level; gameData.xpMax = Math.floor(gameData.xpMax * 1.1 ** r.level); }
-  if (r.pet) gameData.pets.push({id: Math.random(), type: 'random'});
+  if (r.level) { gameData.level += r.level; gameData.xpMax *= 1.1 ** r.level; }
+  if (r.mult) gameData.multiplier *= r.mult;
+  if (r.pet) gameData.pets.push(PETS[Math.floor(Math.random() * PETS.length)]);
+  if (r.prestige) gameData.prestigeLvl += 10;
   
   gameData.lastWheel = now;
   notify(`🎡 ${r.text}`);
@@ -814,10 +707,7 @@ function spinWheel() {
 
 function bankDeposit() {
   const amt = Math.floor(gameData.money * 0.1);
-  if (amt === 0) {
-    notify('❌ Мало денег');
-    return;
-  }
+  if (amt === 0) { notify('❌ Мало денег'); return; }
   gameData.money -= amt;
   gameData.deposit += amt;
   notify(`📥 +${formatNum(amt)}`);
@@ -835,259 +725,335 @@ function bankWithdraw() {
 }
 
 function bankUpgrade() {
-  const cost = 10000 * Math.pow(1.5, gameData.bankLevel - 1);
-  if (gameData.money < cost) {
-    notify('❌ Не хватает');
-    return;
-  }
+  const cost = 1000000 * Math.pow(2, gameData.bankLevel - 1);
+  if (gameData.money < cost) { notify(`❌ Нужно ${formatNum(cost)}`); return; }
   gameData.money -= cost;
   gameData.bankLevel++;
-  gameData.bankIncome = gameData.deposit * (0.001 + gameData.bankLevel * 0.0005);
+  gameData.bankRate += 0.25;
   notify('📈 Банк улучшен');
   updateUI();
   saveGame();
 }
 
-function buyBusiness(id) {
-  const bus = businesses.find(b => b.id === id);
-  const lvl = gameData.businesses[id] || 0;
-  const cost = bus.baseCost * Math.pow(1.2, lvl);
+function buyItem(category, id) {
+  const categories = {business: BUSINESSES, industry: INDUSTRIES, worker: WORKERS, pet: PETS, technology: TECHNOLOGIES};
+  const items = categories[category];
+  const item = items.find(i => i.id === id);
+  const data = gameData[category === 'pet' ? 'pets' : category === 'technology' ? 'technologies' : category === 'worker' ? 'workers' : category === 'industry' ? 'industries' : 'businesses'];
   
-  if (gameData.money < cost) {
-    notify('❌ Дорого');
-    return;
+  if (category === 'pet') {
+    if (gameData.money < item.cost) { notify(`❌ ${formatNum(item.cost)}`); return; }
+    gameData.money -= item.cost;
+    gameData.pets.push(item);
+    notify(`🐾 ${item.icon} ${item.name}`);
+  } else if (category === 'technology') {
+    if (gameData.money < item.baseCost) { notify(`❌ ${formatNum(item.baseCost)}`); return; }
+    gameData.money -= item.baseCost;
+    if (!gameData.technologies[id]) gameData.technologies[id] = 0;
+    gameData.technologies[id]++;
+    gameData.multiplier *= item.bonus;
+    notify(`🔬 ${item.name}`);
+  } else {
+    const lvl = data[id] || 0;
+    const cost = item.baseCost * Math.pow(1.2, lvl);
+    if (gameData.money < cost) { notify(`❌ ${formatNum(cost)}`); return; }
+    gameData.money -= cost;
+    data[id] = lvl + 1;
+    notify(`✅ ${item.name} уровень ${lvl + 1}`);
   }
-  
-  gameData.money -= cost;
-  gameData.businesses[id] = (gameData.businesses[id] || 0) + 1;
-  notify(`🏢 +${bus.name}`);
   updateUI();
   saveGame();
 }
 
-function hireWorker(id) {
-  const wrk = workers.find(w => w.id === id);
-  const cost = wrk.baseCost * Math.pow(1.2, (gameData.workers[id] || 0));
-  
-  if (gameData.money < cost) {
-    notify('❌ Дорого');
-    return;
-  }
-  
-  gameData.money -= cost;
-  gameData.workers[id] = (gameData.workers[id] || 0) + 1;
-  gameData.multiplier *= 1.02;
-  notify(`👷 +${wrk.name}`);
+function investRisky() {
+  if (gameData.money < 1000000) { notify('❌ Нужно 1M'); return; }
+  gameData.money -= 1000000;
+  const gain = Math.random() > 0.4 ? 3000000 : 300000;
+  gameData.investments += gain;
+  notify(gain > 500000 ? '🎲 УСПЕХ!' : '🎲 Неудача');
   updateUI();
   saveGame();
 }
 
-function buyPet(id) {
-  const pet = pets.find(p => p.id === id);
-  if (gameData.money < pet.cost) {
-    notify('❌ Дорого');
+function investSafe() {
+  if (gameData.money < 100000) { notify('❌ Нужно 100K'); return; }
+  gameData.money -= 100000;
+  gameData.investments += 110000;
+  notify('🛡️ Инвестировано');
+  updateUI();
+  saveGame();
+}
+
+function sellInvestments() {
+  gameData.money += gameData.investments;
+  gameData.totalEarned += gameData.investments;
+  gameData.investments = 0;
+  notify('💸 Портфель продан');
+  updateUI();
+  saveGame();
+}
+
+function prestigeReset() {
+  if (gameData.money < 10000000000000) {
+    notify(`❌ Нужно 10T (у вас ${formatNum(gameData.money)})`);
     return;
   }
-  gameData.money -= pet.cost;
-  gameData.pets.push(pet);
-  notify(`🐾 ${pet.icon} ${pet.name}`);
+  gameData.money = 0;
+  gameData.power = 1;
+  gameData.level = 1;
+  gameData.xp = 0;
+  gameData.xpMax = 1000;
+  gameData.deposit = 0;
+  gameData.businesses = {};
+  gameData.industries = {};
+  gameData.workers = {};
+  gameData.pets = [];
+  gameData.technologies = {};
+  gameData.multiplier = 1;
+  gameData.prestigeLvl++;
+  gameData.prestigeBonus = 1 + gameData.prestigeLvl * 1.5;
+  notify(`👑 ПРЕСТИЖ! Уровень ${gameData.prestigeLvl}`);
   updateUI();
   saveGame();
 }
 
 function createClan() {
-  if (gameData.money < 50000 || gameData.clanName) {
-    notify('❌ Невозможно');
-    return;
-  }
+  if (gameData.money < 5000000 || gameData.clanName) { notify('❌ Нельзя'); return; }
   const name = prompt('Имя клана:');
   if (!name) return;
-  gameData.money -= 50000;
+  gameData.money -= 5000000;
   gameData.clanName = name;
   gameData.clanLevel = 1;
   gameData.clanMembers = [currentUser];
-  notify(`🏛️ Клан создан`);
+  notify(`🏛️ ${name} создан`);
   updateUI();
   saveGame();
 }
 
 function leaveClan() {
-  if (!gameData.clanName) {
-    notify('❌ Вы не в клане');
-    return;
-  }
+  if (!gameData.clanName) { notify('❌ Не в клане'); return; }
   gameData.clanName = null;
   gameData.clanLevel = 0;
   gameData.clanMembers = [];
-  notify(`🚪 Вы покинули клан`);
+  notify(`🚪 Вы вышли`);
   updateUI();
   saveGame();
+}
+
+function updateCD(id, lastTime, cooldown) {
+  const now = Date.now();
+  const left = cooldown - (now - lastTime);
+  const elem = document.getElementById(id);
+  if (!elem) return;
+  if (left > 0) {
+    if (left > 86400000) elem.textContent = Math.ceil(left / 86400000) + 'д';
+    else if (left > 3600000) elem.textContent = Math.ceil(left / 3600000) + 'ч';
+    else elem.textContent = Math.ceil(left / 60000) + 'м';
+  } else elem.textContent = 'ГОТОВО';
 }
 
 function updateLeaderboard() {
   const users = JSON.parse(localStorage.getItem('bankUsers') || '{}');
   const leaderData = [];
-  
   for (let user in users) {
     const save = localStorage.getItem(`bankgame_${user}`);
     if (save) {
       const data = JSON.parse(save);
-      leaderData.push({
-        name: user,
-        level: data.level,
-        money: data.money,
-        deposit: data.deposit,
-        total: data.money + data.deposit
-      });
+      leaderData.push({name: user, level: data.level, money: data.money, prestige: data.prestigeLvl || 0, total: (data.money + data.deposit) * (1 + (data.prestigeLvl || 0) * 2)});
     }
   }
-  
   leaderData.sort((a, b) => b.total - a.total);
-  
   let html = '';
-  leaderData.slice(0, 100).forEach((p, i) => {
-    html += `<tr>
-      <td>${i + 1}</td>
-      <td>${p.name === currentUser ? '<b>' + p.name + ' (Вы)</b>' : p.name}</td>
-      <td>${p.level}</td>
-      <td>${formatNum(p.money)}</td>
-      <td>${formatNum(p.deposit)}</td>
-    </tr>`;
+  leaderData.slice(0, 50).forEach((p, i) => {
+    const medal = ['🥇','🥈','🥉'][i] || (i + 1);
+    html += `<tr><td>${medal}</td><td><strong>${p.name === currentUser ? '➤ ' + p.name + ' ⬅️' : p.name}</strong></td><td>${p.level}</td><td>${formatNum(p.money)}</td><td>${p.prestige}</td></tr>`;
   });
-  
   document.getElementById('leaderboardBody').innerHTML = html;
 }
 
 function updateUI() {
-  const petBonus = gameData.pets.length > 0 ? 1 + (gameData.pets.length * 0.1) : 1;
-  const actualPower = gameData.power * petBonus;
-  const income = actualPower * 100 * gameData.multiplier;
-  
-  document.getElementById('playerName').textContent = currentUser.toUpperCase();
+  const petBonus = gameData.pets.reduce((a, p) => a * p.power, 1);
+  const income = gameData.power * petBonus * 10000 * gameData.multiplier * gameData.prestigeBonus * gameData.passiveMulti;
+  const bankIncome = gameData.deposit * (gameData.bankRate * gameData.bankLevel / 100);
+
+  document.getElementById('playerName').textContent = currentUser?.toUpperCase() || '-';
   document.getElementById('level').textContent = gameData.level;
   document.getElementById('money').textContent = formatNum(gameData.money);
   document.getElementById('deposit').textContent = formatNum(gameData.deposit);
-  document.getElementById('prestige').textContent = gameData.prestige;
   document.getElementById('rank').textContent = getRank();
-  
-  document.getElementById('m1').textContent = formatNum(gameData.money);
-  document.getElementById('pow1').textContent = actualPower.toFixed(1);
-  document.getElementById('mult1').textContent = 'x' + gameData.multiplier.toFixed(2);
-  document.getElementById('xp1').textContent = gameData.xp.toFixed(0) + '/' + gameData.xpMax;
-  document.getElementById('lvl1').textContent = gameData.level;
-  document.getElementById('cps1').textContent = formatNum(income);
+  document.getElementById('playTime').textContent = Math.floor((Date.now() - gameData.startTime) / 3600000) + 'ч';
+  document.getElementById('achCount').textContent = gameData.achievementsCompleted.length;
+
+  document.getElementById('mainMoney').textContent = formatNum(gameData.money);
+  document.getElementById('mainPower').textContent = gameData.power.toFixed(1);
+  document.getElementById('mainMult').textContent = 'x' + (gameData.multiplier * gameData.prestigeBonus).toFixed(2);
+  document.getElementById('mainPassive').textContent = formatNum(income);
+
+  document.getElementById('clickMoney').textContent = formatNum(gameData.money);
+  document.getElementById('clickPower').textContent = gameData.power.toFixed(2);
+  document.getElementById('clickMult').textContent = 'x' + (gameData.multiplier * gameData.prestigeBonus * gameData.passiveMulti).toFixed(2);
+  document.getElementById('clickValue').textContent = formatNum(gameData.power * 10000 * gameData.multiplier * gameData.prestigeBonus * gameData.passiveMulti);
+  document.getElementById('clickVal2').textContent = formatNum(gameData.power * 10000 * gameData.multiplier * gameData.prestigeBonus * gameData.passiveMulti);
   
   const xpPct = (gameData.xp / gameData.xpMax * 100).toFixed(0);
   document.getElementById('xpBar').style.width = xpPct + '%';
-  
-  document.getElementById('dep1').textContent = formatNum(gameData.deposit);
-  document.getElementById('intRate').textContent = (0.5 + gameData.bankLevel * 0.25).toFixed(2);
+  document.getElementById('xpPercent').textContent = xpPct + '%';
+  document.getElementById('lvl').textContent = gameData.level;
+  document.getElementById('xp').textContent = Math.floor(gameData.xp);
+  document.getElementById('xpMax').textContent = gameData.xpMax;
+
+  document.getElementById('bankDeposit').textContent = formatNum(gameData.deposit);
+  document.getElementById('bankRate').textContent = gameData.bankRate.toFixed(2) + '%';
   document.getElementById('bankLvl').textContent = gameData.bankLevel;
-  document.getElementById('bankIncome').textContent = formatNum(gameData.deposit * (0.005 + gameData.bankLevel * 0.0005));
-  
+  document.getElementById('bankIncome').textContent = formatNum(bankIncome);
+
   document.getElementById('petCount').textContent = gameData.pets.length;
   document.getElementById('petBonus').textContent = 'x' + petBonus.toFixed(2);
-  
-  document.getElementById('clanName').textContent = gameData.clanName || 'Нет';
+
+  document.getElementById('pres1').textContent = gameData.prestigeLvl;
+  document.getElementById('pres2').textContent = 'x' + gameData.prestigeBonus.toFixed(2);
+  document.getElementById('pres3').textContent = 'x' + gameData.passiveMulti.toFixed(2);
+
+  document.getElementById('clanName').textContent = gameData.clanName || '-';
   document.getElementById('clanLevel').textContent = gameData.clanLevel;
-  document.getElementById('clanMembers').textContent = gameData.clanMembers.length;
-  
-  const now = Date.now();
-  const dailyLeft = 86400000 - (now - gameData.lastDaily);
-  document.getElementById('dailyCD').textContent = dailyLeft > 0 ? Math.floor(dailyLeft / 3600000) + 'ч' : 'ГОТОВО';
-  
-  const weeklyLeft = 604800000 - (now - gameData.lastWeekly);
-  document.getElementById('weeklyCD').textContent = weeklyLeft > 0 ? Math.floor(weeklyLeft / 86400000) + 'д' : 'ГОТОВО';
-  
-  const monthlyLeft = 2592000000 - (now - gameData.lastMonthly);
-  document.getElementById('monthlyCD').textContent = monthlyLeft > 0 ? Math.floor(monthlyLeft / 86400000) + 'д' : 'ГОТОВО';
-  
-  const wheelLeft = 3600000 - (now - gameData.lastWheel);
-  document.getElementById('wheelCD').textContent = wheelLeft > 0 ? Math.floor(wheelLeft / 60000) + 'м' : 'ГОТОВО';
-  
+  document.getElementById('clanMembers').textContent = gameData.clanMembers.length + '/20';
+
+  document.getElementById('portfolio').textContent = formatNum(gameData.investments);
+  document.getElementById('portfolioIncome').textContent = formatNum(gameData.investments * 0.01);
+
+  document.getElementById('totalEarned').textContent = formatNum(gameData.totalEarned);
+  document.getElementById('totalClicks').textContent = gameData.totalClicks;
+
+  updateCD('dailyCD', gameData.lastDaily, 86400000);
+  updateCD('weeklyCD', gameData.lastWeekly, 604800000);
+  updateCD('monthlyCD', gameData.lastMonthly, 2592000000);
+  updateCD('wheelCD', gameData.lastWheel, 3600000);
+
   updateBusinessList();
-  updateWorkersList();
+  updateIndustryList();
+  updateWorkforceList();
   updatePetsList();
+  updateResearchList();
+  updateUpgradesList();
+  updateEventsList();
   updateQuestsList();
-  updateShopList();
+  updateAchievementsList();
   updateLeaderboard();
 }
 
 function updateBusinessList() {
   let html = '';
-  businesses.forEach(b => {
+  BUSINESSES.forEach(b => {
     const lvl = gameData.businesses[b.id] || 0;
     const cost = b.baseCost * Math.pow(1.2, lvl);
     const income = b.baseIncome * Math.pow(1.15, lvl);
-    html += `<div class="item-row">
-      <span>${b.icon} ${b.name} (Уровень ${lvl})</span>
-      <div>
-        <span style="color:#ffff00">+${formatNum(income)}/сек</span>
-        <button onclick="buyBusiness(${b.id})">Купить (${formatNum(cost)})</button>
-      </div>
-    </div>`;
+    html += `<div class="item-row"><div><strong>${b.name}</strong> Уровень ${lvl}<br><span style="color: #00aa00;">+${formatNum(income)}/сек</span></div><button onclick="buyItem('business', ${b.id})">Купить ${formatNum(cost)}</button></div>`;
   });
   document.getElementById('businessList').innerHTML = html;
 }
 
-function updateWorkersList() {
+function updateIndustryList() {
   let html = '';
-  workers.forEach(w => {
-    const cnt = gameData.workers[w.id] || 0;
-    const cost = w.baseCost * Math.pow(1.2, cnt);
-    html += `<div class="item-row">
-      <span>${w.icon} ${w.name} (x${cnt})</span>
-      <button onclick="hireWorker(${w.id})">Нанять (${formatNum(cost)})</button>
-    </div>`;
+  INDUSTRIES.forEach(b => {
+    const lvl = gameData.industries[b.id] || 0;
+    const cost = b.baseCost * Math.pow(1.25, lvl);
+    const income = b.baseIncome * Math.pow(1.2, lvl);
+    html += `<div class="item-row"><div><strong>${b.name}</strong> Уровень ${lvl}<br><span style="color: #00aa00;">+${formatNum(income)}/сек</span></div><button onclick="buyItem('industry', ${b.id})">Купить ${formatNum(cost)}</button></div>`;
   });
-  document.getElementById('workersList').innerHTML = html;
+  document.getElementById('industryList').innerHTML = html;
+}
+
+function updateWorkforceList() {
+  let html = '';
+  WORKERS.forEach(w => {
+    const cnt = gameData.workers[w.id] || 0;
+    const cost = w.baseCost * Math.pow(1.3, cnt);
+    html += `<div class="item-row"><div><strong>${w.icon} ${w.name}</strong> x${cnt}</div><button onclick="buyItem('worker', ${w.id})">Нанять ${formatNum(cost)}</button></div>`;
+  });
+  document.getElementById('workforceList').innerHTML = html;
 }
 
 function updatePetsList() {
   let html = '';
-  pets.forEach(p => {
-    html += `<div class="item-row">
-      <span>${p.icon} ${p.name}</span>
-      <button onclick="buyPet(${p.id})">Купить (${formatNum(p.cost)})</button>
-    </div>`;
+  PETS.forEach(p => {
+    html += `<div class="item-row"><div><strong>${p.icon} ${p.name}</strong><br>Бонус: +${(p.power-1)*100|0}% мощи</div><button onclick="buyItem('pet', ${p.id})">Купить ${formatNum(p.cost)}</button></div>`;
   });
   document.getElementById('petsList').innerHTML = html;
 }
 
+function updateResearchList() {
+  let html = '';
+  TECHNOLOGIES.forEach(t => {
+    const lvl = (gameData.technologies[t.id] || 0);
+    html += `<div class="item-row"><div><strong>${t.name}</strong> Уровень ${lvl}<br>Множитель: x${t.bonus.toFixed(2)}</div><button onclick="buyItem('technology', ${t.id})">研究 ${formatNum(t.baseCost)}</button></div>`;
+  });
+  document.getElementById('researchList').innerHTML = html;
+}
+
+function updateUpgradesList() {
+  const upgrades = [
+    {name: '⚡ Удвоить мощь кликов', cost: 10000000, effect: () => { gameData.power *= 2; }, bonus: 'x2'},
+    {name: '📈 +50% множитель', cost: 50000000, effect: () => { gameData.multiplier *= 1.5; }, bonus: 'x1.5'},
+    {name: '🚀 x10 ускорение XP', cost: 100000000, effect: () => { gameData.xpGrowth = 1.1; }, bonus: 'Быстрее'},
+    {name: '💎 Пассивный x2', cost: 500000000, effect: () => { gameData.passiveMulti *= 2; }, bonus: 'x2'},
+    {name: '✨ Супер бонус', cost: 5000000000, effect: () => { gameData.multiplier *= 10; }, bonus: 'x10'},
+  ];
+  let html = '';
+  upgrades.forEach((u, i) => {
+    html += `<div class="item-row"><div><strong>${u.name}</strong><br>Эффект: ${u.bonus}</div><button onclick="buyUpgrade(${i})">Купить ${formatNum(u.cost)}</button></div>`;
+  });
+  document.getElementById('upgradesList').innerHTML = html;
+}
+
+function buyUpgrade(id) {
+  const upgrades = [
+    {cost: 10000000, effect: () => { gameData.power *= 2; }},
+    {cost: 50000000, effect: () => { gameData.multiplier *= 1.5; }},
+    {cost: 100000000, effect: () => { gameData.xpGrowth = 1.1; }},
+    {cost: 500000000, effect: () => { gameData.passiveMulti *= 2; }},
+    {cost: 5000000000, effect: () => { gameData.multiplier *= 10; }},
+  ];
+  const u = upgrades[id];
+  if (gameData.money < u.cost) { notify(`❌ ${formatNum(u.cost)}`); return; }
+  gameData.money -= u.cost;
+  u.effect();
+  notify('✅ Улучшено!');
+  updateUI();
+  saveGame();
+}
+
+function updateEventsList() {
+  let html = '<p style="color: #ffd700;">🌟 Активные события:</p>';
+  html += '<div class="item-row"><strong>✨ Двойной доход</strong> - Все заработки x2</div>';
+  html += '<div class="item-row"><strong>⚡ Энергия</strong> - Мощь x1.5</div>';
+  html += '<div class="item-row"><strong>💫 Везение</strong> - Крит клики возможны</div>';
+  document.getElementById('eventsList').innerHTML = html;
+}
+
 function updateQuestsList() {
-  let html = `<div class="item-row">
-    <span>🎯 Сделать 100 кликов</span>
-    <span>${gameData.totalClicks}/100</span>
-  </div>
-  <div class="item-row">
-    <span>🏪 Купить 5 бизнесов</span>
-    <span>${Object.keys(gameData.businesses).length}/5</span>
-  </div>`;
+  const quests = [
+    {emoji: '🎯', text: '1K кликов', progress: gameData.totalClicks, target: 1000},
+    {emoji: '💰', text: '1T заработано', progress: gameData.totalEarned, target: 1e12},
+    {emoji: '⭐', text: 'Уровень 500', progress: gameData.level, target: 500},
+    {emoji: '🏢', text: 'Все 20 бизнесов', progress: Object.keys(gameData.businesses).length, target: 20},
+    {emoji: '🏭', text: 'Все 20 промплантов', progress: Object.keys(gameData.industries).length, target: 20},
+    {emoji: '👨‍💼', text: 'Все 15 рабочих', progress: Object.keys(gameData.workers).length, target: 15},
+  ];
+  let html = '';
+  quests.forEach(q => {
+    const pct = Math.min((q.progress / q.target * 100), 100).toFixed(0);
+    html += `<div class="item-row"><div><strong>${q.emoji} ${q.text}</strong><br><div class="progress-bar"><div class="progress-fill" style="width: ${pct}%">${pct}%</div></div></div></div>`;
+  });
   document.getElementById('questsList').innerHTML = html;
 }
 
-function updateShopList() {
+function updateAchievementsList() {
   let html = '';
-  shopItems.forEach(item => {
-    html += `<div class="item-row">
-      <span>${item.icon} ${item.name}</span>
-      <button onclick="buyShop(${item.id})">Купить (${formatNum(item.cost)})</button>
-    </div>`;
+  ACHIEVEMENTS.forEach(a => {
+    const completed = gameData.achievementsCompleted.includes(a.id);
+    html += `<div class="achievement" style="opacity: ${completed ? 1 : 0.5}"><strong>${a.name}</strong> ${completed ? '✓' : ''}<br>${a.desc}</div>`;
   });
-  document.getElementById('shopList').innerHTML = html;
-}
-
-function buyShop(id) {
-  const item = shopItems.find(i => i.id === id);
-  if (gameData.money < item.cost) {
-    notify('❌ Дорого');
-    return;
-  }
-  gameData.money -= item.cost;
-  gameData.multiplier *= item.bonus;
-  notify(`✨ ${item.name}`);
-  updateUI();
-  saveGame();
+  document.getElementById('achievementsList').innerHTML = html;
 }
 
 function switchSection(id) {
@@ -1098,9 +1064,8 @@ function switchSection(id) {
 }
 
 function exportData() {
-  const data = JSON.stringify(gameData, null, 2);
   const a = document.createElement('a');
-  a.href = 'data:text/plain,' + encodeURIComponent(data);
+  a.href = 'data:text/plain,' + encodeURIComponent(JSON.stringify(gameData, null, 2));
   a.download = `bank_${currentUser}.json`;
   a.click();
   notify('💾 Экспортировано');
@@ -1113,7 +1078,6 @@ function importData() {
 function handleFileImport() {
   const file = document.getElementById('fileInput').files[0];
   if (!file) return;
-  
   const reader = new FileReader();
   reader.onload = e => {
     try {
@@ -1122,7 +1086,7 @@ function handleFileImport() {
       updateUI();
       notify('📂 Импортировано');
     } catch {
-      notify('❌ Ошибка импорта');
+      notify('❌ Ошибка');
     }
   };
   reader.readAsText(file);
@@ -1130,27 +1094,43 @@ function handleFileImport() {
 
 function resetGame() {
   if (!confirm('⚠️ ПОЛНЫЙ СБРОС?')) return;
-  gameData = {
-    money: 0, power: 1, level: 1, xp: 0, xpMax: 1000,
-    deposit: 0, prestige: 0, clanName: null, clanLevel: 0,
-    clanMembers: [], businesses: {}, workers: {}, pets: [],
-    lastDaily: 0, lastWeekly: 0, lastMonthly: 0, lastWheel: 0,
-    bankLevel: 1, bankIncome: 0, totalEarned: 0, totalClicks: 0,
-    multiplier: 1, startTime: Date.now(), shopItems: {}
-  };
+  gameData = {money: 0, power: 1, level: 1, xp: 0, xpMax: 1000, xpGrowth: 1.2, deposit: 0, bankLevel: 1, bankRate: 0.5, businesses: {}, industries: {}, workers: {}, pets: [], technologies: {}, upgrades: {}, investments: 0, lastDaily: 0, lastWeekly: 0, lastMonthly: 0, lastWheel: 0, prestigeLvl: 0, prestigeBonus: 1, passiveMulti: 1, clanName: null, clanLevel: 0, clanMembers: [], totalEarned: 0, totalClicks: 0, multiplier: 1, startTime: Date.now(), achievementsCompleted: []};
   saveGame();
   updateUI();
-  notify('🔄 Сброс');
+  notify('🔄 Сброшено');
 }
 
 function startGameLoop() {
   gameLoop = setInterval(() => {
-    const petBonus = gameData.pets.length > 0 ? 1 + (gameData.pets.length * 0.1) : 1;
-    const income = gameData.power * petBonus * 100 * gameData.multiplier;
-    const bankIncome = gameData.deposit * (0.005 + gameData.bankLevel * 0.0005);
+    const petBonus = gameData.pets.reduce((a, p) => a * p.power, 1);
     
-    gameData.money += income / 10 + bankIncome / 10;
-    gameData.totalEarned += income / 10 + bankIncome / 10;
+    let activeIncome = 0;
+    BUSINESSES.forEach(b => {
+      if (gameData.businesses[b.id]) {
+        activeIncome += b.baseIncome * Math.pow(1.15, gameData.businesses[b.id]) * gameData.multiplier * gameData.prestigeBonus;
+      }
+    });
+    
+    INDUSTRIES.forEach(b => {
+      if (gameData.industries[b.id]) {
+        activeIncome += b.baseIncome * Math.pow(1.2, gameData.industries[b.id]) * gameData.multiplier * gameData.prestigeBonus;
+      }
+    });
+    
+    const bankIncome = gameData.deposit * (gameData.bankRate * gameData.bankLevel / 100) * gameData.prestigeBonus;
+    const investIncome = gameData.investments * 0.01 * gameData.multiplier * gameData.prestigeBonus;
+    
+    gameData.money += (activeIncome + bankIncome + investIncome) / 10;
+    gameData.totalEarned += (activeIncome + bankIncome + investIncome) / 10;
+    
+    ACHIEVEMENTS.forEach(a => {
+      if (!gameData.achievementsCompleted.includes(a.id) && a.check()) {
+        gameData.achievementsCompleted.push(a.id);
+        gameData.multiplier *= (1 + a.bonus);
+        notify(`🎖️ ${a.name}!`);
+      }
+    });
+    
     updateUI();
     saveGame();
   }, 100);
