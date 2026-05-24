@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔥 ULTRA CLICKER EMPIRE 4.0</title>
+<title>🔥 ULTRA CLICKER EMPIRE 5.0 - ULTIMATE EDITION</title>
 
 <style>
 * {
@@ -20,6 +20,12 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   padding: 10px;
+  animation: bgShift 15s infinite;
+}
+
+@keyframes bgShift {
+  0%, 100% { background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f3460 100%); }
+  50% { background: linear-gradient(135deg, #1a0f2e 0%, #2a1a4e 50%, #1f4570 100%); }
 }
 
 h1 {
@@ -48,6 +54,31 @@ h1 {
   50% { transform: scale(1.1); }
 }
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) translateX(0); opacity: 1; }
+  100% { transform: translateY(-50px) translateX(20px); opacity: 0; }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
 .rainbow-text {
   animation: rainbow 3s linear infinite;
   font-weight: bold;
@@ -64,6 +95,12 @@ h1 {
   background: rgba(0, 255, 0, 0.1);
   border: 2px solid rgba(0, 255, 0, 0.3);
   border-radius: 15px;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .nav-btn {
@@ -76,6 +113,24 @@ h1 {
   font-weight: bold;
   transition: all 0.3s;
   font-size: 0.9em;
+  position: relative;
+}
+
+.nav-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 8px;
+  transition: left 0.3s;
+  z-index: -1;
+}
+
+.nav-btn:hover::before {
+  left: 0;
 }
 
 .nav-btn:hover {
@@ -88,6 +143,7 @@ h1 {
   background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
   border-color: #ffff00;
   box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+  animation: pulse 0.6s;
 }
 
 .section {
@@ -98,6 +154,12 @@ h1 {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
   border: 2px solid rgba(0, 255, 0, 0.3);
   border-radius: 15px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .section.active {
@@ -112,6 +174,12 @@ h1 {
   box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
   border: 2px solid rgba(0, 255, 0, 0.2);
   transition: all 0.3s;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .card:hover {
@@ -131,6 +199,12 @@ h1 {
   padding: 15px;
   border-radius: 10px;
   border: 1px solid rgba(0, 255, 0, 0.3);
+  animation: statPulse 0.5s ease-out;
+}
+
+@keyframes statPulse {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
 }
 
 .stat-value {
@@ -158,6 +232,26 @@ button {
   font-size: 1em;
   transition: all 0.3s;
   box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:active::after {
+  width: 300px;
+  height: 300px;
 }
 
 button:hover:not(:disabled) {
@@ -184,6 +278,11 @@ button:disabled {
   background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
   color: #fff;
   animation: pulse 1s ease-in-out infinite;
+  position: relative;
+}
+
+.big-button:hover:not(:disabled) {
+  animation: pulse 0.7s ease-in-out infinite;
 }
 
 .item {
@@ -194,11 +293,18 @@ button:disabled {
   margin: 10px 0;
   text-align: left;
   transition: all 0.3s;
+  animation: itemSlide 0.4s ease-out;
+}
+
+@keyframes itemSlide {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .item:hover {
   background: rgba(0, 255, 0, 0.15);
   border-color: rgba(0, 255, 0, 0.4);
+  transform: translateX(10px);
 }
 
 .item-header {
@@ -238,6 +344,7 @@ button:disabled {
   z-index: 2000;
   animation: slideIn 0.5s;
   max-width: 300px;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
 }
 
 @keyframes slideIn {
@@ -273,11 +380,37 @@ button:disabled {
   text-align: center;
   display: inline-block;
   min-width: 150px;
+  animation: petPop 0.5s ease-out;
+  transition: all 0.3s;
+  position: relative;
+}
+
+@keyframes petPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.pet-card:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 0 20px rgba(100, 150, 255, 0.5);
 }
 
 .pet-emoji {
   font-size: 3em;
   margin: 10px 0;
+  animation: bounce 0.6s infinite;
+}
+
+.pet-level {
+  font-size: 0.8em;
+  color: #64ff64;
+  margin-top: 5px;
+}
+
+.pet-income {
+  font-size: 0.75em;
+  color: #ffaa00;
+  margin-top: 3px;
 }
 
 .progress-bar {
@@ -295,6 +428,32 @@ button:disabled {
   background: linear-gradient(90deg, #00ff00 0%, #00cc00 100%);
   transition: width 0.3s;
   box-shadow: 0 0 10px #00ff00;
+  animation: shimmer 2s infinite;
+  background-size: 200% 100%;
+}
+
+.wheel-container {
+  width: 300px;
+  height: 300px;
+  margin: 20px auto;
+  border-radius: 50%;
+  border: 3px solid #ffff00;
+  background: conic-gradient(from 0deg, #ff0000 0deg 60deg, #ff7f00 60deg 120deg, #ffff00 120deg 180deg, #00ff00 180deg 240deg, #0000ff 240deg 300deg, #ff00ff 300deg 360deg);
+  animation: spin 4s linear infinite;
+  box-shadow: 0 0 30px rgba(255, 255, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid #ffff00;
+  z-index: 10;
 }
 
 @media (max-width: 768px) {
@@ -323,12 +482,108 @@ button:disabled {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 255, 0, 0.5);
 }
+
+.quest-item {
+  background: rgba(255, 200, 0, 0.1);
+  border: 1px solid rgba(255, 200, 0, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.achievement {
+  background: rgba(255, 215, 0, 0.15);
+  border: 2px solid #ffd700;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+  animation: achievementPop 0.6s ease-out;
+}
+
+@keyframes achievementPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.exp-bar-container {
+  background: rgba(100, 200, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 8px 0;
+  border: 1px solid rgba(100, 200, 255, 0.3);
+}
+
+.exp-bar {
+  height: 20px;
+  background: linear-gradient(90deg, #4488ff 0%, #00ff88 100%);
+  transition: width 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.multiplier-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin: 5px;
+  font-size: 0.9em;
+  animation: pulseBadge 1s infinite;
+}
+
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.particle {
+  position: fixed;
+  pointer-events: none;
+  font-size: 2em;
+  animation: floatParticle 1s ease-out forwards;
+}
+
+.time-counter {
+  background: rgba(100, 255, 100, 0.15);
+  padding: 8px 12px;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 5px;
+  font-weight: bold;
+}
+
+.daily-reward-card {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 100, 100, 0.2) 100%);
+  border: 2px solid #ffd700;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.prestige-indicator {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
+  padding: 8px 15px;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  margin: 10px 5px;
+}
 </style>
 </head>
 
 <body>
 
-<h1 class="rainbow-text">🔥 ULTRA CLICKER EMPIRE 4.0 🔥</h1>
+<h1 class="rainbow-text">🔥 ULTRA CLICKER EMPIRE 5.0 🔥</h1>
 
 <!-- МЕНЮ НАВИГАЦИИ -->
 <div class="nav-menu">
@@ -337,6 +592,7 @@ button:disabled {
   <button class="nav-btn" onclick="switchSection('magic')">✨ МАГИЯ</button>
   <button class="nav-btn" onclick="switchSection('dungeon')">🏰 ПОДЗЕМЕЛЬЕ</button>
   <button class="nav-btn" onclick="switchSection('bosses')">👹 БОССЫ</button>
+  <button class="nav-btn" onclick="switchSection('quests')">📜 КВЕСТЫ</button>
   <button class="nav-btn" onclick="switchSection('events')">🎉 СОБЫТИЯ</button>
   <button class="nav-btn" onclick="switchSection('prestige')">👑 ПРЕСТИЖ</button>
   <button class="nav-btn" onclick="switchSection('stats')">📊 СТАТИСТИКА</button>
@@ -382,8 +638,14 @@ button:disabled {
 
   <div class="card">
     <h2>🎁 БЫСТРЫЕ ДЕЙСТВИЯ</h2>
-    <button onclick="spinWheel()" style="width: 100%; margin: 10px 0; font-size: 1.2em;">🎡 КОЛЕСО УДАЧИ (500K💰)</button>
+    <button onclick="spinWheel()" style="width: 100%; margin: 10px 0; font-size: 1.2em;">🎡 КОЛЕСО УДАЧИ (100K💰)</button>
     <button onclick="dailyBonus()" style="width: 100%; margin: 10px 0; font-size: 1.2em;">🎁 ЕЖЕДНЕВНЫЙ БОНУС</button>
+    <button onclick="startFreezeMoney()" style="width: 100%; margin: 10px 0; font-size: 1.2em;">❄️ ЛЕДЯНОЙ ВЗРЫВ (300K💰)</button>
+  </div>
+
+  <div class="card">
+    <h2>🔥 АКТИВНЫЕ БОНУСЫ</h2>
+    <div id="activeBonuses"></div>
   </div>
 </div>
 
@@ -391,6 +653,7 @@ button:disabled {
 <div id="pets" class="section">
   <div class="card">
     <h2>🐾 МОИ ПИТОМЦЫ</h2>
+    <div id="petStats"></div>
     <div style="text-align: center; margin: 20px 0;">
       <div id="myPets"></div>
     </div>
@@ -399,6 +662,11 @@ button:disabled {
   <div class="card">
     <h2>🛒 ПОКУПКА ПИТОМЦЕВ</h2>
     <div id="petShop"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎓 ЭВОЛЮЦИЯ ПИТОМЦЕВ</h2>
+    <div id="petEvolution"></div>
   </div>
 </div>
 
@@ -418,12 +686,21 @@ button:disabled {
         <div class="stat-label">✨ МАГИЧЕСКИЙ УРОВЕНЬ</div>
         <div class="stat-value" id="magicLevel">1</div>
       </div>
+      <div class="stat">
+        <div class="stat-label">📚 ОПЫТ МАГИИ</div>
+        <div class="stat-value" id="magicExp">0</div>
+      </div>
     </div>
   </div>
 
   <div class="card">
     <h2>🪄 ЗАКЛИНАНИЯ</h2>
     <div id="spellsList"></div>
+  </div>
+
+  <div class="card">
+    <h2>🔬 ИЗУЧЕНИЕ ЗАКЛИНАНИЙ</h2>
+    <div id="spellUpgrades"></div>
   </div>
 </div>
 
@@ -440,9 +717,14 @@ button:disabled {
         <div class="stat-label">🎖️ ВРАГОВ</div>
         <div class="stat-value" id="enemiesDefeated">0</div>
       </div>
+      <div class="stat">
+        <div class="stat-label">🛡️ ЗАЩИТА</div>
+        <div class="stat-value" id="dungeonDefense">0</div>
+      </div>
     </div>
 
     <button onclick="enterDungeon()" style="width: 100%; margin: 15px 0; font-size: 1.2em;">⚔️ ВОЙТИ В ПОДЗЕМЕЛЬЕ</button>
+    <button onclick="megaDungeon()" style="width: 100%; margin: 15px 0; font-size: 1.2em;">💥 МЕГА РЕЙД (5x награда)</button>
     
     <div id="dungeonInfo"></div>
   </div>
@@ -453,6 +735,24 @@ button:disabled {
   <div class="card">
     <h2>👹 БОЕВЫЕ БОССЫ</h2>
     <div id="bossesList"></div>
+  </div>
+
+  <div class="card">
+    <h2>🏆 ПОБЕЖДЕННЫЕ БОССЫ</h2>
+    <div id="defeatedBosses"></div>
+  </div>
+</div>
+
+<!-- КВЕСТЫ -->
+<div id="quests" class="section">
+  <div class="card">
+    <h2>📜 АКТИВНЫЕ КВЕСТЫ</h2>
+    <div id="questsList"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎖️ НАГРАДЫ КВЕСТОВ</h2>
+    <div id="questRewards"></div>
   </div>
 </div>
 
@@ -473,6 +773,11 @@ button:disabled {
 
     <div id="eventsList"></div>
   </div>
+
+  <div class="card">
+    <h2>⏰ ВРЕМЕННЫЕ БОНУСЫ</h2>
+    <div id="timeBonuses"></div>
+  </div>
 </div>
 
 <!-- ПРЕСТИЖ -->
@@ -488,12 +793,21 @@ button:disabled {
         <div class="stat-label">📈 БОНУС</div>
         <div class="stat-value" id="prestigeBonus">x1</div>
       </div>
+      <div class="stat">
+        <div class="stat-label">💫 ЗВЕЗДЫ</div>
+        <div class="stat-value" id="prestigeStars">0</div>
+      </div>
     </div>
 
     <div class="card" style="background: rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.3); margin-top: 20px;">
       <h3>⚠️ ПРЕСТИЖ = СБРОС + БОНУСЫ!</h3>
       <button onclick="doPrestige()" style="width: 100%; background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%); font-size: 1.2em; margin-top: 15px;">👑 СДЕЛАТЬ ПРЕСТИЖ</button>
     </div>
+  </div>
+
+  <div class="card">
+    <h2>⭐ ПАССИВНЫЕ ПРЕМИУМ БОНУСЫ</h2>
+    <div id="premiumBonuses"></div>
   </div>
 </div>
 
@@ -530,51 +844,67 @@ button:disabled {
 <script>
 let gameData = {
   money: 0, power: 1, crystals: 0, reputation: 0, combo: 0,
-  mana: 200, maxMana: 200, magicLevel: 1,
+  mana: 200, maxMana: 200, magicLevel: 1, magicExp: 0,
   upgrades: {}, pets: [],
-  dungeonLevel: 1, enemiesDefeated: 0, bossesDefeated: 0,
+  dungeonLevel: 1, enemiesDefeated: 0, bossesDefeated: 0, dungeonDefense: 0,
   totalEarned: 0, totalClicks: 0, startTime: Date.now(),
-  prestigeLevel: 0, prestigeMultiplier: 1,
+  prestigeLevel: 0, prestigeMultiplier: 1, prestigeStars: 0,
   lastDaily: 0, lastOffline: Date.now(),
-  currentEvent: 'ДЕНЬ', eventMultiplier: 1
+  currentEvent: 'ДЕНЬ', eventMultiplier: 1,
+  achievements: [], activeBonuses: {}, quests: {}, defeatedBosses: []
 };
 
 const upgrades = [
   { id: 'c1', name: '⚡ МЕГА КЛИК', cost: 20000, effect: 100 },
   { id: 'c2', name: '🌟 СУПЕР КЛИК', cost: 100000, effect: 500 },
+  { id: 'c3', name: '💥 МЕГА УДАР', cost: 500000, effect: 2000 },
   { id: 'p1', name: '💤 ПАССИВ 1', cost: 50000, effect: 100, passive: true },
   { id: 'p2', name: '💤 ПАССИВ 2', cost: 200000, effect: 500, passive: true },
   { id: 'p3', name: '💤 ПАССИВ 3', cost: 1000000, effect: 2000, passive: true },
+  { id: 'p4', name: '💤 ПАССИВ ПРЕМИУМ', cost: 5000000, effect: 10000, passive: true },
   { id: 'pow1', name: '⚡ СИЛА 1', cost: 50000, effect: 5 },
   { id: 'pow2', name: '⚡ СИЛА 2', cost: 200000, effect: 20 },
+  { id: 'pow3', name: '⚡ СИЛА 3', cost: 1000000, effect: 100 },
 ];
 
 const petsList = [
-  { id: 'cat', name: 'Кот', emoji: '🐱', cost: 20000, power: 10 },
-  { id: 'fox', name: 'Лис', emoji: '🦊', cost: 50000, power: 30 },
-  { id: 'unicorn', name: 'Единорог', emoji: '🦄', cost: 100000, power: 60 },
-  { id: 'phoenix', name: 'Феникс', emoji: '🔥', cost: 150000, power: 100 },
-  { id: 'dragon', name: 'Дракон', emoji: '🐉', cost: 250000, power: 200 },
+  { id: 'cat', name: 'Кот', emoji: '🐱', cost: 20000, power: 10, income: 100 },
+  { id: 'fox', name: 'Лис', emoji: '🦊', cost: 50000, power: 30, income: 300 },
+  { id: 'unicorn', name: 'Единорог', emoji: '🦄', cost: 100000, power: 60, income: 600 },
+  { id: 'phoenix', name: 'Феникс', emoji: '🔥', cost: 150000, power: 100, income: 1000 },
+  { id: 'dragon', name: 'Дракон', emoji: '🐉', cost: 250000, power: 200, income: 2000 },
+  { id: 'demon', name: 'Демон', emoji: '👿', cost: 500000, power: 400, income: 5000 },
+  { id: 'angel', name: 'Ангел', emoji: '😇', cost: 750000, power: 600, income: 8000 },
 ];
 
 const spellsList = [
-  { id: 'fire', name: '🔥 Огненный шар', damage: 500, manaUse: 50 },
-  { id: 'ice', name: '❄️ Ледяной шквал', damage: 700, manaUse: 60 },
-  { id: 'lightning', name: '⚡ Громовой удар', damage: 1000, manaUse: 80 },
-  { id: 'heal', name: '💚 Исцеление', heal: 500, manaUse: 40 },
-  { id: 'boost', name: '💪 Усиление', boost: 3, manaUse: 70 },
+  { id: 'fire', name: '🔥 Огненный шар', damage: 500, manaUse: 50, cost: 10000 },
+  { id: 'ice', name: '❄️ Ледяной шквал', damage: 700, manaUse: 60, cost: 20000 },
+  { id: 'lightning', name: '⚡ Громовой удар', damage: 1000, manaUse: 80, cost: 50000 },
+  { id: 'heal', name: '💚 Исцеление', heal: 500, manaUse: 40, cost: 15000 },
+  { id: 'boost', name: '💪 Усиление', boost: 3, manaUse: 70, cost: 30000 },
+  { id: 'meteor', name: '☄️ Метеоритный дождь', damage: 2000, manaUse: 120, cost: 100000 },
 ];
 
 const bossesList = [
-  { id: 'b1', name: 'Каменный Голем', emoji: '🗿', hp: 100000, reward: 500000 },
-  { id: 'b2', name: 'Король Ночи', emoji: '👑', hp: 500000, reward: 2000000 },
-  { id: 'b3', name: 'Старший Дракон', emoji: '🐲', hp: 2000000, reward: 10000000 },
+  { id: 'b1', name: 'Каменный Голем', emoji: '🗿', hp: 100000, reward: 100000 },
+  { id: 'b2', name: 'Король Ночи', emoji: '👑', hp: 500000, reward: 400000 },
+  { id: 'b3', name: 'Старший Дракон', emoji: '🐲', hp: 2000000, reward: 2000000 },
+  { id: 'b4', name: 'Архидемон', emoji: '😈', hp: 5000000, reward: 5000000 },
 ];
 
 const eventsList = [
   { name: '🌙 Ночь магии', mult: 3 },
   { name: '🌞 Солнечный день', mult: 1.5 },
   { name: '⚡ Гроза', mult: 2 },
+  { name: '❄️ Метель', mult: 1.8 },
+];
+
+const questsList = [
+  { id: 'q1', name: 'Первый клик', goal: 10, current: 0, reward: 5000 },
+  { id: 'q2', name: 'Охотник на клики', goal: 1000, current: 0, reward: 50000 },
+  { id: 'q3', name: 'Собиратель питомцев', goal: 3, current: 0, reward: 100000 },
+  { id: 'q4', name: 'Боец подземелья', goal: 50, current: 0, reward: 200000 },
 ];
 
 function loadGame() {
@@ -603,13 +933,26 @@ function showFloating(text) {
   setTimeout(() => div.remove(), 1000);
 }
 
+function createParticle(text, x, y) {
+  const div = document.createElement('div');
+  div.className = 'particle';
+  div.textContent = text;
+  div.style.left = x + 'px';
+  div.style.top = y + 'px';
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 1000);
+}
+
 let comboTimer;
 function clickMoney() {
-  const clickVal = gameData.power * 10000 * gameData.prestigeMultiplier;
+  const clickVal = gameData.power * 10000 * gameData.prestigeMultiplier * gameData.eventMultiplier;
   gameData.money += clickVal;
   gameData.totalEarned += clickVal;
   gameData.totalClicks++;
   gameData.combo++;
+  
+  updateQuests('clicks', 1);
+  
   if (gameData.combo > 1) showFloating(`🔥 КОМБО x${gameData.combo}`);
   clearTimeout(comboTimer);
   comboTimer = setTimeout(() => { gameData.combo = 0; }, 2000);
@@ -618,22 +961,41 @@ function clickMoney() {
 }
 
 function spinWheel() {
-  if (gameData.money < 500000) {
-    notify('❌ Нужно 500K💰!');
+  if (gameData.money < 100000) {
+    notify('❌ Нужно 100K💰!');
     return;
   }
-  gameData.money -= 500000;
+  gameData.money -= 100000;
   const rewards = [
-    { text: '💰 +5M', money: 5000000 },
-    { text: '⚡ +50 МОЩИ', power: 50 },
-    { text: '💎 +100 КРИСТАЛЛОВ', crystals: 100 },
-    { text: '🎉 +50M', money: 50000000 },
+    { text: '💰 +1M', money: 1000000 },
+    { text: '⚡ +10 МОЩИ', power: 10 },
+    { text: '💎 +20 КРИСТАЛЛОВ', crystals: 20 },
+    { text: '🎉 +10M', money: 10000000 },
+    { text: '✨ +100 МАНЫ', mana: 100 },
+    { text: '⭐ +50 РЕПУТАЦИИ', reputation: 50 },
   ];
   const r = rewards[Math.floor(Math.random() * rewards.length)];
   if (r.money) { gameData.money += r.money; gameData.totalEarned += Math.max(0, r.money); }
   if (r.power) gameData.power += r.power;
   if (r.crystals) gameData.crystals += r.crystals;
+  if (r.mana) gameData.mana = Math.min(gameData.maxMana, gameData.mana + r.mana);
+  if (r.reputation) gameData.reputation += r.reputation;
   notify('🎡 ' + r.text);
+  updateUI();
+  saveGame();
+}
+
+function startFreezeMoney() {
+  if (gameData.money < 300000) {
+    notify('❌ Нужно 300K💰!');
+    return;
+  }
+  gameData.money -= 300000;
+  gameData.activeBonuses.freezeBonus = { multiplier: 2, timeLeft: 30 };
+  notify('❄️ ВСЕ ДОХОДЫ +100% НА 30 СЕКУНД!');
+  setTimeout(() => {
+    delete gameData.activeBonuses.freezeBonus;
+  }, 30000);
   updateUI();
   saveGame();
 }
@@ -641,14 +1003,15 @@ function spinWheel() {
 function dailyBonus() {
   const now = Date.now();
   if (now - gameData.lastDaily < 86400000) {
-    notify('⛔ Бонус завтра!');
+    const hours = Math.floor((86400000 - (now - gameData.lastDaily)) / 3600000);
+    notify(`⛔ Бонус через ${hours}ч!`);
     return;
   }
-  gameData.money += 2000000;
-  gameData.totalEarned += 2000000;
+  gameData.money += 500000;
+  gameData.totalEarned += 500000;
   gameData.crystals += 50;
   gameData.lastDaily = now;
-  notify('🎁 +2M💰 +50💎!');
+  notify('🎁 +500K💰 +50💎!');
   updateUI();
   saveGame();
 }
@@ -672,8 +1035,27 @@ function buyPet(petId) {
   if (!pet) return;
   if (gameData.money < pet.cost) { notify('❌ Не хватает!'); return; }
   gameData.money -= pet.cost;
-  gameData.pets.push({ id: petId, name: pet.name, level: 1 });
+  gameData.pets.push({ id: petId, name: pet.name, level: 1, exp: 0 });
+  updateQuests('pets', 1);
   notify(`🐾 Получен ${pet.emoji} ${pet.name}!`);
+  updateUI();
+  saveGame();
+}
+
+function upgradePet(index) {
+  const pet = gameData.pets[index];
+  if (!pet) return;
+  const petData = petsList.find(p => p.id === pet.id);
+  if (!petData) return;
+  const upgradeCost = petData.cost * pet.level;
+  if (gameData.money < upgradeCost) {
+    notify('❌ Не хватает!');
+    return;
+  }
+  gameData.money -= upgradeCost;
+  pet.level++;
+  pet.exp = 0;
+  notify(`⭐ ${petData.name} достиг уровня ${pet.level}!`);
   updateUI();
   saveGame();
 }
@@ -684,12 +1066,30 @@ function castSpell(spellId) {
   if (gameData.mana < spell.manaUse) { notify('❌ Мало маны!'); return; }
   gameData.mana -= spell.manaUse;
   if (spell.damage) {
-    gameData.money += spell.damage * 100;
-    gameData.totalEarned += spell.damage * 100;
-    showFloating(`💥 ${spell.damage * 100}💰`);
+    const dmg = spell.damage * 100;
+    gameData.money += dmg;
+    gameData.totalEarned += dmg;
+    showFloating(`💥 ${dmg}💰`);
   }
   if (spell.boost) gameData.power *= spell.boost;
+  gameData.magicExp += 10;
   notify(`✨ ${spell.name} активирована!`);
+  updateUI();
+  saveGame();
+}
+
+function learnSpell(spellId) {
+  const spell = spellsList.find(s => s.id === spellId);
+  if (!spell) return;
+  if (gameData.money < spell.cost) {
+    notify('❌ Не хватает!');
+    return;
+  }
+  gameData.money -= spell.cost;
+  if (!gameData.upgrades['spell_' + spellId]) {
+    gameData.upgrades['spell_' + spellId] = true;
+    notify(`📚 Выучено заклинание: ${spell.name}`);
+  }
   updateUI();
   saveGame();
 }
@@ -700,11 +1100,25 @@ function enterDungeon() {
   gameData.money += reward;
   gameData.totalEarned += reward;
   gameData.enemiesDefeated++;
+  updateQuests('dungeon', 1);
   if (gameData.enemiesDefeated % 10 === 0) {
     gameData.dungeonLevel++;
-    notify(`🎉 УРОВЕНЬ ${gameData.dungeonLevel}!`);
+    notify(`🎉 УРОВЕНЬ ПОДЗЕМЕЛЬЯ ${gameData.dungeonLevel}!`);
   }
   notify(`⚔️ +${Math.floor(reward)}💰`);
+  updateUI();
+  saveGame();
+}
+
+function megaDungeon() {
+  for (let i = 0; i < 5; i++) {
+    const dmg = gameData.power * 1000 * gameData.dungeonLevel;
+    const reward = dmg * 100;
+    gameData.money += reward;
+    gameData.totalEarned += reward;
+    gameData.enemiesDefeated++;
+  }
+  notify(`💥 МЕГА РЕЙД! +5 врагов!`);
   updateUI();
   saveGame();
 }
@@ -717,9 +1131,12 @@ function fightBoss(bossId) {
     gameData.money += boss.reward;
     gameData.totalEarned += boss.reward;
     gameData.bossesDefeated++;
+    if (!gameData.defeatedBosses.includes(bossId)) {
+      gameData.defeatedBosses.push(bossId);
+    }
     notify(`🏆 ПОБЕДА! +${boss.reward}💰`);
   } else {
-    notify(`❌ Слишком слаб!`);
+    notify(`❌ Слишком слаб! Нужно ${boss.hp / 10000} мощи!`);
   }
   updateUI();
   saveGame();
@@ -728,6 +1145,7 @@ function fightBoss(bossId) {
 function doPrestige() {
   if (!confirm('Сброс прогресса + x1.5 бонус?')) return;
   gameData.prestigeLevel++;
+  gameData.prestigeStars += 5;
   gameData.prestigeMultiplier *= 1.5;
   gameData.crystals += 100;
   gameData.money = 0;
@@ -735,7 +1153,37 @@ function doPrestige() {
   gameData.upgrades = {};
   gameData.pets = [];
   gameData.dungeonLevel = 1;
+  gameData.mana = gameData.maxMana;
   notify(`👑 ПРЕСТИЖ ${gameData.prestigeLevel}! x${gameData.prestigeMultiplier.toFixed(2)}`);
+  updateUI();
+  saveGame();
+}
+
+function updateQuests(type, amount = 1) {
+  if (type === 'clicks') {
+    const q = questsList.find(q => q.id === 'q2');
+    if (q) q.current = Math.min(q.goal, q.current + amount);
+  }
+  if (type === 'pets') {
+    const q = questsList.find(q => q.id === 'q3');
+    if (q) q.current = Math.min(q.goal, q.current + amount);
+  }
+  if (type === 'dungeon') {
+    const q = questsList.find(q => q.id === 'q4');
+    if (q) q.current = Math.min(q.goal, q.current + amount);
+  }
+}
+
+function completeQuest(questId) {
+  const quest = questsList.find(q => q.id === questId);
+  if (!quest || quest.current < quest.goal) {
+    notify('❌ Квест не завершен!');
+    return;
+  }
+  gameData.money += quest.reward;
+  gameData.totalEarned += quest.reward;
+  quest.current = 0;
+  notify(`✅ Квест завершен! +${quest.reward}💰`);
   updateUI();
   saveGame();
 }
@@ -753,7 +1201,17 @@ function calculatePassiveIncome() {
     const up = upgrades.find(u => u.id === id);
     if (up && up.passive) income += up.effect * gameData.upgrades[id];
   });
-  return income * gameData.prestigeMultiplier;
+  
+  gameData.pets.forEach(pet => {
+    const petData = petsList.find(p => p.id === pet.id);
+    if (petData) income += petData.income * pet.level;
+  });
+  
+  let multiplier = gameData.prestigeMultiplier * gameData.eventMultiplier;
+  if (gameData.activeBonuses.freezeBonus) {
+    multiplier *= gameData.activeBonuses.freezeBonus.multiplier;
+  }
+  return income * multiplier;
 }
 
 function formatNum(n) {
@@ -776,10 +1234,13 @@ function updateUI() {
   document.getElementById('totalClicks').textContent = gameData.totalClicks;
   document.getElementById('petCount').textContent = gameData.pets.length;
   document.getElementById('mana').textContent = gameData.mana;
+  document.getElementById('magicLevel').textContent = gameData.magicLevel;
+  document.getElementById('magicExp').textContent = gameData.magicExp;
   document.getElementById('dungeonLevel').textContent = gameData.dungeonLevel;
   document.getElementById('enemiesDefeated').textContent = gameData.enemiesDefeated;
   document.getElementById('prestigeLevel').textContent = gameData.prestigeLevel;
   document.getElementById('prestigeBonus').textContent = `x${gameData.prestigeMultiplier.toFixed(2)}`;
+  document.getElementById('prestigeStars').textContent = gameData.prestigeStars;
 
   const hours = Math.floor((Date.now() - gameData.startTime) / 3600000);
   document.getElementById('playTime').textContent = hours + 'ч';
@@ -801,14 +1262,39 @@ function updateUI() {
     shop.appendChild(item);
   });
 
-  // Питомцы
+  // Активные бонусы
+  const bonuses = document.getElementById('activeBonuses');
+  bonuses.innerHTML = '';
+  if (gameData.activeBonuses.freezeBonus) {
+    bonuses.innerHTML += `<div class="multiplier-badge">❄️ +100% ДОХОД</div>`;
+  }
+
+  // Питомцы - статистика
+  const petStats = document.getElementById('petStats');
+  let totalPetIncome = 0;
+  gameData.pets.forEach(pet => {
+    const petData = petsList.find(p => p.id === pet.id);
+    if (petData) totalPetIncome += petData.income * pet.level;
+  });
+  petStats.innerHTML = `<strong>📊 Общий доход питомцев: ${formatNum(totalPetIncome)}/сек</strong>`;
+
+  // Мои питомцы
   const myPets = document.getElementById('myPets');
   myPets.innerHTML = '';
-  gameData.pets.forEach(pet => {
+  gameData.pets.forEach((pet, idx) => {
     const pd = petsList.find(p => p.id === pet.id);
-    myPets.innerHTML += `<div class="pet-card"><div class="pet-emoji">${pd.emoji}</div><strong>${pd.name}</strong></div>`;
+    myPets.innerHTML += `
+      <div class="pet-card">
+        <div class="pet-emoji">${pd.emoji}</div>
+        <strong>${pd.name}</strong>
+        <div class="pet-level">Уровень: ${pet.level}</div>
+        <div class="pet-income">+${formatNum(pd.income * pet.level)}/сек</div>
+        <button onclick="upgradePet(${idx})" style="margin-top: 10px;">⭐ Улучшить</button>
+      </div>
+    `;
   });
 
+  // Магазин питомцев
   const petShop = document.getElementById('petShop');
   petShop.innerHTML = '';
   petsList.forEach(pet => {
@@ -816,45 +1302,106 @@ function updateUI() {
     item.className = 'item';
     item.innerHTML = `
       <div class="item-header">
-        <div><div class="item-name">${pet.emoji} ${pet.name}</div></div>
+        <div>
+          <div class="item-name">${pet.emoji} ${pet.name}</div>
+          <div class="item-desc">⚡${pet.power} мощи | +${formatNum(pet.income)}/сек</div>
+        </div>
         <button onclick="buyPet('${pet.id}')">${formatNum(pet.cost)}💰</button>
       </div>
     `;
     petShop.appendChild(item);
   });
 
+  // Эволюция питомцев
+  const petEvo = document.getElementById('petEvolution');
+  petEvo.innerHTML = '<strong>🎓 Улучшайте питомцев кликом на "⭐ Улучшить"</strong>';
+
   // Заклинания
   const spells = document.getElementById('spellsList');
   spells.innerHTML = '';
   spellsList.forEach(spell => {
+    const learned = gameData.upgrades['spell_' + spell.id];
     const item = document.createElement('div');
     item.className = 'item';
     item.innerHTML = `
       <div class="item-header">
         <div><div class="item-name">${spell.name}</div></div>
-        <button onclick="castSpell('${spell.id}')" ${gameData.mana < spell.manaUse ? 'disabled' : ''}>Использовать</button>
+        <button onclick="castSpell('${spell.id}')" ${!learned || gameData.mana < spell.manaUse ? 'disabled' : ''}>Использовать</button>
       </div>
     `;
     spells.appendChild(item);
+  });
+
+  // Изучение заклинаний
+  const spellUp = document.getElementById('spellUpgrades');
+  spellUp.innerHTML = '';
+  spellsList.forEach(spell => {
+    const learned = gameData.upgrades['spell_' + spell.id];
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="item-header">
+        <div>
+          <div class="item-name">${spell.name} ${learned ? '✅' : '❌'}</div>
+          <div class="item-desc">Мана: ${spell.manaUse} | Урон: ${spell.damage || 0}</div>
+        </div>
+        <button onclick="learnSpell('${spell.id}')" ${learned ? 'disabled' : ''}>${formatNum(spell.cost)}💰</button>
+      </div>
+    `;
+    spellUp.appendChild(item);
   });
 
   // Боссы
   const bosses = document.getElementById('bossesList');
   bosses.innerHTML = '';
   bossesList.forEach(boss => {
+    const defeated = gameData.defeatedBosses.includes(boss.id);
     const item = document.createElement('div');
     item.className = 'item';
     item.innerHTML = `
       <div class="item-header">
-        <div><div class="item-name">${boss.emoji} ${boss.name}</div><div class="item-desc">HP: ${formatNum(boss.hp)}</div></div>
-        <button onclick="fightBoss('${boss.id}')">⚔️ БОЙ</button>
+        <div>
+          <div class="item-name">${boss.emoji} ${boss.name} ${defeated ? '✅' : '❌'}</div>
+          <div class="item-desc">HP: ${formatNum(boss.hp)}</div>
+        </div>
+        <button onclick="fightBoss('${boss.id}')" ${defeated ? 'disabled' : ''}>⚔️ БОЙ</button>
       </div>
     `;
     bosses.appendChild(item);
   });
 
+  // Побежденные боссы
+  const defeatedBosses = document.getElementById('defeatedBosses');
+  defeatedBosses.innerHTML = '';
+  if (gameData.defeatedBosses.length === 0) {
+    defeatedBosses.innerHTML = '<strong>Боссы еще не побеждены</strong>';
+  } else {
+    gameData.defeatedBosses.forEach(bossId => {
+      const boss = bossesList.find(b => b.id === bossId);
+      defeatedBosses.innerHTML += `<div class="achievement">${boss.emoji} ${boss.name} - ПОБЕДЕН!</div>`;
+    });
+  }
+
+  // Квесты
+  const questsDiv = document.getElementById('questsList');
+  questsDiv.innerHTML = '';
+  questsList.forEach(quest => {
+    const percent = Math.floor((quest.current / quest.goal) * 100);
+    const item = document.createElement('div');
+    item.className = 'quest-item';
+    item.innerHTML = `
+      <div class="item-name">${quest.name}</div>
+      <div class="exp-bar-container">
+        <div class="exp-bar" style="width: ${percent}%">${quest.current}/${quest.goal}</div>
+      </div>
+      <button onclick="completeQuest('${quest.id}')" ${quest.current < quest.goal ? 'disabled' : ''} style="width: 100%; margin-top: 8px;">Получить ${formatNum(quest.reward)}💰</button>
+    `;
+    questsDiv.appendChild(item);
+  });
+
   // События
   const currentEvent = eventsList[Math.floor(Date.now() / 10000) % eventsList.length];
+  gameData.eventMultiplier = currentEvent.mult;
   document.getElementById('currentEvent').textContent = currentEvent.name;
   document.getElementById('eventMultiplier').textContent = `x${currentEvent.mult}`;
 
@@ -862,8 +1409,16 @@ function updateUI() {
   events.innerHTML = '';
   eventsList.forEach(event => {
     const active = event.name === currentEvent.name;
-    events.innerHTML += `<div class="item" style="${active ? 'border: 2px solid #ffff00;' : ''}"><div class="item-name">${event.name} ${active ? '✨' : ''}</div></div>`;
+    events.innerHTML += `<div class="item" style="${active ? 'border: 2px solid #ffff00;' : ''}"><div class="item-name">${event.name} ${active ? '✨ АКТИВНОЕ' : ''}</div></div>`;
   });
+
+  // Премиум бонусы
+  const premiums = document.getElementById('premiumBonuses');
+  premiums.innerHTML = `
+    <div class="achievement">
+      <strong>⭐ Бонус престижа:</strong> x${gameData.prestigeMultiplier.toFixed(2)}
+    </div>
+  `;
 
   // Регенерация маны
   if (gameData.mana < gameData.maxMana) gameData.mana = Math.min(gameData.maxMana, gameData.mana + 1);
@@ -902,7 +1457,7 @@ setInterval(() => {
 window.addEventListener('load', () => {
   loadGame();
   updateUI();
-  notify('👋 Добро пожаловать!');
+  notify('👋 Добро пожаловать в ULTRA CLICKER 5.0!');
 });
 
 window.addEventListener('beforeunload', saveGame);
