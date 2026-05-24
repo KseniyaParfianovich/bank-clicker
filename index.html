@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏦 ULTRA BANK EMPIRE - ДОЛГОСРОЧНАЯ ИГРА</title>
+<title>🏦 ULTRA BANK EMPIRE - ULTIMATE EDITION</title>
 <style>
 * {
   margin: 0;
@@ -62,7 +62,6 @@ body {
   color: #00ff00;
   border-radius: 8px;
   font-size: 1em;
-  transition: all 0.3s;
 }
 
 .auth-input:focus {
@@ -95,16 +94,16 @@ body {
   text-decoration: underline;
 }
 
-.error-msg { color: #ff4444; margin: 10px 0; font-weight: bold; }
-.success-msg { color: #44ff44; margin: 10px 0; font-weight: bold; }
+.error-msg { color: #ff4444; }
+.success-msg { color: #44ff44; }
 
 .game-container { display: none; }
 .game-container.active { display: block; }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2em;
   text-shadow: 0 0 20px #00ff00, 0 0 40px #ff00ff;
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 @keyframes slideDown {
@@ -117,56 +116,62 @@ h1 {
   to { opacity: 1; }
 }
 
-.top-info {
+.top-bar {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  max-width: 1400px;
-  margin: 15px auto;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  max-width: 1600px;
+  margin: 10px auto;
   padding: 10px;
+  background: rgba(0, 255, 0, 0.05);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  border-radius: 10px;
 }
 
-.info-box {
+.stat-box {
   background: rgba(0, 255, 0, 0.1);
   border: 1px solid rgba(0, 255, 0, 0.3);
-  padding: 10px;
+  padding: 8px;
   border-radius: 8px;
+  font-size: 0.9em;
 }
 
-.info-value {
-  color: #00ff00;
+.stat-value {
   font-weight: bold;
+  color: #ffff00;
   font-size: 1.2em;
 }
 
 .nav-menu {
   display: flex;
-  gap: 10px;
-  margin: 20px auto;
-  max-width: 1400px;
+  gap: 5px;
+  margin: 10px auto;
+  max-width: 1600px;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 15px;
-  background: rgba(0, 255, 0, 0.1);
-  border: 2px solid rgba(0, 255, 0, 0.3);
-  border-radius: 15px;
+  padding: 10px;
+  background: rgba(0, 255, 0, 0.05);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 150px;
 }
 
 .nav-btn {
-  padding: 10px 15px;
-  border: 2px solid #00ff00;
+  padding: 8px 12px;
+  border: 1px solid #00ff00;
   background: rgba(0, 255, 0, 0.1);
   color: #00ff00;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: bold;
-  font-size: 0.85em;
+  font-size: 0.8em;
+  white-space: nowrap;
 }
 
 .nav-btn:hover {
   background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
   color: #000;
-  transform: scale(1.1);
 }
 
 .nav-btn.active {
@@ -176,56 +181,57 @@ h1 {
 
 .section {
   display: none;
-  max-width: 1400px;
-  margin: 20px auto;
-  padding: 20px;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
-  border: 2px solid rgba(0, 255, 0, 0.3);
-  border-radius: 15px;
+  max-width: 1600px;
+  margin: 10px auto;
+  padding: 15px;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  border-radius: 10px;
   animation: fadeIn 0.5s ease-in;
 }
 
 .section.active { display: block; }
 
 .card {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d44 100%);
-  padding: 20px;
-  margin: 15px 0;
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-  border: 2px solid rgba(0, 255, 0, 0.2);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
-  margin: 20px 0;
-}
-
-.stat {
-  background: rgba(0, 255, 0, 0.1);
+  background: rgba(0, 0, 0, 0.3);
   padding: 15px;
+  margin: 10px 0;
   border-radius: 10px;
-  border: 1px solid rgba(0, 255, 0, 0.3);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+  border: 1px solid rgba(0, 255, 0, 0.2);
 }
 
-.stat-value {
-  font-size: 1.8em;
-  font-weight: bold;
-  color: #00ff00;
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 10px 0;
 }
 
 button {
-  padding: 10px 15px;
-  margin: 8px 5px;
+  padding: 8px 12px;
+  margin: 5px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
   color: #000;
   font-weight: bold;
-  font-size: 0.95em;
+  font-size: 0.85em;
 }
 
 button:hover:not(:disabled) {
@@ -233,10 +239,10 @@ button:hover:not(:disabled) {
 }
 
 .big-button {
-  font-size: 2em;
-  padding: 25px 50px;
+  font-size: 1.5em;
+  padding: 15px 30px;
   width: 100%;
-  margin: 20px 0;
+  margin: 10px 0;
   background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
   color: #fff;
 }
@@ -247,32 +253,34 @@ button:hover:not(:disabled) {
   right: 20px;
   background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
   color: #fff;
-  padding: 15px 20px;
-  border-radius: 10px;
+  padding: 12px 15px;
+  border-radius: 8px;
   z-index: 2000;
-  max-width: 300px;
+  max-width: 250px;
+  font-size: 0.9em;
 }
 
 .logout-btn {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
-  padding: 10px 20px;
+  padding: 8px 15px;
   cursor: pointer;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   color: white;
   font-weight: bold;
+  font-size: 0.85em;
 }
 
 .progress-bar {
   width: 100%;
-  height: 20px;
+  height: 15px;
   background: rgba(0, 255, 0, 0.1);
   border-radius: 5px;
   overflow: hidden;
-  margin: 10px 0;
+  margin: 8px 0;
   border: 1px solid rgba(0, 255, 0, 0.2);
 }
 
@@ -285,12 +293,65 @@ button:hover:not(:disabled) {
   justify-content: center;
   color: #000;
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 0.75em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+table th {
+  background: rgba(0, 255, 0, 0.2);
+  padding: 8px;
+  text-align: left;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+table td {
+  padding: 8px;
+  border: 1px solid rgba(0, 255, 0, 0.1);
+}
+
+table tr:hover {
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.achievement {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid #ffd700;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 8px 0;
 }
 
 @media (max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .nav-menu { flex-direction: column; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 255, 0, 0.05);
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff00ff 0%, #ff6600 100%);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin: 2px;
 }
 </style>
 </head>
@@ -312,163 +373,177 @@ button:hover:not(:disabled) {
   
   <h1>🏦 ULTRA BANK EMPIRE</h1>
   
-  <div class="top-info">
-    <div class="info-box">
-      <div>👤 ИГРОК</div>
-      <div class="info-value" id="playerName">-</div>
-    </div>
-    <div class="info-box">
-      <div>📅 ДЕНЬ</div>
-      <div class="info-value" id="dayCount">1</div>
-    </div>
-    <div class="info-box">
-      <div>👑 РАНГ</div>
-      <div class="info-value" id="rankDisplay">Новичок</div>
-    </div>
-    <div class="info-box">
-      <div>⭐ УРОВЕНЬ</div>
-      <div class="info-value" id="level">1</div>
-    </div>
+  <div class="top-bar">
+    <div class="stat-box">👤 <span id="playerName">-</span></div>
+    <div class="stat-box">Уровень <span class="stat-value" id="level">1</span></div>
+    <div class="stat-box">💰 <span class="stat-value" id="money">0</span></div>
+    <div class="stat-box">🏦 <span class="stat-value" id="deposit">0</span></div>
+    <div class="stat-box">🌟 <span class="stat-value" id="prestige">0</span></div>
+    <div class="stat-box">👑 <span id="rank">Новичок</span></div>
   </div>
 
   <div class="nav-menu">
     <button class="nav-btn active" onclick="switchSection('main')">💰 ГЛАВНАЯ</button>
     <button class="nav-btn" onclick="switchSection('bank')">🏦 БАНК</button>
-    <button class="nav-btn" onclick="switchSection('mining')">⛏️ ДОБЫЧА</button>
-    <button class="nav-btn" onclick="switchSection('production')">🏭 ПРОИЗВОДСТВО</button>
-    <button class="nav-btn" onclick="switchSection('market')">📊 РЫНОК</button>
-    <button class="nav-btn" onclick="switchSection('stats')">📈 СТАТИСТИКА</button>
+    <button class="nav-btn" onclick="switchSection('business')">🏢 БИЗНЕС</button>
+    <button class="nav-btn" onclick="switchSection('workers')">👷 РАБОТНИКИ</button>
+    <button class="nav-btn" onclick="switchSection('pets')">🐾 ПИТОМЦЫ</button>
+    <button class="nav-btn" onclick="switchSection('quests')">📜 КВЕСТЫ</button>
+    <button class="nav-btn" onclick="switchSection('events')">🎉 СОБЫТИЯ</button>
+    <button class="nav-btn" onclick="switchSection('clan')">🏛️ КЛАН</button>
+    <button class="nav-btn" onclick="switchSection('leaderboard')">🏆 ЛИДЕРЫ</button>
+    <button class="nav-btn" onclick="switchSection('shop')">🛒 МАГАЗИН</button>
+    <button class="nav-btn" onclick="switchSection('settings')">⚙️ НАСТРОЙКИ</button>
   </div>
 
+  <!-- ГЛАВНАЯ -->
   <div id="main" class="section active">
     <div class="card">
-      <h2>💰 ГЛАВНЫЙ КЛИК</h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <div>💵 ДЕНЬГИ</div>
-          <div class="stat-value" id="money">0</div>
+      <h2>💰 ОСНОВНОЙ КЛИК</h2>
+      <div class="grid-2">
+        <div>
+          <p>Денег: <span class="stat-value" id="m1">0</span></p>
+          <p>Мощь: <span class="stat-value" id="pow1">1</span></p>
+          <p>Множитель: <span class="stat-value" id="mult1">x1</span></p>
         </div>
-        <div class="stat">
-          <div>⚡ МОЩЬ</div>
-          <div class="stat-value" id="power">1</div>
-        </div>
-        <div class="stat">
-          <div>🎯 МНОЖИТЕЛЬ</div>
-          <div class="stat-value" id="multiplier">x1</div>
+        <div>
+          <p>XP: <span class="stat-value" id="xp1">0</span></p>
+          <p>Уровень: <span class="stat-value" id="lvl1">1</span></p>
+          <p>CPS: <span class="stat-value" id="cps1">0</span>/сек</p>
         </div>
       </div>
-
-      <button class="big-button" onclick="clickMoney()">
-        ⚡ СУПЕРКЛИК +<span id="clickValue">1000</span>💵
-      </button>
-
-      <div class="progress-bar">
-        <div class="progress-fill" id="xpBar" style="width: 0%">0%</div>
-      </div>
-      <p style="color: #00aa00; margin: 10px 0;">
-        <strong>Уровень <span id="lvl">1</span> | XP: <span id="xpShow">0</span>/<span id="xpMax">1000</span></strong>
-      </p>
+      <button class="big-button" onclick="click()">⚡ СУПЕРКЛИК</button>
+      <div class="progress-bar"><div class="progress-fill" id="xpBar" style="width: 0%"></div></div>
     </div>
 
     <div class="card">
-      <h2>🎁 ЕЖЕДНЕВНЫЕ БОНУСЫ</h2>
-      <button onclick="dailyBonus()" style="width: 100%; margin: 10px 0;">🎁 ДНЕВНОЙ БОНУС</button>
-      <button onclick="weeklyBonus()" style="width: 100%; margin: 10px 0;">📦 ЕЖЕНЕДЕЛЬНЫЙ</button>
-      <button onclick="monthlyBonus()" style="width: 100%; margin: 10px 0;">🎉 ЕЖЕМЕСЯЧНЫЙ</button>
-      <button onclick="spinWheel()" style="width: 100%; margin: 10px 0;">🎡 КОЛЕСО УДАЧИ</button>
+      <h2>💎 БЫСТРЫЕ НАГРАДЫ</h2>
+      <div class="grid-3">
+        <button onclick="rewardDaily()">🎁 ДНЕВНАЯ<br><span style="font-size:0.8em" id="dailyCD">-</span></button>
+        <button onclick="rewardWeekly()">📦 ЕЖЕНЕДЕЛЬНАЯ<br><span style="font-size:0.8em" id="weeklyCD">-</span></button>
+        <button onclick="rewardMonthly()">🎉 ЕЖЕМЕСЯЧНАЯ<br><span style="font-size:0.8em" id="monthlyCD">-</span></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎡 КОЛЕСО УДАЧИ (ДОРОГО)</h2>
+      <button onclick="spinWheel()" style="width:100%">Прокрутить (1M) - Раз в час</button>
+      <p style="font-size:0.8em;color:#aaa">Осталось времени: <span id="wheelCD">-</span></p>
     </div>
   </div>
 
+  <!-- БАНК -->
   <div id="bank" class="section">
     <div class="card">
-      <h2>🏦 СИСТЕМА БАНКА</h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <div>💰 ДЕПОЗИТ</div>
-          <div class="stat-value" id="deposit">0</div>
+      <h2>🏦 БАНКОВСКАЯ СИСТЕМА</h2>
+      <div class="grid-2">
+        <div>
+          <p>Депозит: <span class="stat-value" id="dep1">0</span></p>
+          <p>Процент: <span class="stat-value" id="intRate">0.5</span>%</p>
         </div>
-        <div class="stat">
-          <div>📈 УРОВЕНЬ</div>
-          <div class="stat-value" id="bankLevel">1</div>
+        <div>
+          <p>Уровень: <span class="stat-value" id="bankLvl">1</span></p>
+          <p>Доход/сек: <span class="stat-value" id="bankIncome">0</span></p>
         </div>
       </div>
-      <button onclick="depositMoney()" style="width: 100%;">📥 ПОЛОЖИТЬ (10%)</button>
-      <button onclick="withdrawMoney()" style="width: 100%; margin-top: 10px;">📤 СНЯТЬ (50%)</button>
-      <button onclick="upgradBank()" style="width: 100%; margin-top: 10px;">📈 УЛУЧШИТЬ (100K)</button>
+      <button onclick="bankDeposit()">📥 Положить 10%</button>
+      <button onclick="bankWithdraw()">📤 Снять 50%</button>
+      <button onclick="bankUpgrade()">⬆️ Улучшить (10K) - Повышает %</button>
     </div>
   </div>
 
-  <div id="mining" class="section">
+  <!-- БИЗНЕС -->
+  <div id="business" class="section">
     <div class="card">
-      <h2>⛏️ СИСТЕМА ДОБЫЧИ</h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <div>⛏️ РУДА</div>
-          <div class="stat-value" id="ore">0</div>
-        </div>
-        <div class="stat">
-          <div>⛏️ УРОВЕНЬ</div>
-          <div class="stat-value" id="miningLevel">1</div>
-        </div>
-      </div>
-      <button onclick="mine()" style="width: 100%; font-size: 1.3em;">⛏️ ДОБЫВАТЬ</button>
-      <button onclick="upgradMining()" style="width: 100%; margin-top: 10px;">⬆️ УЛУЧШИТЬ (50K)</button>
+      <h2>🏢 ДЕЛОВЫЕ ПРЕДПРИЯТИЯ</h2>
+      <div id="businessList"></div>
     </div>
   </div>
 
-  <div id="production" class="section">
+  <!-- РАБОТНИКИ -->
+  <div id="workers" class="section">
     <div class="card">
-      <h2>🏭 ПРОИЗВОДСТВО</h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <div>🏭 ФАБРИК</div>
-          <div class="stat-value" id="factoryCount">0</div>
-        </div>
-        <div class="stat">
-          <div>🔄 ДОХОД/СЕК</div>
-          <div class="stat-value" id="production">0</div>
-        </div>
-      </div>
-      <button onclick="buyFactory()" style="width: 100%;">🏭 КУПИТЬ ФАБРИКУ (500K)</button>
-      <button onclick="upgradeFactory()" style="width: 100%; margin-top: 10px;">📈 МОДЕРНИЗИРОВАТЬ (1M)</button>
+      <h2>👷 НАЙМИТЕ РАБОТНИКОВ</h2>
+      <div id="workersList"></div>
     </div>
   </div>
 
-  <div id="market" class="section">
+  <!-- ПИТОМЦЫ -->
+  <div id="pets" class="section">
     <div class="card">
-      <h2>📊 БИРЖА</h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <div>📈 ПОРТФЕЛЬ</div>
-          <div class="stat-value" id="portfolio">0</div>
-        </div>
-      </div>
-      <button onclick="investSafe()" style="width: 100%;">🛡️ БЕЗОПАСНЫЕ (100K)</button>
-      <button onclick="investNormal()" style="width: 100%; margin-top: 10px;">📈 ОБЫЧНЫЕ (500K)</button>
-      <button onclick="investRisky()" style="width: 100%; margin-top: 10px;">🎲 РИСКОВАННЫЕ (1M)</button>
-      <button onclick="sellInvestments()" style="width: 100%; margin-top: 10px;">💸 ПРОДАТЬ</button>
+      <h2>🐾 ПИТОМЦЫ</h2>
+      <p>Питомцев: <span class="stat-value" id="petCount">0</span></p>
+      <p>Бонус мощи: <span class="stat-value" id="petBonus">x1</span></p>
+      <div id="petsList"></div>
     </div>
   </div>
 
-  <div id="stats" class="section">
+  <!-- КВЕСТЫ -->
+  <div id="quests" class="section">
     <div class="card">
-      <h2>📈 СТАТИСТИКА</h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <div>📊 ЗАРАБОТАНО</div>
-          <div class="stat-value" id="totalEarned">0</div>
-        </div>
-        <div class="stat">
-          <div>🖱️ КЛИКОВ</div>
-          <div class="stat-value" id="totalClicks">0</div>
-        </div>
-        <div class="stat">
-          <div>⏱️ ВРЕМЯ</div>
-          <div class="stat-value" id="playTime">0ч</div>
-        </div>
-      </div>
-      <button onclick="exportData()" style="width: 100%;">💾 ЭКСПОРТ</button>
-      <button onclick="resetGame()" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);">🔄 СБРОС</button>
+      <h2>📜 ЕЖЕДНЕВНЫЕ КВЕСТЫ</h2>
+      <p style="color:#aaa;font-size:0.9em">Завершите квесты за дополнительные награды</p>
+      <div id="questsList"></div>
+    </div>
+  </div>
+
+  <!-- СОБЫТИЯ -->
+  <div id="events" class="section">
+    <div class="card">
+      <h2>🎉 ВРЕМЕННЫЕ СОБЫТИЯ</h2>
+      <p style="color:#aaa;font-size:0.9em">Ограниченные события с бонусами</p>
+      <div id="eventsList"></div>
+    </div>
+  </div>
+
+  <!-- КЛАН -->
+  <div id="clan" class="section">
+    <div class="card">
+      <h2>🏛️ СИСТЕМА КЛАНА</h2>
+      <p>Мой клан: <span class="stat-value" id="clanName">Нет</span></p>
+      <p>Уровень клана: <span class="stat-value" id="clanLevel">0</span></p>
+      <p>Членов: <span class="stat-value" id="clanMembers">0</span>/10</p>
+      <button onclick="createClan()">📋 Создать клан (50K)</button>
+      <button onclick="leaveClan()">🚪 Покинуть клан</button>
+      <div id="clanInfo" style="margin-top:15px"></div>
+    </div>
+  </div>
+
+  <!-- ЛИДЕРЫ -->
+  <div id="leaderboard" class="section">
+    <div class="card">
+      <h2>🏆 ТАБЛИЦА ЛИДЕРОВ</h2>
+      <table id="leaderboardTable">
+        <thead>
+          <tr>
+            <th>Место</th>
+            <th>Игрок</th>
+            <th>Уровень</th>
+            <th>Денег</th>
+            <th>Депозит</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- МАГАЗИН -->
+  <div id="shop" class="section">
+    <div class="card">
+      <h2>🛒 МАГАЗИН УЛУЧШЕНИЙ</h2>
+      <div id="shopList"></div>
+    </div>
+  </div>
+
+  <!-- НАСТРОЙКИ -->
+  <div id="settings" class="section">
+    <div class="card">
+      <h2>⚙️ НАСТРОЙКИ</h2>
+      <button onclick="exportData()" style="width:100%">💾 Экспорт сохранения</button>
+      <button onclick="importData()" style="width:100%;margin-top:10px">📂 Импорт сохранения</button>
+      <button onclick="resetGame()" style="width:100%;margin-top:10px;background:linear-gradient(135deg, #ff4444 0%, #cc0000 100%)">🔄 ПОЛНЫЙ СБРОС</button>
+      <input type="file" id="fileInput" style="display:none" onchange="handleFileImport()">
     </div>
   </div>
 </div>
@@ -476,6 +551,7 @@ button:hover:not(:disabled) {
 <script>
 let authMode = 'login';
 let currentUser = null;
+let gameLoop;
 
 function toggleAuthMode() {
   authMode = authMode === 'login' ? 'register' : 'login';
@@ -502,16 +578,16 @@ function authSubmit() {
     return;
   }
 
-  const users = JSON.parse(localStorage.getItem('gameUsers') || '{}');
+  const users = JSON.parse(localStorage.getItem('bankUsers') || '{}');
 
   if (authMode === 'register') {
     if (users[username]) {
-      msg.innerHTML = '<div class="error-msg">❌ Пользователь существует!</div>';
+      msg.innerHTML = '<div class="error-msg">❌ Существует!</div>';
       return;
     }
     users[username] = hashPassword(password);
-    localStorage.setItem('gameUsers', JSON.stringify(users));
-    msg.innerHTML = '<div class="success-msg">✅ Аккаунт создан!</div>';
+    localStorage.setItem('bankUsers', JSON.stringify(users));
+    msg.innerHTML = '<div class="success-msg">✅ Создано!</div>';
     authMode = 'login';
     document.getElementById('authTitle').textContent = '🏦 ВХОД';
     document.getElementById('authPassword').value = '';
@@ -522,15 +598,14 @@ function authSubmit() {
       return;
     }
     currentUser = username;
-    sessionStorage.setItem('currentUser', username);
-    loadUserGame();
+    loadGame();
     showGame();
   }
 }
 
 function logout() {
-  sessionStorage.removeItem('currentUser');
   currentUser = null;
+  clearInterval(gameLoop);
   document.getElementById('gameContainer').classList.remove('active');
   document.getElementById('authContainer').style.display = 'flex';
   document.getElementById('authUsername').value = '';
@@ -543,256 +618,90 @@ function showGame() {
   startGameLoop();
 }
 
-const ranks = [
-  { name: 'Новичок', minLvl: 0, bonus: 1 },
-  { name: 'Охотник', minLvl: 5, bonus: 1.1 },
-  { name: 'Воин', minLvl: 10, bonus: 1.25 },
-  { name: 'Маг', minLvl: 20, bonus: 1.5 },
-  { name: 'Легенда', minLvl: 50, bonus: 2 }
+const businesses = [
+  {id: 1, name: 'Лимонад', icon: '🍋', baseCost: 100, baseIncome: 1, level: 0},
+  {id: 2, name: 'Кофейня', icon: '☕', baseCost: 500, baseIncome: 5, level: 0},
+  {id: 3, name: 'Ресторан', icon: '🍔', baseCost: 5000, baseIncome: 50, level: 0},
+  {id: 4, name: 'Отель', icon: '🏨', baseCost: 50000, baseIncome: 500, level: 0},
+  {id: 5, name: 'Казино', icon: '🎰', baseCost: 500000, baseIncome: 5000, level: 0},
+  {id: 6, name: 'Банк', icon: '🏦', baseCost: 5000000, baseIncome: 50000, level: 0},
+  {id: 7, name: 'Корпорация', icon: '🏢', baseCost: 50000000, baseIncome: 500000, level: 0},
+  {id: 8, name: 'Империя', icon: '👑', baseCost: 500000000, baseIncome: 5000000, level: 0},
+];
+
+const workers = [
+  {id: 1, name: 'Юноша', icon: '🧑', baseCost: 50, productivity: 1.1},
+  {id: 2, name: 'Рабочий', icon: '💪', baseCost: 500, productivity: 1.3},
+  {id: 3, name: 'Менеджер', icon: '👔', baseCost: 5000, productivity: 1.5},
+  {id: 4, name: 'Директор', icon: '🎩', baseCost: 50000, productivity: 2.0},
+  {id: 5, name: 'CEO', icon: '🤵', baseCost: 500000, productivity: 3.0},
+];
+
+const pets = [
+  {id: 1, name: 'Кот', icon: '🐱', cost: 1000, power: 1.1, income: 10},
+  {id: 2, name: 'Собака', icon: '🐶', cost: 5000, power: 1.2, income: 50},
+  {id: 3, name: 'Дракон', icon: '🐉', cost: 100000, power: 1.5, income: 1000},
+  {id: 4, name: 'Феникс', icon: '🔥', cost: 1000000, power: 2.0, income: 10000},
+  {id: 5, name: 'Единорог', icon: '🦄', cost: 10000000, power: 2.5, income: 100000},
+];
+
+const shopItems = [
+  {id: 1, name: 'Удвоитель мощи', icon: '⚡', cost: 100000, bonus: 2.0},
+  {id: 2, name: 'Утроитель дохода', icon: '💰', cost: 500000, bonus: 3.0},
+  {id: 3, name: 'Ускоритель', icon: '⏱️', cost: 1000000, bonus: 1.5},
 ];
 
 let gameData = {
-  money: 0, power: 1, level: 1, xp: 0, xpNeeded: 1000,
-  dayCount: 1, lastLogin: Date.now(),
-  bankLevel: 1, deposit: 0,
-  ore: 0, miningLevel: 1,
-  factoryCount: 0, production: 0,
-  portfolio: 0,
-  totalEarned: 0, totalClicks: 0, startTime: Date.now(),
-  lastDaily: 0, lastWeekly: 0, lastMonthly: 0,
-  multiplier: 1
+  money: 0,
+  power: 1,
+  level: 1,
+  xp: 0,
+  xpMax: 1000,
+  deposit: 0,
+  prestige: 0,
+  clanName: null,
+  clanLevel: 0,
+  clanMembers: [],
+  businesses: {},
+  workers: {},
+  pets: [],
+  lastDaily: 0,
+  lastWeekly: 0,
+  lastMonthly: 0,
+  lastWheel: 0,
+  bankLevel: 1,
+  bankIncome: 0,
+  totalEarned: 0,
+  totalClicks: 0,
+  multiplier: 1,
+  startTime: Date.now(),
+  shopItems: {}
 };
 
-function loadUserGame() {
-  const saved = localStorage.getItem(`game_${currentUser}`);
-  if (saved) gameData = { ...gameData, ...JSON.parse(saved) };
+function loadGame() {
+  const saved = localStorage.getItem(`bankgame_${currentUser}`);
+  if (saved) {
+    gameData = {...gameData, ...JSON.parse(saved)};
+  }
   updateUI();
 }
 
 function saveGame() {
-  localStorage.setItem(`game_${currentUser}`, JSON.stringify(gameData));
+  localStorage.setItem(`bankgame_${currentUser}`, JSON.stringify(gameData));
 }
 
 function getRank() {
-  let rank = ranks[0];
-  for (let r of ranks) {
-    if (gameData.level >= r.minLvl) rank = r;
-  }
-  return rank;
+  const ranks = ['Новичок', 'Стажер', 'Профи', 'Мастер', 'Легенда', 'Бог', 'ИМПЕРЕР'];
+  return ranks[Math.min(Math.floor(gameData.level / 10), 6)];
 }
 
-function clickMoney() {
-  const val = gameData.power * 1000 * gameData.multiplier;
-  gameData.money += val;
-  gameData.totalEarned += val;
-  gameData.totalClicks++;
-  gameData.xp += 10;
-  checkLevelUp();
-  updateUI();
-  saveGame();
-}
-
-function checkLevelUp() {
-  while (gameData.xp >= gameData.xpNeeded) {
-    gameData.xp -= gameData.xpNeeded;
-    gameData.level++;
-    gameData.power *= 1.1;
-    gameData.xpNeeded = Math.floor(gameData.xpNeeded * 1.15);
-    notify(`⭐ УРОВЕНЬ ${gameData.level}!`);
-  }
-}
-
-function mine() {
-  gameData.ore += gameData.miningLevel * 10;
-  gameData.xp += 5;
-  checkLevelUp();
-  updateUI();
-  saveGame();
-}
-
-function upgradMining() {
-  if (gameData.ore < 50000) {
-    notify('❌ Не хватает руды!');
-    return;
-  }
-  gameData.ore -= 50000;
-  gameData.miningLevel++;
-  notify('⬆️ Добыча улучшена!');
-  updateUI();
-  saveGame();
-}
-
-function depositMoney() {
-  const amt = Math.floor(gameData.money * 0.1);
-  if (amt === 0) {
-    notify('❌ Недостаточно денег!');
-    return;
-  }
-  gameData.money -= amt;
-  gameData.deposit += amt;
-  notify(`💰 Депозит +${formatNumber(amt)}`);
-  updateUI();
-  saveGame();
-}
-
-function withdrawMoney() {
-  const amt = Math.floor(gameData.deposit * 0.5);
-  gameData.deposit -= amt;
-  gameData.money += amt;
-  notify(`💸 Снято ${formatNumber(amt)}`);
-  updateUI();
-  saveGame();
-}
-
-function upgradBank() {
-  if (gameData.money < 100000) {
-    notify('❌ Нужно 100K!');
-    return;
-  }
-  gameData.money -= 100000;
-  gameData.bankLevel++;
-  notify('🏦 Банк улучшен!');
-  updateUI();
-  saveGame();
-}
-
-function buyFactory() {
-  if (gameData.money < 500000) {
-    notify('❌ Нужно 500K!');
-    return;
-  }
-  gameData.money -= 500000;
-  gameData.factoryCount++;
-  gameData.production += 100;
-  notify('🏭 Фабрика куплена!');
-  updateUI();
-  saveGame();
-}
-
-function upgradeFactory() {
-  if (gameData.money < 1000000) {
-    notify('❌ Нужно 1M!');
-    return;
-  }
-  gameData.money -= 1000000;
-  gameData.production *= 1.5;
-  notify('📈 Модернизировано!');
-  updateUI();
-  saveGame();
-}
-
-function investSafe() {
-  if (gameData.money < 100000) {
-    notify('❌ Нужно 100K!');
-    return;
-  }
-  gameData.money -= 100000;
-  gameData.portfolio += 105000;
-  notify('🛡️ Инвестировано!');
-  updateUI();
-  saveGame();
-}
-
-function investNormal() {
-  if (gameData.money < 500000) {
-    notify('❌ Нужно 500K!');
-    return;
-  }
-  gameData.money -= 500000;
-  gameData.portfolio += 575000;
-  notify('📈 Инвестировано!');
-  updateUI();
-  saveGame();
-}
-
-function investRisky() {
-  if (gameData.money < 1000000) {
-    notify('❌ Нужно 1M!');
-    return;
-  }
-  gameData.money -= 1000000;
-  const gain = Math.random() > 0.3 ? 1500000 : 500000;
-  gameData.portfolio += gain;
-  notify(gain > 750000 ? '🎲 ВЫИГРЫШ!' : '🎲 Проигрыш...');
-  updateUI();
-  saveGame();
-}
-
-function sellInvestments() {
-  gameData.money += gameData.portfolio;
-  gameData.portfolio = 0;
-  notify('💸 Портфель продан!');
-  updateUI();
-  saveGame();
-}
-
-function dailyBonus() {
-  const now = Date.now();
-  if (now - gameData.lastDaily < 86400000) {
-    const h = Math.floor((86400000 - (now - gameData.lastDaily)) / 3600000);
-    notify(`⛔ Через ${h}ч!`);
-    return;
-  }
-  gameData.money += 1000000;
-  gameData.totalEarned += 1000000;
-  gameData.lastDaily = now;
-  notify('🎁 +1M💵!');
-  updateUI();
-  saveGame();
-}
-
-function weeklyBonus() {
-  const now = Date.now();
-  if (now - gameData.lastWeekly < 604800000) {
-    const d = Math.floor((604800000 - (now - gameData.lastWeekly)) / 86400000);
-    notify(`⛔ Через ${d}д!`);
-    return;
-  }
-  gameData.money += 10000000;
-  gameData.power *= 1.1;
-  gameData.lastWeekly = now;
-  notify('📦 +10M и +10% мощи!');
-  updateUI();
-  saveGame();
-}
-
-function monthlyBonus() {
-  const now = Date.now();
-  if (now - gameData.lastMonthly < 2592000000) {
-    const d = Math.floor((2592000000 - (now - gameData.lastMonthly)) / 86400000);
-    notify(`⛔ Через ${d}д!`);
-    return;
-  }
-  gameData.money += 100000000;
-  gameData.multiplier *= 1.25;
-  gameData.lastMonthly = now;
-  notify('🎉 +100M и x1.25!');
-  updateUI();
-  saveGame();
-}
-
-function spinWheel() {
-  if (gameData.money < 500000) {
-    notify('❌ Нужно 500K!');
-    return;
-  }
-  gameData.money -= 500000;
-  const rewards = [
-    { text: '💰 +2M', money: 2000000 },
-    { text: '⚡ +20% мощи', mult: 1.2 },
-    { text: '⭐ +5 уровней', level: 5 },
-    { text: '🎉 +50M', money: 50000000 },
-    { text: '🌟 +5K XP', xp: 5000 },
-    { text: '👑 +1 ранг', rank: true }
-  ];
-  const r = rewards[Math.floor(Math.random() * rewards.length)];
-  if (r.money) { gameData.money += r.money; gameData.totalEarned += r.money; }
-  if (r.mult) gameData.power *= r.mult;
-  if (r.level) { gameData.level += r.level; gameData.power *= 1.1 ** r.level; }
-  if (r.xp) gameData.xp += r.xp;
-  notify('🎡 ' + r.text);
-  updateUI();
-  saveGame();
+function formatNum(n) {
+  if (n >= 1e15) return (n / 1e15).toFixed(1) + 'Q';
+  if (n >= 1e12) return (n / 1e12).toFixed(1) + 'T';
+  if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+  return Math.floor(n).toString();
 }
 
 function notify(msg) {
@@ -803,42 +712,382 @@ function notify(msg) {
   setTimeout(() => div.remove(), 3000);
 }
 
-function formatNumber(num) {
-  if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
-  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-  return Math.floor(num).toString();
+function click() {
+  const income = gameData.power * 100 * gameData.multiplier;
+  gameData.money += income;
+  gameData.totalEarned += income;
+  gameData.totalClicks++;
+  gameData.xp += 1;
+  
+  if (gameData.xp >= gameData.xpMax) {
+    gameData.xp = 0;
+    gameData.level++;
+    gameData.xpMax = Math.floor(gameData.xpMax * 1.1);
+    notify(`⭐ УРОВЕНЬ ${gameData.level}!`);
+  }
+  
+  updateUI();
+  saveGame();
+}
+
+function rewardDaily() {
+  const now = Date.now();
+  if (now - gameData.lastDaily < 86400000) {
+    const h = Math.floor((86400000 - (now - gameData.lastDaily)) / 3600000);
+    notify(`⛔ Через ${h}ч`);
+    return;
+  }
+  const reward = Math.max(gameData.totalEarned * 0.1, 10000);
+  gameData.money += reward;
+  gameData.totalEarned += reward;
+  gameData.lastDaily = now;
+  notify(`🎁 +${formatNum(reward)}`);
+  updateUI();
+  saveGame();
+}
+
+function rewardWeekly() {
+  const now = Date.now();
+  if (now - gameData.lastWeekly < 604800000) {
+    const d = Math.floor((604800000 - (now - gameData.lastWeekly)) / 86400000);
+    notify(`⛔ Через ${d}д`);
+    return;
+  }
+  const reward = Math.max(gameData.totalEarned * 0.5, 100000);
+  gameData.money += reward;
+  gameData.power *= 1.05;
+  gameData.lastWeekly = now;
+  notify(`📦 +${formatNum(reward)} + мощь`);
+  updateUI();
+  saveGame();
+}
+
+function rewardMonthly() {
+  const now = Date.now();
+  if (now - gameData.lastMonthly < 2592000000) {
+    const d = Math.floor((2592000000 - (now - gameData.lastMonthly)) / 86400000);
+    notify(`⛔ Через ${d}д`);
+    return;
+  }
+  const reward = Math.max(gameData.totalEarned, 1000000);
+  gameData.money += reward;
+  gameData.multiplier *= 1.1;
+  gameData.lastMonthly = now;
+  notify(`🎉 +${formatNum(reward)} + множитель`);
+  updateUI();
+  saveGame();
+}
+
+function spinWheel() {
+  const now = Date.now();
+  if (gameData.money < 1000000) {
+    notify('❌ Нужно 1M');
+    return;
+  }
+  if (now - gameData.lastWheel < 3600000) {
+    const m = Math.floor((3600000 - (now - gameData.lastWheel)) / 60000);
+    notify(`⛔ Через ${m}м`);
+    return;
+  }
+  
+  gameData.money -= 1000000;
+  const rewards = [
+    {text: '+5M', money: 5000000},
+    {text: '+50M', money: 50000000},
+    {text: '+500M', money: 500000000},
+    {text: '+2.0x Мощь', power: 2},
+    {text: '+10 Уровней', level: 10},
+    {text: 'Питомец', pet: true},
+  ];
+  const r = rewards[Math.floor(Math.random() * rewards.length)];
+  
+  if (r.money) { gameData.money += r.money; gameData.totalEarned += r.money; }
+  if (r.power) gameData.power *= r.power;
+  if (r.level) { gameData.level += r.level; gameData.xpMax = Math.floor(gameData.xpMax * 1.1 ** r.level); }
+  if (r.pet) gameData.pets.push({id: Math.random(), type: 'random'});
+  
+  gameData.lastWheel = now;
+  notify(`🎡 ${r.text}`);
+  updateUI();
+  saveGame();
+}
+
+function bankDeposit() {
+  const amt = Math.floor(gameData.money * 0.1);
+  if (amt === 0) {
+    notify('❌ Мало денег');
+    return;
+  }
+  gameData.money -= amt;
+  gameData.deposit += amt;
+  notify(`📥 +${formatNum(amt)}`);
+  updateUI();
+  saveGame();
+}
+
+function bankWithdraw() {
+  const amt = Math.floor(gameData.deposit * 0.5);
+  gameData.deposit -= amt;
+  gameData.money += amt;
+  notify(`📤 ${formatNum(amt)}`);
+  updateUI();
+  saveGame();
+}
+
+function bankUpgrade() {
+  const cost = 10000 * Math.pow(1.5, gameData.bankLevel - 1);
+  if (gameData.money < cost) {
+    notify('❌ Не хватает');
+    return;
+  }
+  gameData.money -= cost;
+  gameData.bankLevel++;
+  gameData.bankIncome = gameData.deposit * (0.001 + gameData.bankLevel * 0.0005);
+  notify('📈 Банк улучшен');
+  updateUI();
+  saveGame();
+}
+
+function buyBusiness(id) {
+  const bus = businesses.find(b => b.id === id);
+  const lvl = gameData.businesses[id] || 0;
+  const cost = bus.baseCost * Math.pow(1.2, lvl);
+  
+  if (gameData.money < cost) {
+    notify('❌ Дорого');
+    return;
+  }
+  
+  gameData.money -= cost;
+  gameData.businesses[id] = (gameData.businesses[id] || 0) + 1;
+  notify(`🏢 +${bus.name}`);
+  updateUI();
+  saveGame();
+}
+
+function hireWorker(id) {
+  const wrk = workers.find(w => w.id === id);
+  const cost = wrk.baseCost * Math.pow(1.2, (gameData.workers[id] || 0));
+  
+  if (gameData.money < cost) {
+    notify('❌ Дорого');
+    return;
+  }
+  
+  gameData.money -= cost;
+  gameData.workers[id] = (gameData.workers[id] || 0) + 1;
+  gameData.multiplier *= 1.02;
+  notify(`👷 +${wrk.name}`);
+  updateUI();
+  saveGame();
+}
+
+function buyPet(id) {
+  const pet = pets.find(p => p.id === id);
+  if (gameData.money < pet.cost) {
+    notify('❌ Дорого');
+    return;
+  }
+  gameData.money -= pet.cost;
+  gameData.pets.push(pet);
+  notify(`🐾 ${pet.icon} ${pet.name}`);
+  updateUI();
+  saveGame();
+}
+
+function createClan() {
+  if (gameData.money < 50000 || gameData.clanName) {
+    notify('❌ Невозможно');
+    return;
+  }
+  const name = prompt('Имя клана:');
+  if (!name) return;
+  gameData.money -= 50000;
+  gameData.clanName = name;
+  gameData.clanLevel = 1;
+  gameData.clanMembers = [currentUser];
+  notify(`🏛️ Клан создан`);
+  updateUI();
+  saveGame();
+}
+
+function leaveClan() {
+  if (!gameData.clanName) {
+    notify('❌ Вы не в клане');
+    return;
+  }
+  gameData.clanName = null;
+  gameData.clanLevel = 0;
+  gameData.clanMembers = [];
+  notify(`🚪 Вы покинули клан`);
+  updateUI();
+  saveGame();
+}
+
+function updateLeaderboard() {
+  const users = JSON.parse(localStorage.getItem('bankUsers') || '{}');
+  const leaderData = [];
+  
+  for (let user in users) {
+    const save = localStorage.getItem(`bankgame_${user}`);
+    if (save) {
+      const data = JSON.parse(save);
+      leaderData.push({
+        name: user,
+        level: data.level,
+        money: data.money,
+        deposit: data.deposit,
+        total: data.money + data.deposit
+      });
+    }
+  }
+  
+  leaderData.sort((a, b) => b.total - a.total);
+  
+  let html = '';
+  leaderData.slice(0, 100).forEach((p, i) => {
+    html += `<tr>
+      <td>${i + 1}</td>
+      <td>${p.name === currentUser ? '<b>' + p.name + ' (Вы)</b>' : p.name}</td>
+      <td>${p.level}</td>
+      <td>${formatNum(p.money)}</td>
+      <td>${formatNum(p.deposit)}</td>
+    </tr>`;
+  });
+  
+  document.getElementById('leaderboardBody').innerHTML = html;
 }
 
 function updateUI() {
+  const petBonus = gameData.pets.length > 0 ? 1 + (gameData.pets.length * 0.1) : 1;
+  const actualPower = gameData.power * petBonus;
+  const income = actualPower * 100 * gameData.multiplier;
+  
   document.getElementById('playerName').textContent = currentUser.toUpperCase();
-  document.getElementById('dayCount').textContent = gameData.dayCount;
-  document.getElementById('rankDisplay').textContent = getRank().name;
   document.getElementById('level').textContent = gameData.level;
-  document.getElementById('lvl').textContent = gameData.level;
+  document.getElementById('money').textContent = formatNum(gameData.money);
+  document.getElementById('deposit').textContent = formatNum(gameData.deposit);
+  document.getElementById('prestige').textContent = gameData.prestige;
+  document.getElementById('rank').textContent = getRank();
   
-  const xpPct = (gameData.xp / gameData.xpNeeded * 100).toFixed(0);
+  document.getElementById('m1').textContent = formatNum(gameData.money);
+  document.getElementById('pow1').textContent = actualPower.toFixed(1);
+  document.getElementById('mult1').textContent = 'x' + gameData.multiplier.toFixed(2);
+  document.getElementById('xp1').textContent = gameData.xp.toFixed(0) + '/' + gameData.xpMax;
+  document.getElementById('lvl1').textContent = gameData.level;
+  document.getElementById('cps1').textContent = formatNum(income);
+  
+  const xpPct = (gameData.xp / gameData.xpMax * 100).toFixed(0);
   document.getElementById('xpBar').style.width = xpPct + '%';
-  document.getElementById('xpShow').textContent = Math.floor(gameData.xp);
-  document.getElementById('xpMax').textContent = gameData.xpNeeded;
   
-  document.getElementById('money').textContent = formatNumber(gameData.money);
-  document.getElementById('power').textContent = gameData.power.toFixed(1);
-  document.getElementById('multiplier').textContent = 'x' + gameData.multiplier.toFixed(2);
-  document.getElementById('clickValue').textContent = formatNumber(gameData.power * 1000 * gameData.multiplier);
+  document.getElementById('dep1').textContent = formatNum(gameData.deposit);
+  document.getElementById('intRate').textContent = (0.5 + gameData.bankLevel * 0.25).toFixed(2);
+  document.getElementById('bankLvl').textContent = gameData.bankLevel;
+  document.getElementById('bankIncome').textContent = formatNum(gameData.deposit * (0.005 + gameData.bankLevel * 0.0005));
   
-  document.getElementById('deposit').textContent = formatNumber(gameData.deposit);
-  document.getElementById('bankLevel').textContent = gameData.bankLevel;
-  document.getElementById('ore').textContent = formatNumber(gameData.ore);
-  document.getElementById('miningLevel').textContent = gameData.miningLevel;
-  document.getElementById('factoryCount').textContent = gameData.factoryCount;
-  document.getElementById('production').textContent = formatNumber(gameData.production);
-  document.getElementById('portfolio').textContent = formatNumber(gameData.portfolio);
-  document.getElementById('totalEarned').textContent = formatNumber(gameData.totalEarned);
-  document.getElementById('totalClicks').textContent = gameData.totalClicks;
+  document.getElementById('petCount').textContent = gameData.pets.length;
+  document.getElementById('petBonus').textContent = 'x' + petBonus.toFixed(2);
   
-  const h = Math.floor((Date.now() - gameData.startTime) / 3600000);
-  document.getElementById('playTime').textContent = h + 'ч';
+  document.getElementById('clanName').textContent = gameData.clanName || 'Нет';
+  document.getElementById('clanLevel').textContent = gameData.clanLevel;
+  document.getElementById('clanMembers').textContent = gameData.clanMembers.length;
+  
+  const now = Date.now();
+  const dailyLeft = 86400000 - (now - gameData.lastDaily);
+  document.getElementById('dailyCD').textContent = dailyLeft > 0 ? Math.floor(dailyLeft / 3600000) + 'ч' : 'ГОТОВО';
+  
+  const weeklyLeft = 604800000 - (now - gameData.lastWeekly);
+  document.getElementById('weeklyCD').textContent = weeklyLeft > 0 ? Math.floor(weeklyLeft / 86400000) + 'д' : 'ГОТОВО';
+  
+  const monthlyLeft = 2592000000 - (now - gameData.lastMonthly);
+  document.getElementById('monthlyCD').textContent = monthlyLeft > 0 ? Math.floor(monthlyLeft / 86400000) + 'д' : 'ГОТОВО';
+  
+  const wheelLeft = 3600000 - (now - gameData.lastWheel);
+  document.getElementById('wheelCD').textContent = wheelLeft > 0 ? Math.floor(wheelLeft / 60000) + 'м' : 'ГОТОВО';
+  
+  updateBusinessList();
+  updateWorkersList();
+  updatePetsList();
+  updateQuestsList();
+  updateShopList();
+  updateLeaderboard();
+}
+
+function updateBusinessList() {
+  let html = '';
+  businesses.forEach(b => {
+    const lvl = gameData.businesses[b.id] || 0;
+    const cost = b.baseCost * Math.pow(1.2, lvl);
+    const income = b.baseIncome * Math.pow(1.15, lvl);
+    html += `<div class="item-row">
+      <span>${b.icon} ${b.name} (Уровень ${lvl})</span>
+      <div>
+        <span style="color:#ffff00">+${formatNum(income)}/сек</span>
+        <button onclick="buyBusiness(${b.id})">Купить (${formatNum(cost)})</button>
+      </div>
+    </div>`;
+  });
+  document.getElementById('businessList').innerHTML = html;
+}
+
+function updateWorkersList() {
+  let html = '';
+  workers.forEach(w => {
+    const cnt = gameData.workers[w.id] || 0;
+    const cost = w.baseCost * Math.pow(1.2, cnt);
+    html += `<div class="item-row">
+      <span>${w.icon} ${w.name} (x${cnt})</span>
+      <button onclick="hireWorker(${w.id})">Нанять (${formatNum(cost)})</button>
+    </div>`;
+  });
+  document.getElementById('workersList').innerHTML = html;
+}
+
+function updatePetsList() {
+  let html = '';
+  pets.forEach(p => {
+    html += `<div class="item-row">
+      <span>${p.icon} ${p.name}</span>
+      <button onclick="buyPet(${p.id})">Купить (${formatNum(p.cost)})</button>
+    </div>`;
+  });
+  document.getElementById('petsList').innerHTML = html;
+}
+
+function updateQuestsList() {
+  let html = `<div class="item-row">
+    <span>🎯 Сделать 100 кликов</span>
+    <span>${gameData.totalClicks}/100</span>
+  </div>
+  <div class="item-row">
+    <span>🏪 Купить 5 бизнесов</span>
+    <span>${Object.keys(gameData.businesses).length}/5</span>
+  </div>`;
+  document.getElementById('questsList').innerHTML = html;
+}
+
+function updateShopList() {
+  let html = '';
+  shopItems.forEach(item => {
+    html += `<div class="item-row">
+      <span>${item.icon} ${item.name}</span>
+      <button onclick="buyShop(${item.id})">Купить (${formatNum(item.cost)})</button>
+    </div>`;
+  });
+  document.getElementById('shopList').innerHTML = html;
+}
+
+function buyShop(id) {
+  const item = shopItems.find(i => i.id === id);
+  if (gameData.money < item.cost) {
+    notify('❌ Дорого');
+    return;
+  }
+  gameData.money -= item.cost;
+  gameData.multiplier *= item.bonus;
+  notify(`✨ ${item.name}`);
+  updateUI();
+  saveGame();
 }
 
 function switchSection(id) {
@@ -852,41 +1101,66 @@ function exportData() {
   const data = JSON.stringify(gameData, null, 2);
   const a = document.createElement('a');
   a.href = 'data:text/plain,' + encodeURIComponent(data);
-  a.download = `game_${currentUser}.json`;
+  a.download = `bank_${currentUser}.json`;
   a.click();
-  notify('💾 Экспортировано!');
+  notify('💾 Экспортировано');
+}
+
+function importData() {
+  document.getElementById('fileInput').click();
+}
+
+function handleFileImport() {
+  const file = document.getElementById('fileInput').files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      gameData = JSON.parse(e.target.result);
+      saveGame();
+      updateUI();
+      notify('📂 Импортировано');
+    } catch {
+      notify('❌ Ошибка импорта');
+    }
+  };
+  reader.readAsText(file);
 }
 
 function resetGame() {
-  if (confirm('⚠️ Сброс? Это нельзя отменить!')) {
-    gameData = {
-      money: 0, power: 1, level: 1, xp: 0, xpNeeded: 1000,
-      dayCount: 1, lastLogin: Date.now(),
-      bankLevel: 1, deposit: 0, ore: 0, miningLevel: 1,
-      factoryCount: 0, production: 0, portfolio: 0,
-      totalEarned: 0, totalClicks: 0, startTime: Date.now(),
-      lastDaily: 0, lastWeekly: 0, lastMonthly: 0, multiplier: 1
-    };
-    saveGame();
-    updateUI();
-    notify('🔄 Сброс выполнен!');
-  }
+  if (!confirm('⚠️ ПОЛНЫЙ СБРОС?')) return;
+  gameData = {
+    money: 0, power: 1, level: 1, xp: 0, xpMax: 1000,
+    deposit: 0, prestige: 0, clanName: null, clanLevel: 0,
+    clanMembers: [], businesses: {}, workers: {}, pets: [],
+    lastDaily: 0, lastWeekly: 0, lastMonthly: 0, lastWheel: 0,
+    bankLevel: 1, bankIncome: 0, totalEarned: 0, totalClicks: 0,
+    multiplier: 1, startTime: Date.now(), shopItems: {}
+  };
+  saveGame();
+  updateUI();
+  notify('🔄 Сброс');
 }
 
 function startGameLoop() {
-  setInterval(() => {
-    gameData.money += gameData.production;
-    gameData.totalEarned += gameData.production;
+  gameLoop = setInterval(() => {
+    const petBonus = gameData.pets.length > 0 ? 1 + (gameData.pets.length * 0.1) : 1;
+    const income = gameData.power * petBonus * 100 * gameData.multiplier;
+    const bankIncome = gameData.deposit * (0.005 + gameData.bankLevel * 0.0005);
+    
+    gameData.money += income / 10 + bankIncome / 10;
+    gameData.totalEarned += income / 10 + bankIncome / 10;
     updateUI();
     saveGame();
-  }, 1000);
+  }, 100);
 }
 
 window.addEventListener('load', () => {
-  const user = sessionStorage.getItem('currentUser');
+  const user = sessionStorage.getItem('bankUser');
   if (user) {
     currentUser = user;
-    loadUserGame();
+    loadGame();
     showGame();
   }
 });
